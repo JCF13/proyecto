@@ -24,6 +24,11 @@
                 </template>
             </q-input>
 
+            <q-btn type="button" id="google">
+                <p>ENTRAR CON GOOGLE</p>
+                <img src="./../assets/google.svg" alt="">
+            </q-btn>
+
             <q-btn label="ENTRAR" type="button" color="black" id="entrar" @click="logIn"/>
         </q-form>
     </div>
@@ -56,10 +61,19 @@ export default {
         box-sizing: border-box;
     }
 
-    #entrar {
-        width: 100%;
-        margin: 0 auto;
+    #google {
+        width: 50%;
         border-bottom-left-radius: 10px;
+        font-weight: bold;        
+    }
+
+    #google p {
+        padding-right: 5%;
+    }
+
+    #entrar {
+        width: 50%;
+        margin: 0 auto;
         border-bottom-right-radius: 10px;
         font-weight: bold;
     }

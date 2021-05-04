@@ -37,7 +37,6 @@ const routes = [
       { path: 'new-post', component: () => import('src/components/NewPost.vue') }
     ]
   },
-  
   {
     path: '/',
     component: () => import('layouts/AccessLayout.vue'),
@@ -45,6 +44,13 @@ const routes = [
       { path: '', component: () => import('src/components/LogIn.vue') },
       { path: 'login', component: () => import('src/components/LogIn.vue') },
       { path: 'register', component: () => import('src/components/Register.vue') }
+    ]
+  },
+  {
+    path: '/admin',
+    component: () => import('layouts/AdminLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/components/MainAdmin.vue') }
     ]
   },
 
