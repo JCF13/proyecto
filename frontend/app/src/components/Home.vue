@@ -1,5 +1,5 @@
 <template>
-    <q-page class="flex flex-center" id="page">
+    <q-page class="flex flex-center" id="page">        
         <div id="main" class="flex flex-center">
             <q-card class="my-card" v-for="image in images" :key="image.img">
                 <q-item class="card-top">
@@ -31,6 +31,23 @@
                 <q-icon name="add_circle_outline" size="30px"/>
             </div>
         </div>
+
+        <q-page-sticky position="bottom-right" :offset="[40, 20]">
+            <q-fab
+                v-model="fabCenter"
+                vertical-actions-align="center"
+                color="black"
+                glossy
+                icon="add"
+                direction="up"
+            >
+                <q-fab-action color="dark" @click="upload_photo" icon="upload" label="Subir foto" />
+                <router-link to="/inside/camera">
+                <q-fab-action color="dark" icon="photo_camera" label="Hacer foto" />
+                </router-link>
+            </q-fab>
+        </q-page-sticky>
+        
         <router-view/>
     </q-page>
 </template>
@@ -72,6 +89,10 @@ export default {
         width: 45%;
     }
 
+    #main::-webkit-scrollbar {
+        display: none;
+    }
+
     .my-card img {
         max-width: 500px;
         max-height: 500px;
@@ -94,6 +115,10 @@ export default {
 
     .info-post {
         padding-right: 1%;
+    }
+
+    a {
+        text-decoration: none;
     }
 
 </style>

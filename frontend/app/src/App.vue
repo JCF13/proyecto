@@ -23,4 +23,5 @@ export default {
     height: 100%;
     background: rgb(243, 243, 243);
   }
+
 </style>
