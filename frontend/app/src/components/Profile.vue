@@ -2,29 +2,36 @@
     <q-page class="flex flex-center">
         <div id="main">
             <div id="top">
-                <div id="avatar">
+                <div id="left-top">
+                    <q-img
+                        src="https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg"
+                        style="width:100%; max-width: 200px; height:100%; max-height: 175px; border-radius:50%; border: 2px solid black;"
+                        contain
+                    />
                 </div>
-                <div id="usuario">
-                    <p>USUARIO</p>
-                </div>
-                <div>
-                    <q-list id="info-top">
-                        <router-link to="/inside/social/followers">
-                            <q-item clickable v-ripple id="seguidores">
-                                <q-item-section>SEGUIDORES</q-item-section>
-                            </q-item>
-                        </router-link>
-                        <router-link to="/inside/social/following">
-                            <q-item clickable v-ripple id="seguidos">
-                                <q-item-section>SEGUIDOS</q-item-section>
-                            </q-item>
-                        </router-link>
-                        <q-item>
-                            <router-link to="/inside/settings">
-                                <q-btn flat round color="black" icon="settings" />
-                            </router-link>
-                        </q-item>
-                    </q-list>
+                <div id="right-top">
+                    <q-card class="my-card" flat>
+                        <q-card-section vertical>
+                            <q-card-section horizontal class="d-flex justify-between">
+                                <h5>Nombre de usuario</h5>
+                                
+                                <q-card-actions horizontal class="q-px-md">
+                                    <q-btn flat color="black" icon="chat_bubble_outline" />
+                                    <router-link to="/inside/settings">
+                                        <q-btn flat round color="black" icon="settings" />
+                                    </router-link>
+                                </q-card-actions>
+                            </q-card-section>
+                            <q-card-section class="d-flex justify-between" horizontal>
+                                <router-link to="/inside/social/followers">
+                                    <q-btn label="10 SEGUIDORES"/>
+                                </router-link>
+                                <router-link to="/inside/social/following">
+                                    <q-btn label="10 SEGUIDOS"/>
+                                </router-link>
+                            </q-card-section>
+                        </q-card-section>
+                    </q-card>
                 </div>
             </div>
             <div id="publicaciones">
@@ -106,14 +113,22 @@ export default {
 
     #top {
         display: grid;
-        width: 100%;
+        width: 90%;
         height: 100%;
-        grid-template-columns: 100%;
-        grid-template-rows: 50% 25% 25%;
-        border-bottom: 2px solid rgb(136, 136, 136);
+        margin: 0 auto;
+        padding: 1%;
+        grid-template-columns: 30% 70%;
+        justify-content: space-between;
     }
 
-    #avatar {
+    #left-top {
+        background: whitesmoke;
+        border-radius: 50%;
+        max-width: 200px;
+        max-height: 175px;
+    }
+
+    /*#avatar {
         height: 100%;
         width: 12%;
         border-radius: 50%;
@@ -141,7 +156,7 @@ export default {
         margin: 0 auto;
         margin-top: 3%;
         font-weight: bold;
-    }
+    }*/
 
     #publicaciones::-webkit-scrollbar {
         display: none;
@@ -152,6 +167,11 @@ export default {
         display: grid;
         grid-template-columns: 33.33% 33.33% 33.33%;
         grid-auto-rows: 60%;
+        padding: 0 2%;
+    }
+
+    #publicaciones div img {
+        border: 1px solid whitesmoke;
     }
 
     .img-post {
