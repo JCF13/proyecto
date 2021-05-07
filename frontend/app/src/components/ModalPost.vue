@@ -1,69 +1,48 @@
 <template>
-    <q-dialog v-model="alert" persistent>
+    <q-dialog v-model="dialog" persistent>
         <q-card id="my-card">
             <q-card-section horizontal>
                 <div id="card-left">
-                    <q-icon id="close" name="highlight_off" size="30px" @click="close"/>
+                    <q-icon id="close" name="highlight_off" size="30px" @click="close" />
 
-                    <img id="image" src="https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg" alt="">
-                
+                    <img id="image" :src="post.photo" alt="">
+
                     <div id="pie-de-foto" class="absolute-bottom text-subtitle2">
-                        Pie de foto 
+                        {{post.caption}}
                     </div>
                 </div>
 
                 <q-card-actions vertical id="card-right">
                     <div id="modal-user">
-                        <q-avatar size="30px" class="avatar" color="orange">J</q-avatar>
-                        <h6>Usuario</h6>
+                        <q-avatar size="30px" class="avatar">
+                            <img :src="post.creator.profilePic" alt="">
+                        </q-avatar>
+                        <h6>{{post.creator.username}}</h6>
                     </div>
                     <div id="modal-info">
                         <div>
-                            <p>34</p><q-icon size="15px" name="favorite" color="red" /> 
-                            <q-icon name="favorite" style="display:none;" />
+                            <p>{{post.likes.length}}</p>
+                            <q-icon size="15px" name="favorite" color="red" />
                         </div>
                         <div>
-                            <p>4</p>
-                            <q-icon name="comment" />
+                            <p>{{post.comments.length}}</p>
+                            <q-icon size="15px" name="comment" color="blue" />
                         </div>
                     </div>
                     <div id="creation-date">
-                        <p>14-3-2021</p>
+                        <p>{{post.creationDate}}</p>
                     </div>
                     <div id="comments">
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="blue">J</q-avatar>
-                            <p><span>Usuario1.</span> Comentario 1</p>
+                        <div v-for="comment in post.comments" :key="comment.id">
+                            <q-avatar size="20px" class="avatar">
+                                <img :src="comment.user.profilePic" alt="">
+                            </q-avatar>
+                            <p>
+                                <span>{{comment.user.username}}.</span>
+                                {{comment.message}}
+                            </p>
                         </div>
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="orange">J</q-avatar>
-                            <p><span>Usuario2.</span> Comentario 2</p>
-                        </div>
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="red">J</q-avatar>
-                            <p><span>Usuario3.</span> Comentario 3</p>
-                        </div>
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="green">J</q-avatar>
-                            <p><span>Usuario4.</span> Comentario 4</p>
-                        </div>
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="pink">J</q-avatar>
-                            <p><span>Usuario5.</span> Comentario 5</p>
-                        </div>
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="purple">J</q-avatar>
-                            <p><span>Usuario6.</span> Comentario 6</p>
-                        </div>
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="yellow">J</q-avatar>
-                            <p><span>Usuario7.</span> Comentario 7</p>
-                        </div>
-                        <div>
-                            <q-avatar size="20px" class="avatar" color="orange">J</q-avatar>
-                            <p><span>Usuario8.</span> Comentario 8</p>
-                        </div>
-                        <q-icon name="add_circle_outline" size="25px"/>
+                        <q-icon v-if="post.comments.length>5" name="add_circle_outline" size="25px" />
                     </div>
                     <div id="new-comment">
                         <q-input label="Escribe un comentario" color="black">
@@ -82,7 +61,40 @@
 export default {
     data() {
         return {
-            alert: true
+            dialog: true,
+            post: {
+                id: 1,
+                creationDate: '15/04/2021',
+                photo: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg',
+                caption: 'Pie de foto',
+                creator: {
+                    id: 1,
+                    username: 'Nombre_de_usuario',
+                    profilePic: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg'
+                },
+                likes: [
+                    {
+                        id: 1,
+                        user: {
+                            id: 2,
+                            username: 'Nombre_usuario_2',
+                            profilePic: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg'
+                        }
+                    }
+                ],
+                comments: [
+                    {
+                        id: 1,
+                        user: {
+                            id: 2,
+                            username: 'Nombre_usuario_2',
+                            profilePic: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg'
+                        },
+                        creationDate: '15/04/2021',
+                        message: 'Comentario1'
+                    }
+                ]
+            }
         }
     },
     methods: {

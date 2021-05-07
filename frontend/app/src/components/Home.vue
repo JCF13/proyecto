@@ -1,32 +1,32 @@
 <template>
     <q-page class="flex flex-center" id="page">        
         <div id="main" class="flex flex-center">
-            <q-card class="my-card" v-for="image in images" :key="image.img">
+            <q-card class="my-card" v-for="post in posts" :key="post.id">
                 <q-item class="card-top">
                     <q-item-section avatar>
-                    <q-avatar>
-                        <img src="https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg">
-                    </q-avatar>
+                        <q-avatar>
+                            <img :src="post.creator.profilePic" alt="">
+                        </q-avatar>
                     </q-item-section>
 
                     <q-item-section>
-                    <q-item-label>Nombre de usuario</q-item-label>
-                    <q-item-label caption>Pie de foto</q-item-label>
+                        <q-item-label>{{post.creator.username}}</q-item-label>
+                        <q-item-label>{{post.caption}}</q-item-label>
                     </q-item-section>
 
                     <q-item-section align="right" class="info-post">
                         <q-item-label>
-                            4 <q-icon name="comment"/>
+                            {{post.comments.length}} <q-icon name="comment" />
                         </q-item-label>
                         <q-item-label>
-                            10 <q-icon name="favorite" color="red"/>
-                            </q-item-label>
+                            {{post.likes.length}} <q-icon name="favorite" color="red" />
+                        </q-item-label>
                     </q-item-section>
                 </q-item>
 
-                <img :src="image.img" @click="openPost">
+                <img :src="post.photo" @click="openPost(post.id)">
             </q-card>
-
+            
             <div id="more">
                 <q-icon name="add_circle_outline" size="30px"/>
             </div>
@@ -37,24 +37,50 @@
 
 <script>
 export default {
+    // "https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg"
+    // "https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg"
+    // "https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg"
+    
     data() {
         return {
-            images: [
+            posts: [
                 {
-                    "img": "https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg"
-                },
-                {
-                    "img": "https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg"
-                },
-                {
-                    "img": "https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg"
+                    id: 1,
+                    photo: "https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg",
+                    caption: 'Pie de foto',
+                    creationDate: '14/05/2021',
+                    creator: {
+                        id: 1,
+                        username: 'Nombre_de_usuario',
+                        profilePic: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg'
+                    },
+                    comments: [
+                        {
+                            id: 1,
+                            user: {
+                                id: 2,
+                                username: 'Nombre_de_usuario2'
+                            },
+                            message: 'Comentario 1',
+                            creationDate: '15/05/2021'
+                        }
+                    ],
+                    likes: [
+                        {
+                            id: 1,
+                            user: {
+                                id: 2,
+                                username: 'Nombre_de_usuario2'
+                            }
+                        },
+                    ]
                 }
             ],
         }
     },
     methods: {
-        openPost() {
-            this.$router.push('/inside/home/post')
+        openPost(id) {
+            this.$router.push(`/inside/home/post/${id}`)
         }
     }
 }

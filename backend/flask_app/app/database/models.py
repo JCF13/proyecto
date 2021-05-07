@@ -2,48 +2,139 @@ from sqlalchemy.sql.schema import ForeignKey
 from flask_app.app.database import db
 from flask_app.app.database.mixins import CreatedMixin
 
-class Usuario(db.Model):
-    __tablename__ = 'usuario'
+class User(db.Model):
+    __tablename__ = 'user'
 
-    usuario_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(200), nullable=False)
-    name = db.Column(db.String(25), nullable=True)
-    surename = db.Column(db.String(756), nullable=True)
-    password = db.Column(db.String(200), nullable=False)
+    user_id = db.Column(db.Integer, primary_key=True)
+    
+    username = db.Column(db.String(15), nullable=False)
+    name = db.Column(db.String(20), nullable=False)
+    surname = db.Column(db.String(20), nullable=True)
+    password = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     profile_pic_path = db.Column(db.String(246))
     profile_pic_fname = db.Column(db.String(20))
-    privado = db.Column()
-    publicaciones = db.relationship(
-        'publicacion',
-        back_populates='emisor')
 
-class Followers(db.Model,CreatedMixin):
-    followed_id = db.Column(db.Integer,db.ForeignKey('usuario.usuario_id'))
-    follower_id = db.Column(db.Integer,db.ForeignKey('usuario.usuario_id'))
-    id_follow = db.Column(db.Integer,primary_key = True)
-    agree = db.Column(db.Boolean, default=False)
-
-class PostLikes(db.Model,CreatedMixin):
-    publicacion_id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer,db.ForeignKey('usuario.usuario_id'))
-    liked = db.Column(db.Boolean(), nullable=True)
-
-class Publicacion(db.Model, CreatedMixin):
-    __tablename__ = 'publicacion'
-
-    publicacion_id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer,db.ForeignKey('usuario.usuario_id'))
-    emisor = db.relationship('usuario',back_populates='publicaciones')
-    caption = db.Column(db.String(200), nullable=True)
-    comentarios = db.relationship('comentario', backref=db.backref('publicacion'))
+    posts = db.relationship('Post', back_populates='creator')
+    chats = db.relationship('Chat', back_populates='user')
+    like_notifications = db.relationship('NotificationLike', back_populates='receiver')
+    comment_notifications = db.relationship('NotificationComment', back_populates='receiver')
+    follow_notifications = db.relationship('NotificationFollow', back_populates='receiver')
 
 
+class Followers(db.Model):
+    __tablename__ = 'follower'
 
-class Comentario(db.Model, CreatedMixin):
-    __tablename__ = 'comentario'
+    follow_id = db.Column(db.Integer, primary_key=True)
+    
+    followed_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
 
-    publicacion_id = db.Column(db.Integer,db.ForeignKey('publicacion.publicacion_id'))
-    usuario_id = db.Column(db.Integer,db.ForeignKey('usuario.usuario_id'))
-    comentario_id = db.Column(db.Integer,primary_key=True)
-    content = db.Column(db.String(200), nullable=True)
+
+class Post(db.Model, CreatedMixin):
+    __tablename__ = "post"
+
+    post_id = db.Column(db.Integer, primary_key=True)
+    
+    caption = db.Column(db.String(20), nullable=False)
+    picture_path = db.Column(db.String(246), nullable=False)
+    picture_fname = db.Column(db.String(20), nullable=False)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    creator = db.relationship('User', back_populates='posts')
+    likes = db.relationship('PostLikes', back_populates='post')
+    comments = db.relationship('PostComment', back_populates='post')
+
+
+class PostLikes(db.Model):
+    __tablename__ = 'post_likes'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    post = db.relationship('Post', back_populates='likes')
+
+
+class PostComment(db.Model):
+    __tablename__ = 'post_comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    
+    message = db.Column(db.String(20), nullable=False)
+    creation_date = db.Column(db.DateTime)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    post = db.relationship('Post', back_populates='comments')
+
+
+class Chat(db.Model):
+    __tablename__ = 'chat'
+
+    chat_id = db.Column(db.Integer, primary_key=True)
+
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    partner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    user = db.relationship('User', back_populates='chats')
+    messages = db.relationship('ChatMessages', back_populates='chat')
+
+
+class ChatMessages(db.Model):
+    __tablename__ = 'chat_messages'
+
+    message_id = db.Column(db.Integer, primary_key=True)
+
+    message = db.Column(db.String(50), nullable=False)
+    creation_date = db.Column(db.DateTime, nullable=False)
+
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
+
+    chat = db.relationship('Chat', back_populates='messages')
+
+
+class NotificationLike(db.Model):
+    __tablename__ = 'notification_like'
+
+    notification_id = db.Column(db.Integer, primary_key=True)
+
+    creation_date = db.Column(db.DateTime, nullable=False)
+
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+
+    receiver = db.relationship('User', back_populates='like_notifications')
+
+
+class NotificationComment(db.Model):
+    __tablename__ = 'notification_comment'
+
+    notification_id = db.Column(db.Integer, primary_key=True)
+
+    creation_date = db.Column(db.DateTime, nullable=False)
+
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    comment_id = db.Column(db.Integer, db.ForeignKey('post_comments.id'))
+
+    receiver = db.relationship('User', back_populates='comment_notifications')
+
+
+class NotificationFollow(db.Model):
+    __tablename__ = 'notification_follow'
+
+    notification_id = db.Column(db.Integer, primary_key=True)
+
+    creation_date = db.Column(db.DateTime, nullable=False)
+    type = db.Column(db.String(10), nullable=False)
+
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    receiver = db.relationship('User', back_populates='follow_notifications')

@@ -4,12 +4,13 @@
         <q-form id="form-username">
             <q-input
                 label="Nombre de usuario"
-                disable
-                value="Nombre_anterior"
+                readonly
+                :value="username"
             />
 
             <q-input
                 label="Nuevo nombre de usuario"
+                v-model="newUsername"
             />
 
             <q-btn label="GUARDAR" type="submit" color="black"/>
@@ -21,7 +22,8 @@
 export default {
     data() {
         return {
-
+            username: 'Nombre_de_usuario',
+            newUsername: null
         }
     }
 }
