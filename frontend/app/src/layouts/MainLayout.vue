@@ -3,7 +3,7 @@
         <q-page-container id="container">
             <router-view />
         </q-page-container>
-        <q-footer elevated class="bg-white text-white">
+        <q-footer elevated class="text-white" id="footer">
             <q-tabs v-model="tab" class="text-black col-md-12">
                 <router-link to="/inside/home" class="col-md-1">
                     <q-tab name="home" icon="home"/>
@@ -92,10 +92,14 @@ export default {
     }
 
     #layout {
-        background: rgb(243, 243, 243);
+        background: #b3e5fc;
     }
 
     #upload-dialog div:hover {
         cursor: pointer;
+    }
+
+    footer {
+        background: linear-gradient(to left, #4fc3f7, #b2ff59)
     }
 </style>

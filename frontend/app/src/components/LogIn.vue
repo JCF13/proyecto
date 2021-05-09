@@ -29,7 +29,9 @@
                 <img src="./../assets/google.svg" alt="">
             </q-btn>
 
-            <q-btn label="ENTRAR" type="button" color="black" id="entrar" @click="logIn"/>
+            <router-link to="/inside/home">
+                <q-btn label="ENTRAR" type="button" color="black" id="entrar" @click="logIn"/>
+            </router-link>
         </q-form>
     </div>
 </template>
@@ -76,5 +78,9 @@ export default {
         margin: 0 auto;
         border-bottom-right-radius: 10px;
         font-weight: bold;
+    }
+
+    a {
+        text-decoration: none;
     }
 </style>

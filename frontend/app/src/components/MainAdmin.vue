@@ -1,12 +1,12 @@
 <template>
     <q-list>
-        <q-item v-for="user in users">
+        <q-item v-for="(user,count) in users">
             <q-item-section avatar>
                 <q-avatar>
                     <img src="https://cdn.quasar.dev/img/boy-avatar.png">
                 </q-avatar>
             </q-item-section>
-            <q-item-section>Usuario1</q-item-section>
+            <q-item-section>Usuario{{count}}</q-item-section>
             <q-item-section>
                 <q-btn label="ADMINISTRAR USUARIO" color="black"/>
             </q-item-section>
