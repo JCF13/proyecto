@@ -1,18 +1,25 @@
 import backend.flask_app.app.database.models as models
 from backend.flask_app.app.database import ma
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema,SQLAlchemyAutoSchemaOpts
-
+from flask_restx import Model, fields
 
 class UserSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.User
         exclude = ['password']
-        only = ['user_id','username','name','surname','email']
+        
         include_relationships = True
         load_instance = True
-    posts = ma.List(ma.HyperlinkRelated('posts_detail'))
-    chats = ma.List(ma.HyperlinkRelated('chats_detail'))
-
+    
+loginReq = Model('loginRequest',{
+    'username': fields.String(),
+    'password': fields.String(),
+})
+loginResp = Model('loginResponse',{
+    'access_token': fields.String(),
+    'refresh_token': fields.String()
+    
+})
 
 class FollowerSchema(SQLAlchemyAutoSchema):
     class Meta:
@@ -44,21 +51,21 @@ class ChatMessageSchema(SQLAlchemyAutoSchema):
         model = models.ChatMessages
         include_relationships = True
 
-class NotificationCSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = models.NotificationComment
-        include_relationships = True
-        include_fk = True
+# class NotificationCSchema(SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = models.NotificationComment
+#         include_relationships = True
+#         include_fk = True
 
-class NotificationLSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = models.NotificationLike
-        include_relationships = True
-        include_fk = True
+# class NotificationLSchema(SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = models.NotificationLike
+#         include_relationships = True
+#         include_fk = True
 
-class NotificationFSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = models.NotificationFollow
-        include_relationships = True
-        include_fk = True
+# class NotificationFSchema(SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = models.NotificationFollow
+#         include_relationships = True
+#         include_fk = True
 

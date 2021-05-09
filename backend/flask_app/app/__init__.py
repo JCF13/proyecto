@@ -4,10 +4,12 @@ import os
 from flask import Flask, json
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
 from backend.flask_app.app.config import Config
 
 cors = CORS()
 bcrypt = Bcrypt()
+jwt = JWTManager()
 class JSONEncoder(json.JSONEncoder):
     
     def default(self, obj):
@@ -27,7 +29,7 @@ def create_app():
     app.json_encoder = JSONEncoder
     cors.init_app(app)
     bcrypt.init_app(app)
-    
+    jwt.init_app(app)
     from backend.flask_app.app.namespaces import managment
     import backend.flask_app.app.cli as cli 
     app.register_blueprint(managment)

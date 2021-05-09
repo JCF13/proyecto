@@ -26,13 +26,11 @@ def create_admin():
 
     if password == confirm_password:
         hashed_pass = bcrypt.generate_password_hash(password).decode('utf-8')
-        print(User.__dict__)
         user = User(username = username,name=name,email=email,password=hashed_pass)
         # user.username = username
         # user.name=name
         # user.surname=surname
         # user.email=email
         # user.password=hashed_pass
-        print(user.__dict__)
         db.session.add(user)
         db.session.commit()
