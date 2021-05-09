@@ -3,11 +3,11 @@ import decimal
 import os
 from flask import Flask, json
 from flask_cors import CORS
-from flask_marshmallow import Marshmallow
-from flask_app.app.config import Config
+from flask_bcrypt import Bcrypt
+from backend.flask_app.app.config import Config
 
 cors = CORS()
-marsh = Marshmallow()
+bcrypt = Bcrypt()
 class JSONEncoder(json.JSONEncoder):
     
     def default(self, obj):
@@ -20,14 +20,15 @@ class JSONEncoder(json.JSONEncoder):
 def create_app():
     app = Flask(__name__.split('.')[1])
     app.config.from_object(Config)
-
-    from flask_app.app.database import db
+    
+    from backend.flask_app.app.database import db, ma
     db.init_app(app)
+    ma.init_app(app)
     app.json_encoder = JSONEncoder
     cors.init_app(app)
-    marsh.init_app(app)
-    from flask_app.app.namespaces import managment
-    import flask_app.app.cli as cli 
+    bcrypt.init_app(app)
+    from backend.flask_app.app.namespaces import managment
+    import backend.flask_app.app.cli as cli 
     app.register_blueprint(managment)
     app.register_blueprint(cli.gen)
     
