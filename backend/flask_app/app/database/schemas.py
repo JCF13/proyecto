@@ -1,52 +1,64 @@
 import backend.flask_app.app.database.models as models
 from backend.flask_app.app.database import ma
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema,SQLAlchemyAutoSchemaOpts
 
 
-class UserSchema(ma.SQLAlchemyAutoSchema):
+class UserSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.User
         exclude = ['password']
+        only = ['user_id','username','name','surname','email']
         include_relationships = True
         load_instance = True
+    posts = ma.List(ma.HyperlinkRelated('posts_detail'))
+    chats = ma.List(ma.HyperlinkRelated('chats_detail'))
 
-class FollowerSchema(ma.SQLAlchemyAutoSchema):
+
+class FollowerSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.Followers
 
-class PostSchema(ma.SQLAlchemyAutoSchema):
+class PostSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.Post
         include_relationships = True
+        include_fk = True
         load_instance = True
 
-class PostLikeSchema(ma.SQLAlchemyAutoSchema):
+class PostLikeSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.PostLikes
 
-class PostCommentSchema(ma.SQLAlchemyAutoSchema):
+class PostCommentSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.PostComment
 
-class ChatSchema(ma.SQLAlchemyAutoSchema):
+class ChatSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.Chat
         include_relationships = True
         load_instance = True
 
-class ChatMessageSchema(ma.SQLAlchemyAutoSchema):
+class ChatMessageSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.ChatMessages
         include_relationships = True
 
-class NotificationCSchema(ma.SQLAlchemyAutoSchema):
+class NotificationCSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.NotificationComment
+        include_relationships = True
+        include_fk = True
 
-class NotificationLSchema(ma.SQLAlchemyAutoSchema):
+class NotificationLSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.NotificationLike
+        include_relationships = True
+        include_fk = True
 
-class NotificationFSchema(ma.SQLAlchemyAutoSchema):
+class NotificationFSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.NotificationFollow
+        include_relationships = True
+        include_fk = True
 

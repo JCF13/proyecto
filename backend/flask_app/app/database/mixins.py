@@ -12,7 +12,6 @@ class CreatedMixin(object):
         will create the following columns:
 
         :created on:
-        :changed on:
         :created by:
         :changed by:
     """
@@ -28,16 +27,14 @@ class CreatedMixin(object):
     def created_by(self):
         return relationship(
             "User",
-            primaryjoin="%s.created_by_fk == user.user_id" % self.__name__,
+            primaryjoin="%s.created_by_fk == User.user_id" % self.__name__,
+            
             enable_typechecks=False,
         )
-
-
-
 
     @classmethod
     def get_user_id(self):
         try:
-            return current_user.id
+            return current_user.user_id
         except Exception:
             return None
