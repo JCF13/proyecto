@@ -1,4 +1,8 @@
-**/**/__pycache__/**
+backend/flask_app/**/__pycache__/
+backend/flask_app/app/**/__pycache__/
+
 venv
 .vscode
 backend/flask_app/wsgi.py
+
+backend/__pycache__/
