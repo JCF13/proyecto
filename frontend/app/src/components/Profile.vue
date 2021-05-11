@@ -24,16 +24,16 @@
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal>
                                 <router-link to="/inside/social/followers">
-                                    <q-btn :label="user.followers+' SEGUIDORES'" />
+                                    <q-btn class="bg-white" push :label="user.followers+' SEGUIDORES'" />
                                 </router-link>
                                 <router-link to="/inside/social/following">
-                                    <q-btn :label="user.following+' SEGUIDOS'" />
+                                    <q-btn class="bg-white" push :label="user.following+' SEGUIDOS'" />
                                 </router-link>
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal style="margin-top:5%">
-                                <q-btn label="SEGUIR" />
-                                <q-btn label="DEJAR DE SEGUIR" />
-                                <q-btn label="TE SIGUE" />
+                                <q-btn class="bg-white" push label="SEGUIR" />
+                                <q-btn class="bg-white" push label="DEJAR DE SEGUIR" style="display:none" />
+                                <q-btn class="bg-white" push label="TE SIGUE" />
                             </q-card-section>
                         </q-card-section>
                     </q-card>
@@ -42,7 +42,7 @@
 
             <div v-if="user.posts.length>0" id="publicaciones">
                 <div v-for="post in user.posts" :key="post.id" @click="openPost(post.id)">
-                    <img class="img-post" :src="post.photo" alt="">
+                    <img class="img-post" :src="post.photo" alt="" >
                 </div>
 
                 <div id="more">
@@ -154,6 +154,7 @@ export default {
         grid-template-columns: 33.33% 33.33% 33.33%;
         grid-auto-rows: 60%;
         padding: 0 2%;
+        margin: 2%;
     }
 
     #publicaciones div img {
@@ -165,6 +166,7 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: contain;
+        background: white;
     }
 
     #more {

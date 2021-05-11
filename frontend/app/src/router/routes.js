@@ -41,7 +41,11 @@ const routes = [
             {   path: 'new-post', component: () => import('src/components/NewPost.vue')   },
             {   path: 'notifications', component: () => import('src/components/Notifications.vue')    },
             {
-                path: 'chats', component: () => import('src/components/MainChats.vue')
+                path: 'chats', 
+                component: () => import('src/components/MainChats.vue'),
+                children: [
+                    {   path: ':id', component: () => import('src/components/Chat.vue') }
+                ]
             }
         ]
     },
@@ -61,9 +65,6 @@ const routes = [
             {   path: '', component: () => import('src/components/MainAdmin.vue')   }
         ]
     },
-
-    // Always leave this as last one,
-    // but you can also remove it
     {
         path: '*',
         component: () => import('pages/Error404.vue')

@@ -24,7 +24,7 @@
                     </q-item-section>
                 </q-item>
 
-                <img :src="post.photo" @click="openPost(post.id)">
+                <img :src="post.photo" @click="openPost(post.id)" @dblclick="sendLike">
             </q-card>
             
             <div id="more">
@@ -81,6 +81,9 @@ export default {
     methods: {
         openPost(id) {
             this.$router.push(`/inside/home/post/${id}`)
+        },
+        sendLike() {
+            
         }
     }
 }
@@ -119,6 +122,7 @@ export default {
 
     .card-top {
         padding-left: 1%;
+        background: linear-gradient(to left, #4fc3f7, #b2ff59);
         border-bottom: 1px solid rgb(128, 128, 128);
     }
 
@@ -128,6 +132,10 @@ export default {
 
     a {
         text-decoration: none;
+    }
+
+    img {
+        background: white;
     }
 
 </style>

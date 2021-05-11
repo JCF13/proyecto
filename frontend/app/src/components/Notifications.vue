@@ -11,7 +11,6 @@
                         <q-icon name="favorite" color="red" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 ha dado Me Gusta</q-item-section>
-                    <q-icon name="close"/>
                 </q-item>
             </q-slide-item>
             
@@ -24,7 +23,6 @@
                         <q-icon name="comment" color="blue" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 ha comentado</q-item-section>
-                    <q-icon name="close"/>
                 </q-item>
             </q-slide-item>
 
@@ -37,7 +35,6 @@
                         <q-icon name="person_add" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha seguido</q-item-section>
-                    <q-icon name="close"/>
                 </q-item>
             </q-slide-item>
 
@@ -50,7 +47,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -63,7 +59,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -76,7 +71,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -89,7 +83,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -102,7 +95,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -115,7 +107,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -128,7 +119,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -141,7 +131,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -154,7 +143,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
 
@@ -167,7 +155,6 @@
                         <q-icon name="waving_hand" color="black" size="30px"/>
                     </q-item-section>
                     <q-item-section>Usuario1 te ha dejado de seguir</q-item-section>
-                    <q-icon name="close" class="justify-center"/>
                 </q-item>
             </q-slide-item>
         </q-list>
@@ -209,6 +196,6 @@ export default {
     }
 
     .q-slide-item {
-        background: rgb(243, 243, 243);
+        background: #b3e5fc;
     }
 </style>
