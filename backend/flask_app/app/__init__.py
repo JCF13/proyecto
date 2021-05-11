@@ -27,9 +27,9 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
     app.json_encoder = JSONEncoder
+    jwt.init_app(app)
     cors.init_app(app)
     bcrypt.init_app(app)
-    jwt.init_app(app)
     from backend.flask_app.app.namespaces import managment
     import backend.flask_app.app.cli as cli 
     app.register_blueprint(managment)
