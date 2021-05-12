@@ -16,6 +16,8 @@ class User(db.Model):
     profile_pic_fname = db.Column(db.String(20), nullable= True)
 
     posts = db.relationship('Post', back_populates='created_by', viewonly=True)
+    followers = db.relationship('Followers',primaryjoin='User.user_id==Followers.followed_id', viewonly=True)
+    following = db.relationship('Followers',primaryjoin='User.user_id==Followers.follower_id', viewonly=True)
     chats = db.relationship('Chat', primaryjoin='User.user_id==Chat.created_by_fk', viewonly=True)
     # like_notifications = db.relationship('NotificationLike', back_populates='receiver')
     # comment_notifications = db.relationship('NotificationComment', back_populates='receiver')

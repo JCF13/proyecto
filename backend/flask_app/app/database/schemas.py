@@ -12,6 +12,8 @@ from flask_restx import Model, fields
 #         include_relationships = True
 #         load_instance = True
     
+
+
 userSchema = Model('userSchema',{
     'user_id' : fields.Integer() ,
     'username' : fields.String(),
@@ -28,6 +30,7 @@ userSchema = Model('userSchema',{
 auth_token = Model('auth_token',{
     'access_token': fields.String(),
     'refresh_token': fields.String()
+
 })
 errorSchema = Model('errorSchema', {
     'error_type': fields.Integer(description='Código identificador del error') ,
@@ -46,6 +49,8 @@ loginReq = Model('loginRequest',{
     'username':fields.String(),
     'passwd':fields.String(),
 })
+
+
 
 class FollowerSchema(SQLAlchemyAutoSchema):
     class Meta:
