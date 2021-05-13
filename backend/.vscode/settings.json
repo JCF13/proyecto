@@ -2,4 +2,5 @@
     "python.languageServer": "Pylance",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
+    "python.pythonPath": "venv\\Scripts\\python.exe",
 }

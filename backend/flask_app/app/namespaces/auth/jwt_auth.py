@@ -5,11 +5,11 @@ import os
 from functools import wraps
 from flask import make_response, json,request, Response
 from flask_restx.marshalling import marshal
-from backend.flask_app.app.database.dao.userDao import find_user_by_username
+from flask_app.app.database.dao.userDao import find_user_by_username
 from flask_jwt_extended import create_access_token, create_refresh_token
 
-from backend.flask_app.app import bcrypt,JSONEncoder
-from backend.flask_app.app.database.schemas import auth_token, errorSchema, loginResp
+from flask_app.app import bcrypt,JSONEncoder
+from flask_app.app.database.schemas import auth_token, errorSchema, loginResp
 
 
 

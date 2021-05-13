@@ -1,6 +1,6 @@
 import datetime
-import backend.flask_app.app.database.models as models
-from backend.flask_app.app.database import ma
+import flask_app.app.database.models as models
+from flask_app.app.database import ma
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema,SQLAlchemyAutoSchemaOpts
 from flask_restx import Model, fields
 
@@ -11,10 +11,7 @@ from flask_restx import Model, fields
         
 #         include_relationships = True
 #         load_instance = True
-    
-
-
-userSchema = Model('userSchema',{
+userModel = Model('User',{
     'user_id' : fields.Integer() ,
     'username' : fields.String(),
     'name' : fields.String(),
@@ -26,13 +23,15 @@ userSchema = Model('userSchema',{
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
+    
 
 auth_token = Model('auth_token',{
     'access_token': fields.String(),
     'refresh_token': fields.String()
 
 })
-errorSchema = Model('errorSchema', {
+
+errorSchema = Model('error', {
     'error_type': fields.Integer(description='Código identificador del error') ,
     'error_desc': fields.String(description='Descripción del error') ,
 })

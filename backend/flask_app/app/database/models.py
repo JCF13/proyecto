@@ -1,7 +1,7 @@
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from backend.flask_app.app.database import db
-from backend.flask_app.app.database.mixins import CreatedMixin
+from flask_app.app.database import db
+from flask_app.app.database.mixins import CreatedMixin
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -39,10 +39,10 @@ class Post(db.Model, CreatedMixin):
     __tablename__ = "post"
 
     post_id = db.Column(db.Integer, primary_key=True)
-    
-    caption = db.Column(db.String(20), nullable=False)
-    picture_path = db.Column(db.String(246), nullable=False)
-    picture_fname = db.Column(db.String(20), nullable=False)
+    #nullables cambiados
+    caption = db.Column(db.String(20), nullable=True)
+    picture_path = db.Column(db.String(246), nullable=True)
+    picture_fname = db.Column(db.String(20), nullable=True)
     
     likes = db.relationship('PostLikes', backref='post')
     comments = db.relationship('PostComment', backref='post')
@@ -63,7 +63,6 @@ class PostComment(db.Model, CreatedMixin):
     __tablename__ = 'post_comments'
 
     id = db.Column(db.Integer, primary_key=True)
-    
     message = db.Column(db.String(20), nullable=False)
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
@@ -87,7 +86,7 @@ class ChatMessages(db.Model, CreatedMixin):
     __tablename__ = 'chat_messages'
 
     message_id = db.Column(db.Integer, primary_key=True)
-
+# nullable cambiado a mmessage
     message = db.Column(db.String(50), nullable=False)
 
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
