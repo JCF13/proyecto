@@ -94,6 +94,7 @@ export default {
         box-shadow: 0 0 10px rgb(214, 214, 214);
         display: grid;
         grid-template-columns: 25% 75%;
+        border-radius: 5px;
     }
 
     #left {
@@ -114,6 +115,7 @@ export default {
         margin: 0 auto;
         width: 90%;
         height: 100%;
+        position: relative;
     }
 
     .avatar-chat {
