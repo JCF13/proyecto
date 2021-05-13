@@ -6,6 +6,7 @@ from backend.flask_app.app.namespaces import api
 from flask_restx import Namespace
 
 main = Namespace('public')
+main.model()
 
 postsSch = schema.PostSchema(many=True)
 
