@@ -1,7 +1,7 @@
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from backend.flask_app.app.database import db
-from backend.flask_app.app.database.mixins import CreatedMixin
+from flask_app.app.database import db
+from flask_app.app.database.mixins import CreatedMixin
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -16,6 +16,8 @@ class User(db.Model):
     profile_pic_fname = db.Column(db.String(20), nullable= True)
 
     posts = db.relationship('Post', back_populates='created_by', viewonly=True)
+    followers = db.relationship('Followers',primaryjoin='User.user_id==Followers.followed_id', viewonly=True)
+    following = db.relationship('Followers',primaryjoin='User.user_id==Followers.follower_id', viewonly=True)
     chats = db.relationship('Chat', primaryjoin='User.user_id==Chat.created_by_fk', viewonly=True)
     # like_notifications = db.relationship('NotificationLike', back_populates='receiver')
     # comment_notifications = db.relationship('NotificationComment', back_populates='receiver')
@@ -37,10 +39,10 @@ class Post(db.Model, CreatedMixin):
     __tablename__ = "post"
 
     post_id = db.Column(db.Integer, primary_key=True)
-    
-    caption = db.Column(db.String(20), nullable=False)
-    picture_path = db.Column(db.String(246), nullable=False)
-    picture_fname = db.Column(db.String(20), nullable=False)
+    #nullables cambiados
+    caption = db.Column(db.String(20), nullable=True)
+    picture_path = db.Column(db.String(246), nullable=True)
+    picture_fname = db.Column(db.String(20), nullable=True)
     
     likes = db.relationship('PostLikes', backref='post')
     comments = db.relationship('PostComment', backref='post')
@@ -61,7 +63,6 @@ class PostComment(db.Model, CreatedMixin):
     __tablename__ = 'post_comments'
 
     id = db.Column(db.Integer, primary_key=True)
-    
     message = db.Column(db.String(20), nullable=False)
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
@@ -85,7 +86,7 @@ class ChatMessages(db.Model, CreatedMixin):
     __tablename__ = 'chat_messages'
 
     message_id = db.Column(db.Integer, primary_key=True)
-
+# nullable cambiado a mmessage
     message = db.Column(db.String(50), nullable=False)
 
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
