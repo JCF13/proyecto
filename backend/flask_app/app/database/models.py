@@ -1,7 +1,7 @@
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from flask_app.app.database import db
-from flask_app.app.database.mixins import CreatedMixin
+from backend.flask_app.app.database import db
+from backend.flask_app.app.database.mixins import CreatedMixin
 
 class User(db.Model):
     __tablename__ = 'user'

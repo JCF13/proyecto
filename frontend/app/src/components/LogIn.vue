@@ -29,9 +29,7 @@
                 <img src="./../assets/google.svg" alt="">
             </q-btn>
 
-            <router-link to="/inside/home">
-                <q-btn label="ENTRAR" type="button" color="black" id="entrar" @click="logIn"/>
-            </router-link>
+            <q-btn label="ENTRAR" type="button" color="black" id="entrar" @click="logIn"/>
         </q-form>
     </div>
 </template>
@@ -48,7 +46,15 @@ export default {
     },
     methods: {
         async logIn() {
-            
+            const logInFetch = await fetch('http://localhost:5000/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: this.user.username,
+                    passwd: this.user.password
+                })
+            });
+
+
         }
     }
 }

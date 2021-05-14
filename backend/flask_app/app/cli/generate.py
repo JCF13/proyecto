@@ -2,9 +2,9 @@ from getpass import getpass
 import click
 from flask import current_app
 from flask.cli import with_appcontext
-from flask_app.app import bcrypt
-from flask_app.app.database import db
-from flask_app.app.database.models import User
+from backend.flask_app.app import bcrypt
+from backend.flask_app.app.database import db
+from backend.flask_app.app.database.models import User
 
 @click.command(name='database')
 @with_appcontext

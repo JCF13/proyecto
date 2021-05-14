@@ -91,7 +91,16 @@ export default {
     },
     methods: {
         async register() {
-            
+            const registerFecth = await fetch('http://localhost:5000/register', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: this.user.name,
+                    surnames: this.user.surnames,
+                    email: this.user.email,
+                    username: this.user.username,
+                    passwd: this.user.password
+                })
+            });
         }
     }
 }

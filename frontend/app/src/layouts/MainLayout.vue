@@ -77,6 +77,8 @@ export default {
             model: null
         }
     },
+    created() {
+    },
     methods: {
         goToPost() {
             this.$router.push('/inside/new-post')

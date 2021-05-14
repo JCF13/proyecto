@@ -45,9 +45,9 @@
                         <q-icon v-if="post.comments.length>5" name="add_circle_outline" size="25px" />
                     </div>
                     <div id="new-comment">
-                        <q-input label="Escribe un comentario" color="black">
+                        <q-input label="Escribe un comentario" color="black" v-model="message">
                             <template v-slot:append>
-                                <q-icon name="send" color="black"/>
+                                <q-icon name="send" color="black" @click="newComment"/>
                             </template>
                         </q-input>
                     </div>
@@ -94,12 +94,44 @@ export default {
                         message: 'Comentario1'
                     }
                 ]
-            }
+            },
+            user: {
+                id: null,
+            },
+            message: null
         }
+    },
+    created() {
+        const postId = this.$route.params.id;
+
+        //getPost(postId);
     },
     methods: {
         close() {
             this.$router.go(-1)
+        },
+
+        // Cargar post
+        async getPost(id) {
+            const postFetch = await fetch(`http://localhost:5000/private/post/${id}`)
+            const post = postFetch.json();
+
+            this.post = post;
+        },
+
+        // Enviar comentario y nueva notificación
+        async newComment() {
+            const postId = this.$route.params.id;
+            
+            const comment = await fetch('http://localhost:5000/private/post/comment', {
+                method: 'POST',
+                body: JSON.stringify({
+                    post: postId,
+                    creator: this.post.creator.id,
+                    user: this.user.id,
+                    message: this.message
+                })
+            });
         }
     }
 }

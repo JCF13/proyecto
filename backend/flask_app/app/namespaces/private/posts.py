@@ -1,11 +1,11 @@
 from flask import request
-from flask_app.app.database import db
-from flask_app.app.services.postService import get_all_posts
-from flask_app.app.namespaces.private.schemas import postModel,userModel,commentModel,likeListModel,likeModel
+from backend.flask_app.app.database import db
+from backend.flask_app.app.services.postService import get_all_posts
+from backend.flask_app.app.namespaces.private.schemas import postModel,userModel,commentModel,likeListModel,likeModel
 from flask_restx import Namespace, fields, Resource, marshal
 
 
-from flask_app.app.database.schemas import PostSchema
+from backend.flask_app.app.database.schemas import PostSchema
 
 post = Namespace('post','todas las rutas de Posts irán a aquí')
 

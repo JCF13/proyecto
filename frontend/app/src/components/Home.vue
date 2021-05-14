@@ -19,7 +19,7 @@
                             {{post.comments.length}} <q-icon name="comment" />
                         </q-item-label>
                         <q-item-label>
-                            {{post.likes.length}} <q-icon name="favorite" color="red" />
+                            {{post.likes.length}} <q-icon name="favorite" color="red" @click="sendLike(post.id)" />
                         </q-item-label>
                     </q-item-section>
                 </q-item>
@@ -28,7 +28,7 @@
             </q-card>
             
             <div id="more">
-                <q-icon name="add_circle_outline" size="30px"/>
+                <q-icon name="add_circle_outline" size="30px" @click="loadMore" />
             </div>
         </div>
         <router-view/>
@@ -74,16 +74,55 @@ export default {
                             }
                         },
                     ]
-                }
+                },
             ],
+            offset: 0,
+            user: {
+                id: null,
+            }
         }
     },
+    async created() {
+        //this.getPosts()
+    },
     methods: {
+        // Abrir información del post
         openPost(id) {
             this.$router.push(`/inside/home/post/${id}`)
         },
-        sendLike() {
+        
+        // Nuevo like y notificación
+        async sendLike(id) {
+            const post = this.posts.filter(post => post.id === id);
             
+            const likeFetch = await fetch('http://localhost:5000/private/post/like', {
+                method: 'POST',
+                body: JSON.stringify({
+                    post: id,
+                    creator: post.creator.id,
+                    user: this.user.id
+                })
+            });
+        },
+
+        // Todos los posts por usuario que hace login y offset y limit de 10
+        async getPosts() {
+            const postsFetch = await fetch(`http://localhost:5000/private/posts/${this.user.id}/${this.offset}`);
+            const posts = postsFetch.json();
+
+            this.posts = posts;
+        },
+
+        // Cargar siguientes 10 posts
+        async loadMore() {
+            this.offset += 10;
+
+            const postsFetch = await fetch(`http://localhost:5000/private/posts/${this.user.id}/${this.offset}`);
+            const posts = postsFetch.json();
+
+            posts.forEach(post => {
+                this.posts.push(post);
+            });
         }
     }
 }

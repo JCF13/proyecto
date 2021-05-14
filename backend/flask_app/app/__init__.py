@@ -5,7 +5,7 @@ from flask import Flask, json
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
-from flask_app.app.config import Config
+from backend.flask_app.app.config import Config
 
 cors = CORS()
 bcrypt = Bcrypt()
@@ -16,14 +16,14 @@ class JSONEncoder(json.JSONEncoder):
         if isinstance(obj, decimal.Decimal):
             return float(obj)
         elif isinstance(obj, datetime.date): 
-            return obj.strftime('%d/%m/%Y')             
+            return obj.strftime('%d/%m/%Y')
         return super(JSONEncoder, self).default(obj)
 
 def create_app():
     app = Flask(__name__.split('.')[1])
     app.config.from_object(Config)
     
-    from flask_app.app.database import db, ma
+    from backend.flask_app.app.database import db, ma
     db.init_app(app)
     ma.init_app(app)
     app.json_encoder = JSONEncoder
@@ -32,8 +32,8 @@ def create_app():
     cors.init_app(app)
     bcrypt.init_app(app)
 
-    from flask_app.app.namespaces import managment
-    import flask_app.app.cli as cli 
+    from backend.flask_app.app.namespaces import managment
+    import backend.flask_app.app.cli as cli 
     app.register_blueprint(managment)
     app.register_blueprint(cli.gen)
     

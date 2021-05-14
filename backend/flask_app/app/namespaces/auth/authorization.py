@@ -1,12 +1,12 @@
 from collections import UserDict
-from flask_app.app.namespaces.auth.jwt_auth import make_header
+from backend.flask_app.app.namespaces.auth.jwt_auth import make_header
 from flask.globals import request
 from flask_restx import Namespace,Resource
 from flask_jwt_extended import create_access_token,create_refresh_token
 from flask_restx.marshalling import marshal
-import flask_app.app.database.schemas as schema
-from flask_app.app.database.dao.userDao import find_user_by_username  
-from flask_app.app import bcrypt 
+import backend.flask_app.app.database.schemas as schema
+from backend.flask_app.app.database.dao.userDao import find_user_by_username  
+from backend.flask_app.app import bcrypt 
 
 authorization = Namespace('auth')
 
