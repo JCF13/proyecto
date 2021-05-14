@@ -4,12 +4,14 @@ import os
 from flask import Flask, json
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
+from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from backend.flask_app.app.config import Config
 
 cors = CORS()
 bcrypt = Bcrypt()
 jwt = JWTManager()
+migrate = Migrate(db=db)
 class JSONEncoder(json.JSONEncoder):
     
     def default(self, obj):
@@ -26,6 +28,7 @@ def create_app():
     from backend.flask_app.app.database import db, ma
     db.init_app(app)
     ma.init_app(app)
+    migrate.init_app(app)
     app.json_encoder = JSONEncoder
     
     jwt.init_app(app)
