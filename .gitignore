@@ -6,3 +6,5 @@ venv
 backend/flask_app/wsgi.py
 
 backend/__pycache__/
+
+backend/flask_backend_social.code-workspace

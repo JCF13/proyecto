@@ -16,8 +16,10 @@ from flask_app.app.database.schemas import auth_token, errorSchema, loginResp
 
 def make_header(user):
     valido = False
+    print('make')
+    print(user)
     usuario = find_user_by_username(user['username'])
-
+    print(usuario)
     if bcrypt.check_password_hash(usuario.password,user['passwd']):
         valido = True 
             
