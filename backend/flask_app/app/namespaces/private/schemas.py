@@ -5,7 +5,6 @@ userModel = Model('User',{
     'username' : fields.String(),
     'name' : fields.String(),
     'password' : fields.String(),
-    'surname' : fields.String(),
     'email' : fields.String(),
     'profile_pic_path' : fields.String(),
     'profile_pic_fname' : fields.String(),
@@ -20,22 +19,29 @@ likeModel = Model('Like',{
 
 likeListModel = Model('LikeList',{
     'cantidad': fields.Integer(),
-    'lista': fields.List(fields.Nested(likeModel))
+    'lista': fields.List(fields.Integer())
 })
 
 commentModel = Model('Comment',{
-    'created_by': fields.Nested(userModel),
+    'created_by_fk': fields.Integer(),
     'message': fields.String(max=150),
+    # 'date_time': fields.String(),
+})
 
+createPostModel = Model('PostCreate',{
+'caption': fields.String(),
+'path': fields.String(),
+'fname': fields.String(),
 })
 
 postModel = Model('Post',{
 'id': fields.Integer(attribute='post_id'),
+'user_id': fields.Integer(attribute='created_by_fk'),
 'caption': fields.String(attribute='caption'),
 'path': fields.String(attribute='picture_path'),
 'fname': fields.String(attribute='picture_fname'),
-'likes': fields.Nested(likeListModel,allow_null=True ),
-'comments': fields.List(fields.Nested(commentModel,allow_null=True)),
+'likes': fields.Nested(likeListModel),
+'comments': fields.List(fields.Nested(commentModel)),
 })
 
 
