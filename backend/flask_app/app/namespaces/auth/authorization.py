@@ -7,6 +7,8 @@ from flask_restx.marshalling import marshal
 import backend.flask_app.app.database.schemas as schema
 from backend.flask_app.app.database.dao.userDao import find_user_by_username  
 from backend.flask_app.app import bcrypt 
+from backend.flask_app.app.database.schemas import userModel, loginReq, loginResp, auth_token, errorSchema
+from flask import jsonify
 
 authorization = Namespace('auth')
 
@@ -22,7 +24,7 @@ class login(Resource):
     @authorization.expect(loginReq)
     @authorization.marshal_with(loginResp)
     def post(self):
-        load_user = request.get_json()
+        load_user = request.json #request.get_data()
         print(load_user)
         user_dict = marshal(load_user,loginReq)
         print(user_dict)

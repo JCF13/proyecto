@@ -48,12 +48,21 @@ export default {
         async logIn() {
             const logInFetch = await fetch('http://localhost:5000/auth/login', {
                 method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
                 body: JSON.stringify({
                     username: this.user.username,
                     passwd: this.user.password
                 })
             });
 
+            if (logInFetch.status === 200) {
+                const token = await logInFetch.json();
+    
+                localStorage.setItem('access_token', token.your_auth.access_token);
+                localStorage.setItem('refresh_token', token.your_auth.refresh_token);
+            }
 
         }
     }

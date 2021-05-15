@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from backend.flask_app.app.config import Config
+from backend.flask_app.app.database import db, ma
 
 cors = CORS()
 bcrypt = Bcrypt()
@@ -25,7 +26,6 @@ def create_app():
     app = Flask(__name__.split('.')[1])
     app.config.from_object(Config)
     
-    from backend.flask_app.app.database import db, ma
     db.init_app(app)
     ma.init_app(app)
     migrate.init_app(app)
