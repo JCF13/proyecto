@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token,create_refresh_token
 from flask_restx.marshalling import marshal
 from flask_app.app.database.schemas import userModel,auth_token,errorSchema,loginReq,loginResp
 from flask_app.app.database.dao.userDao import find_user_by_username  
-from flask_app.app import bcrypt 
+from flask_app.app.cli.generate import bcrypt 
 
 authorization = Namespace('auth')
 

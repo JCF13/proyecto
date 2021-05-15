@@ -3,14 +3,13 @@ import decimal
 import os
 from flask import Flask, json
 from flask_cors import CORS
-from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_app.app.config import Config
 from flask_app.app.database import db, ma
+from flask_app.app.cli.generate import bcrypt
 
 cors = CORS()
-bcrypt = Bcrypt()
 jwt = JWTManager()
 migrate = Migrate(db=db)
 class JSONEncoder(json.JSONEncoder):
@@ -29,6 +28,7 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
     migrate.init_app(app)
+    
     app.json_encoder = JSONEncoder
     
     jwt.init_app(app)
