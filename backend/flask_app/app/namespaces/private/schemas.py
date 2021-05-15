@@ -23,9 +23,9 @@ likeListModel = Model('LikeList',{
 })
 
 commentModel = Model('Comment',{
-    'created_by': fields.Integer(),
+    'created_by_fk': fields.Integer(),
     'message': fields.String(max=150),
-
+    # 'date_time': fields.String(),
 })
 
 createPostModel = Model('PostCreate',{
@@ -40,8 +40,8 @@ postModel = Model('Post',{
 'caption': fields.String(attribute='caption'),
 'path': fields.String(attribute='picture_path'),
 'fname': fields.String(attribute='picture_fname'),
-'likes': fields.Nested(likeListModel,allow_null=True ),
-'comments': fields.List(fields.Nested(commentModel,allow_null=True)),
+'likes': fields.Nested(likeListModel),
+'comments': fields.List(fields.Nested(commentModel)),
 })
 
 

@@ -8,3 +8,6 @@ def create_post(post: Post):
 
 def find_all_posts():
     return Post.query.all()
+
+def find_post_by_id(id):
+    return Post.query.filter(Post.post_id == id).first()

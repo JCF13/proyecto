@@ -5,6 +5,8 @@ import flask_app.app.database.dao.postDao as dao
 
 def get_all_posts():
     return dao.find_all_posts()
+def get_post_by_id(id):
+    return dao.find_post_by_id(id)
 
 def generate_post(creator,bodyPost):
         post = Post()
