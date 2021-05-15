@@ -28,8 +28,8 @@ def make_header(user):
         respuesta['result'] = 0
         
         tok = {
-            "access_token": create_access_token(identity=user),
-            "refresh_token": create_refresh_token(identity=user)
+            "access_token": create_access_token(identity=usuario.user_id),
+            "refresh_token": create_refresh_token(identity=usuario.user_id)
             }
         respuesta['your_auth'] = marshal(tok,auth_token,skip_none=True) 
         

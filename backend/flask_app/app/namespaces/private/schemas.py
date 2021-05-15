@@ -29,7 +29,6 @@ commentModel = Model('Comment',{
 })
 
 createPostModel = Model('PostCreate',{
-'user_id': fields.Integer(),
 'caption': fields.String(),
 'path': fields.String(),
 'fname': fields.String(),
