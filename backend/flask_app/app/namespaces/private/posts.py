@@ -1,13 +1,13 @@
-from flask_app.app.services.commentService import generate_comment
-from flask_app.app.database.models import Post
+from backend.flask_app.app.services.commentService import generate_comment
+from backend.flask_app.app.database.models import Post
 from flask import request, json
-from flask_app.app.database import db
-from flask_app.app.services.postService import get_all_posts, generate_post, get_post_by_id
-from flask_app.app.namespaces.private.schemas import postModel,userModel,commentModel,likeListModel,likeModel,createPostModel
+from backend.flask_app.app.database import db
+from backend.flask_app.app.services.postService import get_all_posts, generate_post, get_post_by_id
+from backend.flask_app.app.namespaces.private.schemas import postModel,userModel,commentModel,likeListModel,likeModel,createPostModel, simpleUser, posts, commentUser
 from flask_restx import Namespace, fields, Resource, marshal
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from flask_app.app.database.schemas import PostSchema, PostCommentSchema
+from backend.flask_app.app.database.schemas import PostSchema, PostCommentSchema
 
 post = Namespace('post','todas las rutas de Posts irán a aquí')
 
@@ -17,6 +17,9 @@ post.models[likeListModel.name] = likeListModel
 post.models[commentModel.name] = commentModel
 post.models[postModel.name] = postModel
 post.models[createPostModel.name] = createPostModel
+post.models[simpleUser.name] = simpleUser
+post.models[posts.name] = posts
+post.models[commentUser.name] = commentUser
 
 parser = post.parser()
 parser.add_argument('Authorization', location='headers',required=True)
@@ -65,7 +68,7 @@ class get_posts(Resource):
         #             comments.append(sqlPostComment.dump(comment))
         #         post['comments'] = comments.copy()
             
-        return marshal(h,postModel)
+        return marshal(h,posts)
 
 @post.route('/gpost/<int:id>')
 class get_post(Resource):

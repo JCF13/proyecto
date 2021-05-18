@@ -5,9 +5,9 @@ from flask import Flask, json
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from flask_app.app.config import Config
-from flask_app.app.database import db, ma
-from flask_app.app.cli.generate import bcrypt
+from backend.flask_app.app.config import Config
+from backend.flask_app.app.database import db, ma
+from backend.flask_app.app.cli.generate import bcrypt
 
 cors = CORS()
 jwt = JWTManager()

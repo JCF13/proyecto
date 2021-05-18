@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask_restx import Model, fields
 
 userModel = Model('User',{
@@ -42,6 +43,28 @@ postModel = Model('Post',{
 'fname': fields.String(attribute='picture_fname'),
 'likes': fields.Nested(likeListModel),
 'comments': fields.List(fields.Nested(commentModel)),
+})
+
+simpleUser = Model('simpleUser', {
+    'id': fields.Integer(),
+    'username': fields.String(),
+    'profilePic': fields.String()
+})
+
+commentUser = Model('commentUser', {
+    'id': fields.Integer(),
+    'user': fields.Nested(simpleUser),
+    'message': fields.String(),
+    'creationDate': fields.DateTime(default=datetime.now())
+})
+
+posts = Model('allPosts', {
+    'id': fields.Integer(),
+    'photo': fields.String(),
+    'caption': fields.String(),
+    'creationDate': fields.DateTime(default=datetime.now()),
+    'creator': fields.List(fields.Nested(simpleUser)),
+    'comments': fields.List(fields.Nested(commentUser))
 })
 
 

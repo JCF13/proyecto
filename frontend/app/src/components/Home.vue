@@ -107,7 +107,7 @@ export default {
 
         // Todos los posts por usuario que hace login y offset y limit de 10
         async getPosts() {
-            const postsFetch = await fetch(`http://localhost:5000/private/posts/${this.user.id}/${this.offset}`);
+            const postsFetch = await fetch('http://localhost:5000/post/gposts');
             const posts = postsFetch.json();
 
             this.posts = posts;

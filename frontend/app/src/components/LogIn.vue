@@ -62,6 +62,8 @@ export default {
     
                 localStorage.setItem('access_token', token.your_auth.access_token);
                 localStorage.setItem('refresh_token', token.your_auth.refresh_token);
+
+                this.$router.push('/inside')
             }
 
         }

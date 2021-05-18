@@ -46,7 +46,8 @@ const routes = [
                 children: [
                     {   path: ':id', component: () => import('src/components/Chat.vue') }
                 ]
-            }
+            },
+            {   path: 'search', component: () => import('src/components/Search.vue')    }
         ]
     },
     {

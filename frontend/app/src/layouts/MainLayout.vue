@@ -11,7 +11,9 @@
                 <router-link to="/inside/search" class="col-md-1">
                     <q-tab name="search" icon="search" />
                 </router-link>
-                <q-tab class="col-md-1" name="new-post" icon="add_circle" @click="postDialog = true" />
+                <router-link to="/inside/camera" class="col-md-1">
+                    <q-tab name="new-post" icon="add_circle" />
+                </router-link>
                 <router-link to="/inside/chats" class="col-md-1">
                     <q-tab name="chats" icon="chat_bubble_outline">
                     <q-badge floating color="negative">9</q-badge></q-tab>
@@ -26,44 +28,6 @@
                 </router-link>
             </q-tabs>
         </q-footer>
-
-        <q-dialog v-model="postDialog" position="bottom" id="upload-dialog">
-            <q-card style="width: 300px">
-                <router-link to="/inside/camera">
-                    <q-card-section class="row items-center no-wrap">
-                        <div class="flex d-flex justify-between align-items-center col-md-12">
-                            <q-icon size="30px" name="photo_camera"/>
-                            <p>HACER FOTO</p>
-                        </div>
-                    </q-card-section>
-                </router-link>
-                <q-separator/>
-                <q-card-section class="row items-center no-wrap" @click="uploadDialog = true">
-                        <div class="flex d-flex justify-between col-md-12">
-                            <q-icon size="30px" name="file_upload"/> 
-                            <p>SUBIR FOTO</p>
-                        </div>
-                </q-card-section>
-            </q-card>
-        </q-dialog>
-
-        <q-dialog v-model="uploadDialog">
-            <q-card style="width: 700px; max-width: 80vw;">
-                <q-card-section>
-                    <div class="text-h6">Sube una foto con la que crear una publicación</div>
-                </q-card-section>
-
-                <q-card-section class="q-pt-none">
-                    <q-uploader style="width:100%"
-                        url="http://localhost:4444/upload"
-                    />
-                </q-card-section>
-
-                <q-card-actions align="right" class="bg-white">
-                    <q-btn flat label="SIGUIENTE" @click="goToPost" />
-                </q-card-actions>
-            </q-card>
-        </q-dialog>
     </q-layout>
 </template>
 
@@ -73,7 +37,6 @@ export default {
         return {
             tab: '',
             postDialog: false,
-            uploadDialog: false,
             model: null
         }
     },

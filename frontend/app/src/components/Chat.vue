@@ -140,6 +140,7 @@ export default {
     },
     methods: {
         sendMessage() {
+            console.log(document.querySelector('#messages').offsetHeight)
             this.messages.push({
                 id: 14,
                 creator: {

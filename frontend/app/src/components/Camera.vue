@@ -3,7 +3,23 @@
         <video class="align-middle">
             <source type="video/mp4">
         </video>
-        <q-btn push label="HACER FOTO" color="black" />
+        <q-btn push label="HACER FOTO" color="black" @click="captionDialog = true" />
+
+        <q-dialog v-model="captionDialog">
+            <q-card style="width: 700px; max-width: 80vw;">
+                <q-card-section>
+                    <div class="text-h6">Añade un pie de foto si lo ves necesario</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <q-input color="black" v-model="caption"/>
+                </q-card-section>
+
+                <q-card-actions align="right" class="bg-white">
+                    <q-btn flat label="SIGUIENTE" @click="goToPost" />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 
@@ -11,7 +27,9 @@
 export default {
     data() {
         return {
-            mediaRecorder: null
+            mediaRecorder: null,
+            captionDialog: false,
+            caption: ''
         }
     },
     created() {
@@ -31,6 +49,8 @@ export default {
             video.play()
             this.mediaRecorder.start()
         })
+    },
+    methods: {
     }
 }
 </script>

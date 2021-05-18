@@ -49,8 +49,6 @@ loginReq = Model('loginRequest',{
     'passwd':fields.String(),
 })
 
-
-
 class FollowerSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.Followers
