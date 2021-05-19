@@ -1,12 +1,14 @@
-from collections import UserDict
 from flask_app.app.namespaces.auth.jwt_auth import make_header
 from flask.globals import request
-from flask_restx import Namespace,Resource
-from flask_jwt_extended import create_access_token,create_refresh_token
+from flask_restx import Namespace, Resource
 from flask_restx.marshalling import marshal
-from flask_app.app.database.schemas import userModel,auth_token,errorSchema,loginReq,loginResp
-from flask_app.app.database.dao.userDao import find_user_by_username  
-from flask_app.app.cli.generate import bcrypt 
+from flask_app.app.namespaces.auth.schemas import (
+    userModel, auth_token, errorSchema,
+    loginReq, loginResp, userRegister
+)
+from flask_app.app.database import db 
+from flask_app.app.services.userService import create_user
+from flask_app.app.database.schemas import UserRegisterSchema
 
 authorization = Namespace('auth')
 
@@ -15,20 +17,44 @@ authorization.models[loginReq.name] = loginReq
 authorization.models[loginResp.name] = loginResp
 authorization.models[auth_token.name] = auth_token
 authorization.models[errorSchema.name] = errorSchema
+authorization.models[userRegister.name] = userRegister
+
+@authorization.route('/logon')
+class Register(Resource):
+
+    def get(self):
+
+        pass
+
+    @authorization.expect(userRegister)
+    def post(self):
+        to_register = request.get_json()
+        marshalled = marshal(to_register, userRegister)
+        create_user(marshalled)
+        
+        print('done')
+        
+        return create_user(marshalled)
+
+
+class LogOut(Resource):
+
+    def post(self):
+        pass
+
 
 @authorization.route('/login')
-class login(Resource):
+class Login(Resource):
 
     @authorization.expect(loginReq)
     @authorization.marshal_with(loginResp)
     def post(self):
-        load_user = request.json #request.get_data()
-        print(load_user)
-        user_dict = marshal(load_user,loginReq)
-        print(user_dict)
-        header = make_header(load_user)
-        
-        return header
-        
 
-        
+        load_user = request.get_json()
+        # request.get_data()
+
+        user_dict = marshal(load_user, loginReq)
+
+        header = make_header(user_dict)
+
+        return header
