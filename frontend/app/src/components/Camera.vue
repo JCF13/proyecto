@@ -79,12 +79,13 @@ export default {
             const postFetch = await fetch('http://localhost:5000/post/cpost', {
                 method: 'POST',
                 headers: {
-                    'Authorization': JSON.stringify(authorization)
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + authorization + ''
                 },
                 body: JSON.stringify({
                     caption: this.caption,
                     path: 'C:\\Users\\JCFJe\\Documentos\\Segundo_curso\\FCP\\proyecto\\backend\\flask_app\\app\\static\\img',
-                    fname: 'primerafoto'
+                    fname: 'primerafoto.png'
                 })
             })
         }
