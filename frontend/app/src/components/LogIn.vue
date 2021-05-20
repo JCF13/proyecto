@@ -44,6 +44,19 @@ export default {
             }
         }
     },
+    created() {
+        window.gapi.load('auth2', () => {
+            const auth2 = window.gapi.auth2.init({
+                client_id: '969437755795-mas4cecbtrqrd38pa9hodgbjtkssoeqs.apps.googleusercontent.com'
+            });
+            auth2.attachClickHandler(document.querySelector('#google'), {}, async (googleUser) => {
+                console.log(googleUser);
+                const id_token = googleUser.qc.id_token;
+
+                console.log(id_token);
+            });
+        });
+    },
     methods: {
         async logIn() {
             const logInFetch = await fetch('http://localhost:5000/auth/login', {
