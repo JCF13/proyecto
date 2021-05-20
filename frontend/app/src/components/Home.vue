@@ -83,7 +83,7 @@ export default {
         }
     },
     async created() {
-        //this.getPosts()
+        this.getPosts()
     },
     methods: {
         // Abrir información del post
