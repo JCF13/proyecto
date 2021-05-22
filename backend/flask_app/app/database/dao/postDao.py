@@ -1,5 +1,5 @@
-from backend.flask_app.app.database.models import Post
-from backend.flask_app.app.database import db
+from flask_app.app.database.models import Post
+from flask_app.app.database import db
 
 def create_post(post: Post):
     db.session.add(post)

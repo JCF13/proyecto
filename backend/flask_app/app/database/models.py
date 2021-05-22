@@ -1,7 +1,8 @@
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from backend.flask_app.app.database import db
-from backend.flask_app.app.database.mixins import CreatedMixin
+from flask_app.app.database import db
+from flask_app.app.database.mixins import CreatedMixin
+
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -12,8 +13,8 @@ class User(db.Model):
     surname = db.Column(db.String(20), nullable=True)
     password = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
-    profile_pic_path = db.Column(db.String(246), nullable= True)
-    profile_pic_fname = db.Column(db.String(20), nullable= True)
+    profile_pic_path = db.Column(db.String(246), nullable=True)
+    profile_pic_fname = db.Column(db.String(20), nullable=True)
 
     posts = db.relationship('Post', back_populates='created_by', viewonly=True)
     followers = db.relationship('Followers',primaryjoin='User.user_id==Followers.followed_id', viewonly=True)
