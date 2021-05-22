@@ -1,5 +1,5 @@
-from flask_app.app.database.models import PostComment
-from flask_app.app.database import db
+from backend.flask_app.app.database.models import PostComment
+from backend.flask_app.app.database import db
 
 def create_commentPost(comment: PostComment):
     db.session.add(comment)

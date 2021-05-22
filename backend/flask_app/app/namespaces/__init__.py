@@ -1,7 +1,7 @@
 from flask.blueprints import Blueprint
 from flask_restx import Api
-from flask_app.app.namespaces.auth.authorization import authorization
-from flask_app.app.namespaces.private.posts import post
+from backend.flask_app.app.namespaces.auth.authorization import authorization
+from backend.flask_app.app.namespaces.private.posts import post
 # from flask_app.app.namespaces.public.main import main
 
 api_version = '0.01'

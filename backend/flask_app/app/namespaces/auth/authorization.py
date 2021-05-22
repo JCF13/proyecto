@@ -1,14 +1,14 @@
-from flask_app.app.namespaces.auth.jwt_auth import make_header
+from backend.flask_app.app.namespaces.auth.jwt_auth import make_header
 from flask.globals import request
 from flask_restx import Namespace, Resource
 from flask_restx.marshalling import marshal
-from flask_app.app.namespaces.auth.schemas import (
+from backend.flask_app.app.namespaces.auth.schemas import (
     userModel, auth_token, errorSchema,
     loginReq, loginResp, userRegister
 )
-from flask_app.app.database import db 
-from flask_app.app.services.userService import create_user
-from flask_app.app.database.schemas import UserRegisterSchema
+from backend.flask_app.app.database import db 
+from backend.flask_app.app.services.userService import create_user
+from backend.flask_app.app.database.schemas import UserRegisterSchema
 
 authorization = Namespace('auth')
 
