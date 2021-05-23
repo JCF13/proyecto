@@ -131,15 +131,11 @@ export default {
                 } else {
                     this.$q.notify({
                         type: 'positive',
-                        message: register
+                        message: register.message
                     })
                     
                     this.$router.push('/login')
                 }
-                
-                
-
-                
             } else {
                 this.$q.notify({
                     type: 'warning',

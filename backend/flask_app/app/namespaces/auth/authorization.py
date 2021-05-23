@@ -30,9 +30,6 @@ class Register(Resource):
     def post(self):
         to_register = request.get_json()
         marshalled = marshal(to_register, userRegister)
-        create_user(marshalled)
-        
-        print('done')
         
         return create_user(marshalled)
 
