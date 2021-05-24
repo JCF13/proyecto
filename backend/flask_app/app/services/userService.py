@@ -1,16 +1,21 @@
-from backend.flask_app.app.database.schemas import UserRegisterSchema
-from backend.flask_app.app.database.models import User
-from backend.flask_app.app.database.dao.userDao import find_user_by_email, generate_user,find_user_by_username
-from backend.flask_app.app.database import db
-from backend.flask_app.app import bcrypt
+from flask_app.app.database.schemas import UserRegisterSchema
+from flask_app.app.database.models import User, Followers
+from flask_app.app.database.dao.userDao import (
+    generate_user,find_user_by_username, find_user_by_id, follows_to
+)
+from flask_app.app import bcrypt
+from flask_app.app.database import db
 
+def user_follows_to(follower, followed):
+    follows = Followers(followed_id=followed.user_id, follower_id=follower.user_id)
+    follows_to(follows)
+    pass
 
 def create_user(user):
     if user['username'] != '' \
         and user['password'] != '' \
         and user['email'] != '' \
         and user['name'] != '':
-    
         if find_user_by_username(user['username']):
             return {
                 'type': 'error',
@@ -40,3 +45,7 @@ def create_user(user):
             'type': 'error',
             'message': 'Los datos no son correctos'
         }
+def get_user_by_username(username):
+    return find_user_by_username(username)
+def get_user_by_id(id):
+    return find_user_by_id(id)
