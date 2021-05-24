@@ -9,6 +9,7 @@ class UserRegisterSchema(SQLAlchemyAutoSchema):
         model = models.User
         load_instance = True
         
+        
 # class UserSchema(SQLAlchemyAutoSchema):
 #     class Meta:
 #         model = models.User

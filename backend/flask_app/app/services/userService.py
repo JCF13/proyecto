@@ -6,7 +6,7 @@ from flask_app.app import bcrypt
 
 
 def create_user(user):
-    
+
     if find_user_by_username(user['username']):
         return 'el username ya ha sido registrado'
 

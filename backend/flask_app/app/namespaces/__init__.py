@@ -6,9 +6,9 @@ from flask_app.app.namespaces.private.posts import post
 
 api_version = '0.01'
 
-managment = Blueprint('routes',__name__)
+managment = Blueprint('routes', __name__)
 
-api = Api(managment,version=api_version,title='Api',description='Descripcion')
+api = Api(managment, version=api_version, title='Api', description='Descripcion')
 
 api.add_namespace(authorization)
 api.add_namespace(post)
