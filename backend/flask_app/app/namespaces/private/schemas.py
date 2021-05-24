@@ -68,5 +68,11 @@ posts = Model('allPosts', {
     'caption': fields.String(attribute='caption'),
     'creationDate': fields.DateTime(default=datetime.now(), attribute='created_on'),
     'creator': fields.List(fields.Nested(simpleUser, attribute='created_by')),
-    'comments': fields.List(fields.Nested(commentUser, attribute='comments',as_list=True))
+    'comments': fields.List(fields.Nested(commentUser, attribute='comments', as_list=True))
+})
+
+followModel = Model('followModel', {
+    'user': fields.Nested(simpleUser),
+    'follows': fields.Boolean(default=False),
+    
 })
