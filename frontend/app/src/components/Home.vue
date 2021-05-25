@@ -45,32 +45,32 @@ export default {
         return {
             posts: [
                 {
-                    id: 1,
-                    photo: "https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg",
-                    caption: 'Pie de foto',
-                    creationDate: '14/05/2021',
+                    id: 0,
+                    photo: '',
+                    caption: '',
+                    creationDate: '',
                     creator: {
-                        id: 1,
-                        username: 'Nombre_de_usuario',
-                        profilePic: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg'
+                        id: 0,
+                        username: '',
+                        profilePic: ''
                     },
                     comments: [
                         {
-                            id: 1,
+                            id: 0,
                             user: {
-                                id: 2,
-                                username: 'Nombre_de_usuario2'
+                                id: 0,
+                                username: ''
                             },
-                            message: 'Comentario 1',
-                            creationDate: '15/05/2021'
+                            message: '',
+                            creationDate: ''
                         }
                     ],
                     likes: [
                         {
-                            id: 1,
+                            id: 0,
                             user: {
-                                id: 2,
-                                username: 'Nombre_de_usuario2'
+                                id: 0,
+                                username: ''
                             }
                         },
                     ]
@@ -83,7 +83,10 @@ export default {
         }
     },
     async created() {
-        this.getPosts()
+        const postsFetch = await fetch('http://localhost:5000/post/gposts');
+        const posts = await postsFetch.json();
+
+        this.posts = posts;
     },
     methods: {
         // Abrir información del post
@@ -103,14 +106,6 @@ export default {
                     user: this.user.id
                 })
             });
-        },
-
-        // Todos los posts por usuario que hace login y offset y limit de 10
-        async getPosts() {
-            const postsFetch = await fetch('http://localhost:5000/post/gposts');
-            const posts = postsFetch.json();
-
-            this.posts = posts;
         },
 
         // Cargar siguientes 10 posts

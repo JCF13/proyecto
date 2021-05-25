@@ -1,5 +1,6 @@
 import datetime
 from flask_restx import Model, fields
+from backend.flask_app.app.namespaces.private.schemas import postModel
 
 userModel = Model('User',{ 
     'user_id': fields.Integer(),
@@ -48,4 +49,11 @@ loginResp = Model('loginResponse', {
 loginReq = Model('loginRequest',{
     'username': fields.String(),
     'passwd': fields.String(),
+})
+
+userProfile = Model('userProfile', {
+    'id': fields.Integer(),
+    'username': fields.String(),
+    'profile_pic': fields.String(),
+    'posts': fields.Nested(postModel)
 })

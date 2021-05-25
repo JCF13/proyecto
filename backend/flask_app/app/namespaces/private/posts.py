@@ -1,11 +1,11 @@
-from flask_app.app.services.commentService import (
+from backend.flask_app.app.services.commentService import (
     generate_comment, get_post_comments
 )
 from flask import request, json
-from flask_app.app.services.postService import (
-    get_all_posts, generate_post, get_post_by_id
+from backend.flask_app.app.services.postService import (
+    get_all_posts, generate_post, get_comments_by_post, get_post_by_id
 )
-from flask_app.app.namespaces.private.schemas import (
+from backend.flask_app.app.namespaces.private.schemas import (
                     postModel,
                     userModel,
                     commentModel,
@@ -21,7 +21,7 @@ from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
 
-from flask_app.app.database.schemas import PostSchema, PostCommentSchema, UserRegisterSchema
+from backend.flask_app.app.database.schemas import PostSchema, PostCommentSchema, UserRegisterSchema
 
 post = Namespace('post', 'todas las rutas de Posts irán a aquí')
 
@@ -75,6 +75,13 @@ class Get_posts(Resource):
 
         strPosts = sqlPost.dumps(allPosts, many=True)
         h = json.loads(strPosts)
+        pos = 0
+        for post, j in allPosts, h:
+            strComments = sqlPostComment.dumps(get_post_comments(post.post_id), many=True)
+            print(strComments)
+            j['comments'] = json.loads(strComments)
+            #h[i]['comments'] = json.loads(strComments)
+
         # for post in h:
         #     if len(post['comments']) > 0:
         #         comments = []

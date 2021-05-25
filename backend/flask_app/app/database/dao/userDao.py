@@ -1,4 +1,4 @@
-from backend.flask_app.app.database.models import User
+from backend.flask_app.app.database.models import User, Followers
 from backend.flask_app.app.database import db
 
 

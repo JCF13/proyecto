@@ -5,6 +5,7 @@ import backend.flask_app.app.database.dao.postDao as dao
 
 def get_all_posts():
     return dao.find_all_posts()
+    
 def get_post_by_id(id):
     return dao.find_post_by_id(id)
 
@@ -17,3 +18,6 @@ def generate_post(creator,bodyPost):
         post.created_by_fk = creator
 
         dao.create_post(post)
+
+def get_comments_by_post():
+    return 

@@ -1,12 +1,14 @@
-from flask import request
-from flask_restx import Namespace, Resource
-from flask_app.app.namespaces.private.schemas import (
+from backend.flask_app.app.database.schemas import PostSchema
+from flask import json, request
+from flask_restx import Namespace, Resource, marshal
+from backend.flask_app.app.namespaces.private.schemas import (
     simpleUser, followModel
 )
+from backend.flask_app.app.namespaces.auth.schemas import userProfile
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
-from flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to
+from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to
 
 
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
@@ -32,3 +34,17 @@ class Follow(Resource):
         print(user_followed)
         print(user_follower)
         pass
+
+
+@myNS.route('/getUser/<string:username>')
+class GetUser(Resource):
+    def get(self, username):
+        user = get_user_by_username(username)
+        sqlPost = PostSchema()
+
+        strPosts = sqlPost.dumps(user.posts, many=True)
+
+        resp = marshal(user, userProfile, skip_none=True)
+        resp['posts'] = json.loads(strPosts)
+        
+        return resp 
