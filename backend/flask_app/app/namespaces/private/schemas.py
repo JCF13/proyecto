@@ -11,6 +11,11 @@ userModel = Model('User', {
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
+simpleUser = Model('simpleUser', {
+    'id': fields.Integer(),
+    'username': fields.String(),
+    'profilePic': fields.String()
+})
 
 userProfile = Model('UserProfile', {
     'username': fields.String(),
@@ -25,7 +30,7 @@ profilePicture = Model('profilePicture',{
 })
 
 likeModel = Model('Like', {
-    'user': fields.Nested(userModel),
+    'user': fields.Nested(simpleUser),
     'like': fields.Boolean(default=False)
 })
 
@@ -56,11 +61,7 @@ postModel = Model('Post',{
     'comments': fields.List(fields.Nested(commentModel)),
 })
 
-simpleUser = Model('simpleUser', {
-    'id': fields.Integer(),
-    'username': fields.String(),
-    'profilePic': fields.String()
-})
+
 
 commentUser = Model('commentUser', {
     # 'id': fields.Integer(),
