@@ -9,8 +9,10 @@ from flask_app.app.namespaces.auth.schemas import (
 from flask_app.app.database import db 
 from flask_app.app.services.userService import create_user
 from flask_app.app.database.schemas import UserRegisterSchema
+from flask_app.app.services.logs import complex_file_handler
 
 authorization = Namespace('auth')
+authorization.logger.addHandler(complex_file_handler)
 
 authorization.models[userModel.name] = userModel
 authorization.models[loginReq.name] = loginReq
@@ -29,7 +31,7 @@ class Register(Resource):
     @authorization.expect(userRegister)
     def post(self):
         to_register = request.get_json()
-        marshalled = marshal(to_register, userRegister)
+        marshalled = marshal(to_register, userRegister, skip_none=True)
         create_user(marshalled)
 
         return create_user(marshalled)

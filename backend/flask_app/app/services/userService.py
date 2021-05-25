@@ -1,16 +1,17 @@
-
 from flask_app.app.database.schemas import UserRegisterSchema
 from flask_app.app.database.models import User, Followers
 from flask_app.app.database.dao.userDao import (
-    generate_user,find_user_by_username, find_user_by_id, follows_to
+    generate_user, find_user_by_username, find_user_by_id, follows_to
 )
 from flask_app.app.database import db
 from flask_app.app import bcrypt
+
 
 def user_follows_to(follower, followed):
     follows = Followers(followed_id=followed.user_id, follower_id=follower.user_id)
     follows_to(follows)
     pass
+
 
 def create_user(user):
 
@@ -25,8 +26,10 @@ def create_user(user):
     creado.name = user['name']
     creado.surname = user['surname']
     creado.email = user['email']
-    creado.profile_pic_fname = user['profile_pic_fname']
-
+    if user['picture'] is None:
+        creado.picture = user['picture']
+    else:
+        creado.picture = 1
     generate_user(creado)
     return True
 

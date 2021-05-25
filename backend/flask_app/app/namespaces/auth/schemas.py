@@ -8,8 +8,7 @@ userModel = Model('User',{
     'password': fields.String(),
     'surname': fields.String(),
     'email': fields.String(),
-    'profile_pic_path' : fields.String(),
-    'profile_pic_fname' : fields.String(),
+    'picture': fields.String(),
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
@@ -20,7 +19,7 @@ userRegister = Model('userRegister', {
     'surname': fields.String(),
     'password': fields.String(),
     'email': fields.String(),
-    'profile_pic_fname': fields.String(),
+    'picture': fields.String(),
 })
 
 auth_token = Model('auth_token', {

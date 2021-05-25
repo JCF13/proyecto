@@ -20,10 +20,12 @@ from flask_restx import Namespace, Resource, marshal
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
-
 from flask_app.app.database.schemas import PostSchema, PostCommentSchema, UserRegisterSchema
+from flask_app.app.services.logs import complex_file_handler
 
 post = Namespace('post', 'todas las rutas de Posts irán a aquí')
+
+post.logger.addHandler(complex_file_handler)
 
 post.models[userModel.name] = userModel
 post.models[likeModel.name] = likeModel
@@ -82,7 +84,7 @@ class Get_posts(Resource):
         #             comments.append(sqlPostComment.dump(comment))
         #         post['comments'] = comments.copy()
             
-        return marshal(h,posts)
+        return marshal(h, posts)
 
 @post.route('/gpost/<int:id>')
 class get_post(Resource):

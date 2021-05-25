@@ -7,10 +7,21 @@ userModel = Model('User', {
     'name': fields.String(),
     'password': fields.String(),
     'email': fields.String(),
-    'profile_pic_path': fields.String(),
-    'profile_pic_fname': fields.String(),
+    'picture': fields.String(),
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
+})
+
+userProfile = Model('UserProfile', {
+    'username': fields.String(),
+    'name': fields.String(),
+    'picture': fields.String(),
+    # 'posts' : fields.List(fields.Wildcard()),
+    # 'chats' : fields.List(fields.Wildcard())
+})
+
+profilePicture = Model('profilePicture',{
+    'blurb': fields.String()
 })
 
 likeModel = Model('Like', {
