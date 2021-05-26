@@ -25,7 +25,7 @@ userProfile = Model('UserProfile', {
     # 'chats' : fields.List(fields.Wildcard())
 })
 picture = Model('picture', {
-    'kind': fields.String(),
+    'kind': fields.String(description='CHOICES: profile, chat, post'),
     'blurb': fields.String()
 })
 
