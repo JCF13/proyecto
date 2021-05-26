@@ -16,4 +16,4 @@ def generate_post(creator,bodyPost):
         post.picture_path = bodyPost.get('fname')
         post.created_by_fk = creator
 
-        dao.create_post(post)
+        dao.generate_post(post)

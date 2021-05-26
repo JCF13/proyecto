@@ -8,7 +8,7 @@ def generate_comment(creator, postId, bodyPost):
     # post.post_id = bodyPost.get('id')
     comment.post_id = postId
     comment.created_by_fk = creator
-    dao.create_commentPost(comment)
+    dao.generate_commentPost(comment)
 
 
 def get_post_comments(post_id):

@@ -14,7 +14,7 @@ from flask_app.app.services.logs.refactor_dict import gen_log
 
 authorization = Namespace('auth')
 _LEVELLOG_ = 20
-
+ 
 authorization.logger.addHandler(complex_file_handler)
 
 authorization.models[userModel.name] = userModel
