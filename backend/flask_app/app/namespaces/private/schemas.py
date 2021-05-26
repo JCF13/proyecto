@@ -24,6 +24,10 @@ userProfile = Model('UserProfile', {
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
+picture = Model('picture', {
+    'kind': fields.String(),
+    'blurb': fields.String()
+})
 
 profilePicture = Model('profilePicture',{
     'blurb': fields.String()

@@ -10,8 +10,11 @@ from flask_app.app.database import db
 from flask_app.app.services.userService import create_user
 from flask_app.app.database.schemas import UserRegisterSchema
 from flask_app.app.services.logs import complex_file_handler
+from flask_app.app.services.logs.refactor_dict import gen_log
 
 authorization = Namespace('auth')
+_LEVELLOG_ = 20
+
 authorization.logger.addHandler(complex_file_handler)
 
 authorization.models[userModel.name] = userModel
@@ -56,5 +59,7 @@ class Login(Resource):
         user_dict = marshal(load_user, loginReq)
 
         header = make_header(user_dict)
+        elLog = gen_log(header, _LEVELLOG_)
+        authorization.logger.log(_LEVELLOG_, elLog)
 
         return header

@@ -1,12 +1,13 @@
 from flask import request
 from flask_restx import Namespace, Resource
 from flask_app.app.namespaces.private.schemas import (
-    simpleUser, followModel, profilePicture
+    simpleUser, followModel, profilePicture, picture
 )
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
 from flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to
+from flask_app.app.services.imageService import create_image
 from flask_app.app.services.logs import complex_file_handler
 
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
@@ -17,6 +18,7 @@ print(myNS.logger.handlers)
 myNS.models[simpleUser.name] = simpleUser
 myNS.models[followModel.name] = followModel
 myNS.models[profilePicture.name] = profilePicture
+myNS.models[picture.name] = picture
 
 parser = myNS.parser()
 parser.add_argument('Authorization', location='headers', required=True)
@@ -42,6 +44,8 @@ class Follow(Resource):
 class TakePhoto(Resource):
 
 
-    @myNS.expect(profilePicture)
+    @myNS.expect(picture)
     def post(self):
+        jsonImg = request.get_json()
+        create_image(jsonImg['blurb'], jsonImg['kind'])
         pass

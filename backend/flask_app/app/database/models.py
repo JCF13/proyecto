@@ -102,7 +102,7 @@ class Image(CreatedMixin):
 
     @declared_attr
     def image_id(self):
-        return Column(Integer, primary_key=True) 
+        return Column(Integer, primary_key=True)
 
     @declared_attr
     def image(self):
