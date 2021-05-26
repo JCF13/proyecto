@@ -6,7 +6,7 @@ def del_null_values(myDict):
         if type(value) is dict:
 
             for key2, value2 in value.items():
-                if value2 is not None:                
+                if value2 is not None:
                     newDict[key2] = value2
             
         else:
@@ -28,24 +28,25 @@ def gen_log(myDict, level):
 def gen_simple_log(myDict):
     theLog = ''
     
-    my_values = ['request','result','your_auth','listart','empid','artid','artdes','dptid','famid','grpid','lpreid','tipart','error_type','error_desc']
+    # my_values = ['request','result','your_auth','listart','empid','artid','artdes','dptid','famid','grpid','lpreid','tipart','error_type','error_desc']
+    my_values = ['username', 'email', 'user', 'cantidad', 'caption', 'photo', 'creator', 'user', 'follows']
     
     for key, value in myDict.items():
         for attr_log in my_values:
             if key == attr_log:
                 if value != '':
                     
-                    if key == 'listart':
-                        if value != None:
-                            theLog = theLog + key + ': ' + str(len(value)) + ' | '                        
-                    elif key == 'error':
-                        pass
-                        # for keyErr, valErr in value:
-                        #     theLog = theLog + keyErr + ': ' + str(valErr) + ' | '                        
-                    elif key == 'your_auth':
-                        pass
-                    else:
-                        theLog = theLog + key + ': ' + str(value) + ' | '
+                    # if key == 'listart':
+                    #     if value != None:
+                    #         theLog = theLog + key + ': ' + str(len(value)) + ' | '                        
+                    # elif key == 'error':
+                    #     pass
+                    #     # for keyErr, valErr in value:
+                    #     #     theLog = theLog + keyErr + ': ' + str(valErr) + ' | '                        
+                    # elif key == 'your_auth':
+                    #     pass
+                    # else:
+                    theLog = theLog + key + ': ' + str(value) + ' | '
     return theLog
 
 

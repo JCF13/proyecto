@@ -15,7 +15,7 @@ def create_chat_image(image):
     objImage = ChatImage()
     pass
 
-def create_image(image, kind: str):
+def create_image(image,user_id, kind: str):
     if kind == 'post':
         create_post_image(image)
     if kind == 'profile':

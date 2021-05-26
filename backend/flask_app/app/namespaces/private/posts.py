@@ -1,7 +1,7 @@
 from flask_app.app.services.commentService import (
     generate_comment, get_post_comments
 )
-from flask import request, json
+from flask import request, json, current_app
 from flask_app.app.services.postService import (
     get_all_posts, generate_post, get_post_by_id
 )
@@ -39,6 +39,7 @@ post.models[commentUser.name] = commentUser
 
 parser = post.parser()
 parser.add_argument('Authorization', location='headers', required=True)
+
 
 @post.route('/cpost')
 class Make_post(Resource):

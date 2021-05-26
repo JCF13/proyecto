@@ -12,6 +12,7 @@ from flask_app.app.services.logs import complex_file_handler
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
 
 myNS.logger.addHandler(complex_file_handler)
+print(myNS.logger.handlers)
 
 myNS.models[simpleUser.name] = simpleUser
 myNS.models[followModel.name] = followModel

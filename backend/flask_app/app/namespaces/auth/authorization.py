@@ -34,7 +34,7 @@ class Register(Resource):
         marshalled = marshal(to_register, userRegister, skip_none=True)
         create_user(marshalled)
 
-        return create_user(marshalled)
+        return marshalled
 
 
 class LogOut(Resource):
