@@ -47,7 +47,8 @@ const routes = [
                     {   path: ':id', component: () => import('src/components/Chat.vue') }
                 ]
             },
-            {   path: 'search', component: () => import('src/components/Search.vue')    }
+            {   path: 'search', component: () => import('src/components/Search.vue')    },
+            {   path: 'user/:username', component: () => import('src/components/Profile.vue')}
         ]
     },
     {

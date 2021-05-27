@@ -3,6 +3,7 @@ from flask_restx import Namespace, Resource
 from flask_app.app.namespaces.private.schemas import (
     simpleUser, followModel, profilePicture, picture
 )
+from backend.flask_app.app.namespaces.auth.schemas import userProfile
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
@@ -39,6 +40,20 @@ class Follow(Resource):
         print(user_followed)
         print(user_follower)
         pass
+
+
+@myNS.route('/getUser/<string:username>')
+class GetUser(Resource):
+    def get(self, username):
+        user = get_user_by_username(username)
+        sqlPost = PostSchema()
+
+        strPosts = sqlPost.dumps(user.posts, many=True)
+
+        resp = marshal(user, userProfile, skip_none=True)
+        resp['posts'] = json.loads(strPosts)
+        
+        return resp 
 
 @myNS.route('take_photo')
 class TakePhoto(Resource):

@@ -1,5 +1,5 @@
-from flask_app.app.database.models import User, Followers
-from flask_app.app.database import db
+from backend.flask_app.app.database.models import User, Followers
+from backend.flask_app.app.database import db
 
 
 def find_user_by_username(username: str):
@@ -20,6 +20,9 @@ def find_user_by_id(id: int):
     :param id: int
     """
     return User.query.filter(User.user_id == id).first()
+
+def find_user_by_email(email: str):
+    return User.query.filter(User.email == email).first()
 
 
 def generate_user(user: User):

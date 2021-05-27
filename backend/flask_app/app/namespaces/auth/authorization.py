@@ -1,8 +1,8 @@
-from flask_app.app.namespaces.auth.jwt_auth import make_header
+from backend.flask_app.app.namespaces.auth.jwt_auth import make_header
 from flask.globals import request
 from flask_restx import Namespace, Resource
 from flask_restx.marshalling import marshal
-from flask_app.app.namespaces.auth.schemas import (
+from backend.flask_app.app.namespaces.auth.schemas import (
     userModel, auth_token, errorSchema,
     loginReq, loginResp, userRegister
 )
@@ -34,10 +34,9 @@ class Register(Resource):
     @authorization.expect(userRegister)
     def post(self):
         to_register = request.get_json()
-        marshalled = marshal(to_register, userRegister, skip_none=True)
-        create_user(marshalled)
-
-        return marshalled
+        marshalled = marshal(to_register, userRegister)
+        
+        return create_user(marshalled)
 
 
 class LogOut(Resource):
