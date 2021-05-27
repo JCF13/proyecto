@@ -2,10 +2,10 @@
 from flask_app.app.database.schemas import UserRegisterSchema
 from flask_app.app.database.models import User, Followers
 from flask_app.app.database.dao.userDao import (
-    generate_user,find_user_by_username, find_user_by_id, follows_to
+    generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email
 )
-from backend.flask_app.app import bcrypt
-from backend.flask_app.app.database import db
+from flask_app.app import bcrypt
+from flask_app.app.database import db
 
 
 def user_follows_to(follower, followed):
@@ -23,7 +23,7 @@ def create_user(user):
             return {
                 'type': 'error',
                 'message': 'El nombre de usuario ya está en uso'
-        }
+            }
 
         if find_user_by_email(user['email']):
             return {
@@ -40,11 +40,12 @@ def create_user(user):
         creado.surname = user['surname']
         creado.email = user['email']
         creado.profile_pic_fname = user['profile_pic_fname']
-    if user['picture'] is None:
-        creado.picture = user['picture']
-    else:
-        creado.picture = 1
-    generate_user(creado)
+
+        if user['picture'] is None:
+            creado.picture = user['picture']
+        else:
+            creado.picture = 1
+        generate_user(creado)
         return {
             'type': 'positive',
             'message': 'Usuario registrado correctamente'
