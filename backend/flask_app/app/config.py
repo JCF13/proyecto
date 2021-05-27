@@ -1,9 +1,10 @@
 import datetime
 import os
 
+
 class Config():
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(hours=2)
-    JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=1,hours=2)
+    JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=1, hours=2)
     JWT_ALGORITHM = 'HS256'
     JWT_SECRET_KEY = os.environ.get('SECRET_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')

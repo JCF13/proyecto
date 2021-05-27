@@ -16,7 +16,7 @@ class CreatedMixin(object):
         :changed by:
     """
 
-    created_on = Column(DateTime, default=datetime.datetime.now, nullable=False)
+    created_on = Column(DateTime, default=datetime.datetime.now(), nullable=False)
 
     @declared_attr
     def created_by_fk(self):

@@ -1,7 +1,7 @@
-from backend.flask_app.app.database.schemas import PostSchema
-from backend.flask_app.app.database.models import Post
-from backend.flask_app.app.namespaces.private.schemas import postModel
-import backend.flask_app.app.database.dao.postDao as dao
+from flask_app.app.database.schemas import PostSchema
+from flask_app.app.database.models import Post
+from flask_app.app.namespaces.private.schemas import postModel
+import flask_app.app.database.dao.postDao as dao
 
 def get_all_posts():
     return dao.find_all_posts()
@@ -16,4 +16,4 @@ def generate_post(creator,bodyPost):
         post.picture_path = bodyPost.get('fname')
         post.created_by_fk = creator
 
-        dao.create_post(post)
+        dao.generate_post(post)
