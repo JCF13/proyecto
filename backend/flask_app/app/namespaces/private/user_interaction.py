@@ -1,15 +1,17 @@
-from flask import request
-from flask_restx import Namespace, Resource
-from flask_app.app.namespaces.private.schemas import (
+from flask import request, json
+from flask.helpers import send_file
+from flask_restx import Namespace, Resource, marshal
+from backend.flask_app.app.namespaces.private.schemas import (
     simpleUser, followModel, profilePicture, picture
 )
 from backend.flask_app.app.namespaces.auth.schemas import userProfile
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
-from flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to
-from flask_app.app.services.imageService import create_image
-from flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to
+#from backend.flask_app.app.services.imageService import create_image
+from backend.flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.database.schemas import PostSchema
 
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
 
@@ -55,12 +57,10 @@ class GetUser(Resource):
         
         return resp 
 
-@myNS.route('take_photo')
-class TakePhoto(Resource):
 
+@myNS.route('/image')
+class SendImage(Resource):
 
-    @myNS.expect(picture)
     def post(self):
-        jsonImg = request.get_json()
-        create_image(jsonImg['blurb'], jsonImg['kind'])
-        pass
+        image = request.get_json()
+        return send_file(image['path'], mimetype='image/png')

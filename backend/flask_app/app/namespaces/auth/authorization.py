@@ -6,11 +6,11 @@ from backend.flask_app.app.namespaces.auth.schemas import (
     userModel, auth_token, errorSchema,
     loginReq, loginResp, userRegister
 )
-from flask_app.app.database import db 
-from flask_app.app.services.userService import create_user
-from flask_app.app.database.schemas import UserRegisterSchema
-from flask_app.app.services.logs import complex_file_handler
-from flask_app.app.services.logs.refactor_dict import gen_log
+from backend.flask_app.app.database import db 
+from backend.flask_app.app.services.userService import create_user
+from backend.flask_app.app.database.schemas import UserRegisterSchema
+from backend.flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.logs.refactor_dict import gen_log
 
 authorization = Namespace('auth')
 _LEVELLOG_ = 20

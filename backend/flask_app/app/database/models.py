@@ -1,8 +1,8 @@
 import datetime
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from flask_app.app.database import db
-from flask_app.app.database.mixins import CreatedMixin
+from backend.flask_app.app.database import db
+from backend.flask_app.app.database.mixins import CreatedMixin
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy import Column, Integer, String
 
@@ -16,7 +16,8 @@ class User(db.Model):
     surname = db.Column(db.String(20), nullable=True)
     password = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
-    picture = db.Column(db.Integer, db.ForeignKey('profile_image.image_id'))
+    picture = db.Column(db.String, nullable=True)
+    #picture = db.Column(db.Integer, db.ForeignKey('profile_image.image_id'))
 
     posts = db.relationship('Post', back_populates='created_by', viewonly=True)
     followers = db.relationship('Followers',primaryjoin='User.user_id==Followers.followed_id', viewonly=True)
@@ -45,8 +46,8 @@ class Post(db.Model, CreatedMixin):
     #nullables cambiados
     caption = db.Column(db.String(20), nullable=True)
 
-    picture = db.Column(db.Integer, db.ForeignKey('post_image.image_id'))
-    
+    #picture = db.Column(db.Integer, db.ForeignKey('post_image.image_id'))
+    picture = db.Column(db.String, nullable=False)
     
     likes = db.relationship('PostLikes', backref='post')
     comments = db.relationship('PostComment', backref='post')
@@ -93,37 +94,37 @@ class ChatMessages(db.Model, CreatedMixin):
 # nullable cambiado a mmessage
     message = db.Column(db.String(50), nullable=True)
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
-    image  = db.Column(db.Integer, db.ForeignKey('chat_image.chat_id'), nullable=True)
+    #image  = db.Column(db.Integer, db.ForeignKey('chat_image.chat_id'), nullable=True)
 
     chat = db.relationship('Chat', back_populates='messages')
 
 
-class Image(CreatedMixin):
+#class Image(CreatedMixin):
 
-    @declared_attr
-    def image_id(self):
-        return Column(Integer, primary_key=True)
+#    @declared_attr
+#    def image_id(self):
+#        return Column(Integer, primary_key=True)
 
-    @declared_attr
-    def image(self):
-        return Column(String(), nullable=False)
+#    @declared_attr
+#    def image(self):
+#        return Column(String(), nullable=False)
 
 
-class ChatImage(db.Model, Image):
-    __tablename__ = 'chat_image'
+#class ChatImage(db.Model, Image):
+#    __tablename__ = 'chat_image'
 
-    chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
+#    chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
 
-class PostImage(db.Model, Image):
-    __tablename__ = 'post_image'
+#class PostImage(db.Model, Image):
+#    __tablename__ = 'post_image'
 
-    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+#    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
 
-class ProfileImage(db.Model):
-    __tablename__ = 'profile_image'
-    image_id = db.Column(Integer, primary_key=True)
-    image = db.Column(String(), nullable=False)
-    created_on = db.Column(db.DateTime, default=datetime.datetime.now(), nullable=False)
+#class ProfileImage(db.Model):
+#    __tablename__ = 'profile_image'
+#    image_id = db.Column(Integer, primary_key=True)
+#    image = db.Column(String(), nullable=False)
+#    created_on = db.Column(db.DateTime, default=datetime.datetime.now(), nullable=False)
     
 
 # class NotificationLike(db.Model, CreatedMixin):

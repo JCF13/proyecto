@@ -1,23 +1,40 @@
+import base64
+from datetime import datetime
+import os
+
+from flask.globals import current_app
 from backend.flask_app.app.database.schemas import PostSchema
 from backend.flask_app.app.database.models import Post
 from backend.flask_app.app.namespaces.private.schemas import postModel
 import backend.flask_app.app.database.dao.postDao as dao
+from backend.flask_app.app.services.imageService import save_picture
 
-def get_all_posts():
-    return dao.find_all_posts()
+def get_by_offset(page):
+    return dao.find_by_offset(page)
     
 def get_post_by_id(id):
     return dao.find_post_by_id(id)
 
 def generate_post(creator,bodyPost):
-        post = Post()
-        post.caption = bodyPost.get('caption')
-        # post.post_id = bodyPost.get('id')
-        post.picture_fname = bodyPost.get('path')
-        post.picture_path = bodyPost.get('fname')
-        post.created_by_fk = creator
+        try:
+            post = Post()
+            post.caption = bodyPost.get('caption')
+            post.picture = save_picture(bodyPost.get('picture'), str(creator)+str(datetime.now()).replace(' ', '-').replace('.', '').replace(':', ''))
+            post.created_by_fk = creator
+            
+            return {
+                'post_id': dao.generate_post(post),
+                'type': 'positive',
+                'message': 'Publicación creada correctamente'
+            }
+        except:
+            return {
+                'type': 'error',
+                'message': 'Ha ocurrido un error'
+            }
 
-        dao.create_post(post)
 
 def get_comments_by_post():
     return 
+
+

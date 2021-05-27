@@ -1,6 +1,6 @@
 import datetime
 from flask_restx import Model, fields
-from backend.flask_app.app.namespaces.private.schemas import postModel
+from backend.flask_app.app.namespaces.private.schemas import postModel, posts
 
 userModel = Model('User',{ 
     'user_id': fields.Integer(),
@@ -55,4 +55,10 @@ userProfile = Model('userProfile', {
     'username': fields.String(),
     'profile_pic': fields.String(),
     'posts': fields.Nested(postModel)
+})
+
+creator = Model('creator', {
+    'user_id': fields.Integer(),
+    'username': fields.String(),
+    'picture': fields.String(),
 })

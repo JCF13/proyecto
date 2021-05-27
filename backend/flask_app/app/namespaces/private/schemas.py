@@ -26,7 +26,8 @@ userProfile = Model('UserProfile', {
 })
 picture = Model('picture', {
     'kind': fields.String(description='CHOICES: profile, chat, post'),
-    'blurb': fields.String()
+    'blurb': fields.String(),
+    'post_id': fields.Integer()
 })
 
 profilePicture = Model('profilePicture',{
@@ -51,8 +52,9 @@ commentModel = Model('Comment', {
 
 createPostModel = Model('PostCreate', {
     'caption': fields.String(),
-    'path': fields.String(),
-    'fname': fields.String(),
+    'picture': fields.String()
+    #'path': fields.String(),
+    #'fname': fields.String(),
 })
 
 postModel = Model('Post',{
@@ -80,7 +82,7 @@ listComments = Model('commentList', {
 
 posts = Model('allPosts', {
     'id': fields.Integer(attribute='post_id'),
-    'photo': fields.String(attribute='picture_fname'),
+    'picture': fields.String(attribute='picture'),
     'caption': fields.String(attribute='caption'),
     'creationDate': fields.DateTime(default=datetime.now(), attribute='created_on'),
     'creator': fields.List(fields.Nested(simpleUser, attribute='created_by')),

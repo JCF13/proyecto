@@ -4,7 +4,7 @@
             <source type="video/mp4">
         </video>
         <q-btn push label="HACER FOTO" color="black" @click="nextDialog" />
-
+        <input type="hidden" id="picture">
         <q-dialog v-model="captionDialog">
             <q-card style="width: 700px; max-width: 80vw;">
                 <img id="photo" src="" alt="">
@@ -31,10 +31,11 @@ export default {
             mediaRecorder: null,
             captionDialog: false,
             caption: '',
+            picture: ''
         }
     },
     created() {
-        const constraints = { audio: true, video: { width: 1280, height: 720 } };
+        const constraints = { audio: false, video: { width: 1280, height: 720 } };
         let chunks = [];
         
         navigator.mediaDevices.getUserMedia(constraints).then((mediaStream) => {
@@ -60,33 +61,45 @@ export default {
 
             let ctx = canvas.getContext('2d');
             ctx.drawImage(video, 0, 0);
-
             ctx.canvas.toBlob(async function(blob) {
                 let url = URL.createObjectURL(blob);
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    let fileInBase64 = btoa(e.target.result);
+                    document.querySelector('#picture').value = btoa(e.target.result);
                 }
 
                 reader.readAsBinaryString(blob);
                 document.querySelector('#photo').src = url;
             })
 
+
             this.captionDialog = true;
         },
         async createPost() {
-            const authorization = localStorage.getItem('access_token');
             const postFetch = await fetch('http://localhost:5000/post/cpost', {
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json',
-                    'Authorization': 'Bearer ' + authorization + ''
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
                     caption: this.caption,
-                    path: 'C:\\Users\\JCFJe\\Documentos\\Segundo_curso\\FCP\\proyecto\\backend\\flask_app\\app\\static\\img',
-                    fname: 'primerafoto.png'
+                    picture: document.querySelector('#picture').value
                 })
+            })
+            const response = await postFetch.json()
+
+            if (response.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: response.message,
+                    position: 'top-right'
+                })
+                this.$router.push(`/inside/home/post/${response.post_id}`)
+            } else this.$q.notify({
+                type: 'error',
+                message: response.message,
+                position: 'top-right'
             })
         }
     }

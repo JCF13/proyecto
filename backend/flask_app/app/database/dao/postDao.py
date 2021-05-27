@@ -10,14 +10,16 @@ def generate_post(post: Post):
                  saved at the data base
     """
     db.session.add(post)
+    db.session.flush()
     db.session.commit()
+    return post.post_id
 
 
-def find_all_posts():
+def find_by_offset(page):
     """
     Return all the Post objects of the data base
     """
-    return Post.query.all()
+    return Post.query.limit(10).offset(page*10)
 
 
 def find_post_by_id(id):
