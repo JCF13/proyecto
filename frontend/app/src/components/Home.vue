@@ -29,8 +29,7 @@
 
                 <q-icon class="liked" :data-post='post.post_id' @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; right: 0; font-size: 40px;" />
 
-                <!--<img :src="post.picture" @click="openPost(post.id)" @dblclick="sendLike">-->
-                <img @click="openPost(post.post_id)" src="https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg" alt="">
+                <img @click="openPost(post.post_id)" :src="post.picture" alt="">
             </q-card>
             
             <div id="more">
@@ -96,17 +95,22 @@ export default {
         const postsFetch = await fetch(`http://localhost:5000/post/gposts/${this.page}`);
         const posts = await postsFetch.json();
 
-        this.posts = posts;
-        /*const imgFetch = await fetch('http://localhost:5000/my/image', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                path: 'C:\\Users\\JCFJe\\Documentos\\Segundo_curso\\FCP\\proyecto\\backend\\flask_app\\app\\static\\uploads\\foto.png'
+        posts.forEach(async post => {
+            const imgFetch = await fetch('http://localhost:5000/my/image', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(post.picture)
             })
+            const img = await imgFetch.json()
+
+            img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+            img.picture = img.picture.replace("'", '');
+            post.picture = img.picture;
         })
-        this.pic = await imgFetch.blob()*/
+
+        this.posts = posts;
     },
     methods: {
         // Abrir información del post
@@ -122,15 +126,6 @@ export default {
                 }
             })
         },
-
-            /*const likeFetch = await fetch('http://localhost:5000/private/post/like', {
-                method: 'POST',
-                body: JSON.stringify({
-                    post: id,
-                    creator: post.creator.id,
-                    user: this.user.id
-                })
-            });*/
 
         // Cargar siguientes 10 posts
         async loadMore() {

@@ -5,6 +5,7 @@ from os import execlp
 #from backend.flask_app.app.database.models import ChatImage, PostImage, ProfileImage
 import backend.flask_app.app.database.dao.imageDao as dao
 import os
+import base64
 
 def save_picture(picture, name):
     picture_path = os.path.join(current_app.root_path, 'app\\static\\uploads', name+'.png')
@@ -14,6 +15,14 @@ def save_picture(picture, name):
         return picture_path
     except:
         raise Exception()
+
+
+def get_picture(path):
+    with open(path, 'rb') as img:
+        pic = base64.b64encode(img.read())
+        return {
+            'picture': pic
+        }
 
 #def create_post_image(image,  post_id, user_id):
 

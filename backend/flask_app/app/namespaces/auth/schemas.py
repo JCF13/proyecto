@@ -62,3 +62,7 @@ creator = Model('creator', {
     'username': fields.String(),
     'picture': fields.String(),
 })
+
+picture = Model('picture', {
+    'picture': fields.String()
+})

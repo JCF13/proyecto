@@ -4,7 +4,7 @@ from flask_restx import Namespace, Resource, marshal
 from backend.flask_app.app.namespaces.private.schemas import (
     simpleUser, followModel, profilePicture, picture
 )
-from backend.flask_app.app.namespaces.auth.schemas import userProfile
+from backend.flask_app.app.namespaces.auth.schemas import userProfile, picture
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
@@ -12,6 +12,7 @@ from backend.flask_app.app.services.userService import get_user_by_id, get_user_
 #from backend.flask_app.app.services.imageService import create_image
 from backend.flask_app.app.services.logs import complex_file_handler
 from backend.flask_app.app.database.schemas import PostSchema
+from backend.flask_app.app.services.imageService import get_picture
 
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
 
@@ -63,4 +64,5 @@ class SendImage(Resource):
 
     def post(self):
         image = request.get_json()
-        return send_file(image['path'], mimetype='image/png')
+        pic = get_picture(image)
+        return marshal(pic, picture, skip_none=True)
