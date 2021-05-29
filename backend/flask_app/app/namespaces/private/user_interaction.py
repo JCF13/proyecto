@@ -4,7 +4,7 @@ from flask_restx import Namespace, Resource, marshal
 from backend.flask_app.app.namespaces.private.schemas import (
     simpleUser, followModel, profilePicture, picture
 )
-from backend.flask_app.app.namespaces.auth.schemas import userProfile, picture
+from backend.flask_app.app.namespaces.auth.schemas import userProfile, picture, creator
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
@@ -53,7 +53,7 @@ class GetUser(Resource):
 
         strPosts = sqlPost.dumps(user.posts, many=True)
 
-        resp = marshal(user, userProfile, skip_none=True)
+        resp = marshal(user, creator, skip_none=True)
         resp['posts'] = json.loads(strPosts)
         
         return resp 

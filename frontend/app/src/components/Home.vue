@@ -113,12 +113,10 @@ export default {
         this.posts = posts;
     },
     methods: {
-        // Abrir información del post
         openPost(id) {
             this.$router.push(`/inside/home/post/${id}`)
         },
-        
-        // Nuevo like y notificación
+
         async sendLike(id) {
             this.posts.filter(post => {
                 if (post.post_id === id) {
@@ -127,16 +125,28 @@ export default {
             })
         },
 
-        // Cargar siguientes 10 posts
         async loadMore() {
             this.page += 1;
 
             const postsFetch = await fetch(`http://localhost:5000/post/gposts/${this.page}`);
             const posts = await postsFetch.json();
 
-            posts.forEach(post => {
+            posts.forEach(async post => {
+                const imgFetch = await fetch('http://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(post.picture)
+                })
+                const img = await imgFetch.json()
+
+                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+                img.picture = img.picture.replace("'", '');
+                post.picture = img.picture;
+                
                 this.posts.push(post);
-            });
+            })
 
             if (posts.length < 10) {
                 document.querySelector('#more i').style.display = 'none'

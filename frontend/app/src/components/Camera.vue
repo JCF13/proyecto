@@ -13,10 +13,11 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    <q-input color="black" v-model="caption"/>
+                    <q-input color="black" v-model="caption" autofocus='true'/>
                 </q-card-section>
 
                 <q-card-actions align="right" class="bg-white">
+                    <q-btn flat label="CANCELAR" @click="captionDialog = false"/>
                     <q-btn flat label="SIGUIENTE" @click="createPost" />
                 </q-card-actions>
             </q-card>

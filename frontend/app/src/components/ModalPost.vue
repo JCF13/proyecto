@@ -5,7 +5,7 @@
                 <div id="card-left">
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
 
-                    <img id="image" :src="post.photo" alt="">
+                    <img id="image" :src="post.picture" alt="">
 
                     <div id="pie-de-foto" class="absolute-bottom text-subtitle2">
                         {{post.caption}}
@@ -109,13 +109,23 @@ export default {
     },
     async created() {
         const postId = this.$route.params.id;
-        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`)
-        const post = await postFetch.json()
+        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`);
+        const post = await postFetch.json();
 
-        this.post = post
-        console.log(this.post)
+        const imgFetch = await fetch('http://localhost:5000/my/image', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(post.picture)
+        })
+        const img = await imgFetch.json()
 
-        //getPost(postId);
+        img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+        img.picture = img.picture.replace("'", '');
+        post.picture = img.picture;
+
+        this.post = post;
     },
     methods: {
         close() {

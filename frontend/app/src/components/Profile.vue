@@ -3,17 +3,19 @@
         <div id="main">
             <div id="top">
                 <div id="left-top">
-                    <q-img
-                        :src="user.profilePic"
+                    <q-img v-if="user.picture !== '1'"
+                        :src="user.picture"
                         style="width:100%; max-width: 200px; height:100%; max-height: 175px; border-radius:50%; border: 2px solid black;"
                         contain
                     />
+                    <q-icon v-else name='person' style="font-size: 150px; width:100%; max-width: 200px; height:100%; max-height: 175px; 
+                        border-radius:50%; border: 2px solid black;" />
                 </div>
                 <div id="right-top">
                     <q-card class="my-card" flat>
                         <q-card-section vertical>
                             <q-card-section horizontal class="d-flex justify-between">
-                                <h5>{{user.username}}</h5>
+                                <h5><strong>{{user.username}}</strong></h5>
 
                                 <q-card-actions horizontal class="q-px-md">
                                     <q-btn flat color="black" icon="chat_bubble_outline" />
@@ -40,9 +42,10 @@
                 </div>
             </div>
 
-            <div v-if="user.posts.length>0" id="publicaciones">
-                <div v-for="post in user.posts" :key="post.id" @click="openPost(post.id)">
-                    <img class="img-post" :src="post.photo" alt="" >
+            <div v-if="user.posts.length > 0" id="publicaciones">
+                <div v-for="post in user.posts" :key="post.post_id" @click="openPost(post.post_id)">
+                    <q-skeleton height="100%" square class="skeleton" />
+                    <img class="img-post" :src="post.picture" alt="" >
                 </div>
 
                 <div id="more">
@@ -59,62 +62,51 @@ export default {
     data() {
         return {
             user: {
-                id: 1,
-                username: 'Nombre_de_usuario',
-                profilePic: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg',
+                user_id: 0,
+                username: '',
+                picture: '',
                 followers: 2,
                 following: 4,
                 posts: [
                     {
-                        id: 1,
-                        photo: 'https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg',
+                        post_id: 0,
+                        picture: 'https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg',
                         caption: 'Pie de foto',
-                        likes: 4,
-                        comments: 2
                     },
-                    {
-                        id: 2,
-                        photo: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg',
-                        caption: 'Pie de foto',
-                        likes: 4,
-                        comments: 2
-                    },
-                    {
-                        id: 3,
-                        photo: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg',
-                        caption: 'Pie de foto',
-                        likes: 4,
-                        comments: 2
-                    },
-                    {
-                        id: 3,
-                        photo: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg',
-                        caption: 'Pie de foto',
-                        likes: 4,
-                        comments: 2
-                    }
                 ],
             },            
         }
     },
     async created() {
         if (this.$route.params.username) {
-            console.log('username')
             const profileFetch = await fetch(`http://localhost:5000/my/getUser/${this.$route.params.username}`)
-        } else {
-            const postFetch = await fetch('http://localhost:5000/post/cpost', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    caption: 'pie de foto',
-                    path: '',
-                    fname: ''
+            const profile = await profileFetch.json();
+            
+            profile.posts.forEach(async post => {
+                const imgFetch = await fetch('http://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(post.picture)
                 })
+                
+                const img = await imgFetch.json()
+
+                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+                img.picture = img.picture.replace("'", '');
+                post.picture = img.picture;
             })
-            console.log('no')
+            
+            this.user = profile;
+
+            document.querySelectorAll('.skeleton').forEach(a => {
+                console.log(a)
+                a.style.height = '0% !important';            
+            })
+            
+        } else {
+            
         }
     },
     methods: {
