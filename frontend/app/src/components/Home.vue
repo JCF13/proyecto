@@ -1,6 +1,6 @@
 <template>
-    <q-page class="flex flex-center" id="page" @scroll="displayButton">        
-        <div id="main" class="flex flex-center" >
+    <q-page class="flex flex-center" id="page">        
+        <div id="main" class="flex flex-center">
             <q-card class="my-card" v-for="post in posts" :key="post.id">
                 <q-item class="card-top">
                     <q-item-section avatar>
@@ -45,10 +45,6 @@
 
 <script>
 export default {
-    // "https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg"
-    // "https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg"
-    // "https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg"
-    
     data() {
         return {
             posts: [
@@ -108,6 +104,19 @@ export default {
             img.picture = img.picture.replace("b'", 'data:image/png;base64,');
             img.picture = img.picture.replace("'", '');
             post.picture = img.picture;
+
+            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(post.creator.picture)
+            })
+
+            const profilePic = await profilePicFetch.json();
+            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+            profilePic.picture = profilePic.picture.replace("'", '');
+            post.creator.picture = profilePic.picture;
         })
 
         this.posts = posts;
@@ -152,10 +161,6 @@ export default {
                 document.querySelector('#more i').style.display = 'none'
             }
         },
-
-        displayButton() {
-            console.log('scroll')
-        }
     }
 }
 </script>

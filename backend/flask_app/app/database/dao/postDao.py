@@ -29,3 +29,7 @@ def find_post_by_id(id):
     :param id: int
     """
     return Post.query.filter(Post.post_id == id).first()
+
+
+def find_by_offset_and_followed(page):
+    pass

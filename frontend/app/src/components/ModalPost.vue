@@ -125,6 +125,19 @@ export default {
         img.picture = img.picture.replace("'", '');
         post.picture = img.picture;
 
+        const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(post.creator.picture)
+        })
+
+        const profilePic = await profilePicFetch.json();
+        profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+        profilePic.picture = profilePic.picture.replace("'", '');
+        post.creator.picture = profilePic.picture;
+
         this.post = post;
     },
     methods: {
@@ -170,6 +183,7 @@ export default {
         max-width: 800px;
     }
 
+
     #image {
         justify-self: center;
         max-width: 400px;
@@ -196,6 +210,11 @@ export default {
             "fecha fecha"
             "comments comments"
             "comment comment";
+    }
+
+    #card-right img {
+        object-fit: contain;
+        border: 2px solid black;
     }
 
     #modal-user {

@@ -44,7 +44,6 @@
 
             <div v-if="user.posts.length > 0" id="publicaciones">
                 <div v-for="post in user.posts" :key="post.post_id" @click="openPost(post.post_id)">
-                    <q-skeleton height="100%" square class="skeleton" />
                     <img class="img-post" :src="post.picture" alt="" >
                 </div>
 
@@ -70,8 +69,8 @@ export default {
                 posts: [
                     {
                         post_id: 0,
-                        picture: 'https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg',
-                        caption: 'Pie de foto',
+                        picture: '',
+                        caption: '',
                     },
                 ],
             },            
@@ -97,16 +96,59 @@ export default {
                 img.picture = img.picture.replace("'", '');
                 post.picture = img.picture;
             })
+
+            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(profile.picture)
+            })
+
+            const profilePic = await profilePicFetch.json();
+            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+            profilePic.picture = profilePic.picture.replace("'", '');
+            profile.picture = profilePic.picture;
             
             this.user = profile;
-
-            document.querySelectorAll('.skeleton').forEach(a => {
-                console.log(a)
-                a.style.height = '0% !important';            
-            })
-            
         } else {
+            const profileFetch = await fetch(`http://localhost:5000/my/getProfile`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            })
+            const profile = await profileFetch.json();
             
+            profile.posts.forEach(async post => {
+                const imgFetch = await fetch('http://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(post.picture)
+                });
+                
+                const img = await imgFetch.json();
+
+                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+                img.picture = img.picture.replace("'", '');
+                post.picture = img.picture;
+            });
+
+            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(profile.picture)
+            })
+
+            const profilePic = await profilePicFetch.json();
+            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+            profilePic.picture = profilePic.picture.replace("'", '');
+            profile.picture = profilePic.picture;
+            
+            this.user = profile;
         }
     },
     methods: {

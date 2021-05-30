@@ -91,6 +91,10 @@ posts = Model('allPosts', {
 
 followModel = Model('followModel', {
     'user': fields.Nested(simpleUser),
-    'follows': fields.Boolean(default=False),
-    
+    'follows': fields.Boolean(default=False),  
+})
+
+profilePicModel = Model('profilePicModel', {
+    'user': fields.Integer(),
+    'picture': fields.String()
 })

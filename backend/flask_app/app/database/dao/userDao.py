@@ -21,6 +21,7 @@ def find_user_by_id(id: int):
     """
     return User.query.filter(User.user_id == id).first()
 
+
 def find_user_by_email(email: str):
     return User.query.filter(User.email == email).first()
 
@@ -45,4 +46,9 @@ def follows_to(follow: Followers):
     """
     db.session.add(follow)
     db.session.commit()
-    pass
+
+
+def set_profile_pic(user: User):
+    db.session.add(user)
+    db.session.commit()
+    return 

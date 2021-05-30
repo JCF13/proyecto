@@ -2,13 +2,13 @@ from flask import request, json
 from flask.helpers import send_file
 from flask_restx import Namespace, Resource, marshal
 from backend.flask_app.app.namespaces.private.schemas import (
-    simpleUser, followModel, profilePicture, picture
+    simpleUser, followModel, profilePicture, picture, profilePicModel
 )
 from backend.flask_app.app.namespaces.auth.schemas import userProfile, picture, creator
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
-from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to
+from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to, update_profile_pic
 #from backend.flask_app.app.services.imageService import create_image
 from backend.flask_app.app.services.logs import complex_file_handler
 from backend.flask_app.app.database.schemas import PostSchema
@@ -56,7 +56,22 @@ class GetUser(Resource):
         resp = marshal(user, creator, skip_none=True)
         resp['posts'] = json.loads(strPosts)
         
-        return resp 
+        return resp
+
+
+@myNS.route('/getProfile')
+class GetProfile(Resource):
+    @jwt_required()
+    def get(self):
+        user = get_user_by_id(get_jwt_identity())
+        sqlPost = PostSchema()
+
+        strPosts = sqlPost.dumps(user.posts, many=True)
+
+        resp = marshal(user, creator, skip_none=True)
+        resp['posts'] = json.loads(strPosts)
+
+        return resp
 
 
 @myNS.route('/image')
@@ -66,3 +81,14 @@ class SendImage(Resource):
         image = request.get_json()
         pic = get_picture(image)
         return marshal(pic, picture, skip_none=True)
+
+
+@myNS.route('/profilepic')
+class SetProfilePic(Resource):
+
+    @jwt_required()
+    def post(self):
+        pic_req = request.get_json()
+        pic_req['user'] = get_jwt_identity()
+        profile_pic = marshal(pic_req, profilePicModel, skip_none=True)
+        return update_profile_pic(pic_req)
