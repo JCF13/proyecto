@@ -1,11 +1,11 @@
 from functools import wraps
 from flask import request
 from flask_restx.marshalling import marshal
-from backend.flask_app.app.database.dao.userDao import find_user_by_username
+from flask_app.app.database.dao.userDao import find_user_by_username
 from flask_jwt_extended import create_access_token, create_refresh_token
 
-from backend.flask_app.app import bcrypt
-from backend.flask_app.app.namespaces.auth.schemas import auth_token, errorSchema, loginResp
+from flask_app.app import bcrypt
+from flask_app.app.namespaces.auth.schemas import auth_token, errorSchema, loginResp
 
 
 def make_header(user):

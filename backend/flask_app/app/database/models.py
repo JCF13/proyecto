@@ -1,8 +1,8 @@
 import datetime
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from backend.flask_app.app.database import db
-from backend.flask_app.app.database.mixins import CreatedMixin
+from flask_app.app.database import db
+from flask_app.app.database.mixins import CreatedMixin
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy import Column, Integer, String
 

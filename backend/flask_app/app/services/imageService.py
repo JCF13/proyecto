@@ -1,9 +1,9 @@
 import base64
 from flask.globals import current_app
-from backend.flask_app.app.services.utils import save_file
+from flask_app.app.services.utils import save_file
 from os import execlp
-#from backend.flask_app.app.database.models import ChatImage, PostImage, ProfileImage
-import backend.flask_app.app.database.dao.imageDao as dao
+#from flask_app.app.database.models import ChatImage, PostImage, ProfileImage
+import flask_app.app.database.dao.imageDao as dao
 import os
 import base64
 
