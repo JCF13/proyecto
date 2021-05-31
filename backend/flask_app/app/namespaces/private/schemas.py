@@ -26,8 +26,7 @@ userProfile = Model('UserProfile', {
 })
 picture = Model('picture', {
     'kind': fields.String(description='CHOICES: profile, chat, post'),
-    'blurb': fields.String(),
-    'post_id': fields.Integer()
+    'blurb': fields.String()
 })
 
 profilePicture = Model('profilePicture',{
@@ -52,12 +51,11 @@ commentModel = Model('Comment', {
 
 createPostModel = Model('PostCreate', {
     'caption': fields.String(),
-    'picture': fields.String()
-    #'path': fields.String(),
-    #'fname': fields.String(),
+    'path': fields.String(),
+    
 })
 
-postModel = Model('Post',{
+postModel = Model('Post', {
     # 'id': fields.Integer(attribute='post_id'),
     'user_id': fields.Integer(attribute='created_by_fk'),
     'caption': fields.String(attribute='caption'),
@@ -67,6 +65,21 @@ postModel = Model('Post',{
     'comments': fields.List(fields.Nested(commentModel)),
 })
 
+postOnlyAttr = Model('PostOnly', {
+    'user': fields.Nested(userProfile),
+    'picture': fields.String(attribute='picture'),
+    'caption': fields.String(attribute='caption'),
+
+})
+
+
+postUnit = Model('PostUnit', {
+    'user': fields.Nested(userProfile),
+    'post': fields.Nested(postOnlyAttr),
+    'likes': fields.Nested(likeListModel),
+    'comments': fields.List(fields.Nested(commentModel)),
+
+})
 
 
 commentUser = Model('commentUser', {
@@ -81,20 +94,11 @@ listComments = Model('commentList', {
 })
 
 posts = Model('allPosts', {
-    'id': fields.Integer(attribute='post_id'),
-    'picture': fields.String(attribute='picture'),
-    'caption': fields.String(attribute='caption'),
-    'creationDate': fields.DateTime(default=datetime.now(), attribute='created_on'),
-    'creator': fields.List(fields.Nested(simpleUser, attribute='created_by')),
-    'comments': fields.List(fields.Nested(commentUser, attribute='comments', as_list=True))
+    'posts': fields.List(fields.Nested(postUnit)),
+
 })
 
 followModel = Model('followModel', {
     'user': fields.Nested(simpleUser),
-    'follows': fields.Boolean(default=False),  
-})
-
-profilePicModel = Model('profilePicModel', {
-    'user': fields.Integer(),
-    'picture': fields.String()
+    'follows': fields.Boolean(default=False),
 })
