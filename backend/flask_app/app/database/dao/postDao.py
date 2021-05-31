@@ -13,6 +13,13 @@ def generate_post(post: Post):
     db.session.commit()
 
 
+def find_by_offset(page):
+    """
+    Return all the Post objects of the data base
+    """
+    return Post.query.limit(10).offset(page*10)
+
+
 def find_all_posts():
     """
     Return all the Post objects of the data base

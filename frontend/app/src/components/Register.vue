@@ -117,7 +117,7 @@ export default {
                         surname: this.user.surnames,
                         password: this.user.password,
                         email: this.user.email,
-                        profile_pic_fname: ''
+                        picture: ''
                     })
                 });
             
@@ -126,12 +126,14 @@ export default {
                 if (register.type == 'error') {
                     this.$q.notify({
                         type: 'negative',
-                        message: register.message
+                        message: register.message,
+                        position: 'top-right'
                     })
                 } else {
                     this.$q.notify({
                         type: 'positive',
-                        message: register.message
+                        message: register.message,
+                        position: 'top-right'
                     })
                     
                     this.$router.push('/login')
@@ -139,7 +141,8 @@ export default {
             } else {
                 this.$q.notify({
                     type: 'warning',
-                    message: 'La contraseña no coincide'
+                    message: 'La contraseña no coincide',
+                    position: 'top-right'
                 })
             }
         }

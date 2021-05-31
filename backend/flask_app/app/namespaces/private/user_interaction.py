@@ -50,17 +50,42 @@ class GetUser(Resource):
 
         strPosts = sqlPost.dumps(user.posts, many=True)
 
-        resp = marshal(user, userProfile, skip_none=True)
+        resp = marshal(user, creator, skip_none=True)
         resp['posts'] = json.loads(strPosts)
         
-        return resp 
-
-@myNS.route('take_photo')
-class TakePhoto(Resource):
+        return resp
 
 
-    @myNS.expect(picture)
+@myNS.route('/getProfile')
+class GetProfile(Resource):
+    @jwt_required()
+    def get(self):
+        user = get_user_by_id(get_jwt_identity())
+        sqlPost = PostSchema()
+
+        strPosts = sqlPost.dumps(user.posts, many=True)
+
+        resp = marshal(user, creator, skip_none=True)
+        resp['posts'] = json.loads(strPosts)
+
+        return resp
+
+
+@myNS.route('/image')
+class SendImage(Resource):
+
     def post(self):
-        jsonImg = request.get_json()
-        create_image(jsonImg['blurb'], jsonImg['kind'])
-        pass
+        image = request.get_json()
+        pic = get_picture(image)
+        return marshal(pic, picture, skip_none=True)
+
+
+@myNS.route('/profilepic')
+class SetProfilePic(Resource):
+
+    @jwt_required()
+    def post(self):
+        pic_req = request.get_json()
+        pic_req['user'] = get_jwt_identity()
+        profile_pic = marshal(pic_req, profilePicModel, skip_none=True)
+        return update_profile_pic(pic_req)

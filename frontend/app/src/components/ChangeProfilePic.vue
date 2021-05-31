@@ -1,14 +1,17 @@
 <template>
     <div id="change-profilepic-main">
         <h4>Cambiar foto de perfil</h4>
+        <input type="hidden" id="picture-new">
         <q-form id="form-profilepic">
-            <q-file clearable filled v-model="model" label="Nueva foto de perfil" />
+            <video id="profile-new" class="align-middle">
+                <source type="video/mp4">
+            </video>
 
             <div id="new-pic">
                 Foto
             </div>
 
-            <q-btn label="GUARDAR" type="submit" color="black"/>
+            <q-btn label="GUARDAR" type="button" color="black" style="height: 100%;" @click="changePicture"/>
         </q-form>
     </div>
 </template>
@@ -19,6 +22,63 @@ export default {
         return {
             model: null
         }
+    },
+    created() {
+        const constraints = { audio: false, video: { width: 1280, height: 720 } };
+        let chunks = [];
+        
+        navigator.mediaDevices.getUserMedia(constraints).then((mediaStream) => {
+            const video = document.querySelector("video");
+            video.srcObject = mediaStream;
+
+            this.mediaRecorder = new MediaRecorder(mediaStream);
+
+            this.mediaRecorder.ondatavailable = function(e) {
+                chunks.push(e.data)
+            }
+
+            video.play()
+            this.mediaRecorder.start()
+        })
+    },
+    methods: {
+        async changePicture() {
+            let canvas = document.createElement('CANVAS');
+            let video = document.querySelector('#profile-new');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            let ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            ctx.canvas.toBlob(async (blob) => {
+                let url = URL.createObjectURL(blob);
+                var reader = new FileReader();
+                reader.onload = async (e) => {
+                    document.querySelector('#picture-new').value = btoa(e.target.result);
+                    const profileFetch = await fetch('http://localhost:5000/my/profilepic', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'picture': btoa(e.target.result)
+                        })
+                    });
+                    const resp = await profileFetch.json();
+
+                    if (resp.type === 'positive') {
+                        this.$q.notify({
+                            type: 'positive',
+                            message: resp.message,
+                            position: 'top-right'
+                        })
+                    }
+                }
+
+                reader.readAsBinaryString(blob);
+            })
+        },
     }
 }
 </script>
@@ -49,5 +109,11 @@ export default {
 
     #new-pic {
         height: 100%;
+    }
+
+    video {
+        border-radius: 10px;
+        height: 100%;
+        width: 100%;
     }
 </style>

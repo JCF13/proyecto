@@ -23,7 +23,6 @@ userRegister = Model('userRegister', {
 })
 
 auth_token = Model('auth_token', {
-    'username': fields.String(),
     'access_token': fields.String(),
     'refresh_token': fields.String()
 
@@ -55,4 +54,25 @@ userProfile = Model('userProfile', {
     'username': fields.String(),
     'profile_pic': fields.String(),
     'posts': fields.Nested(postModel)
+})
+
+creator = Model('creator', {
+    'user_id': fields.Integer(),
+    'username': fields.String(),
+    'picture': fields.String(),
+})
+
+picture = Model('picture', {
+    'picture': fields.String()
+})
+
+
+creator = Model('creator', {
+    'user_id': fields.Integer(),
+    'username': fields.String(),
+    'picture': fields.String(),
+})
+
+picture = Model('picture', {
+    'picture': fields.String()
 })

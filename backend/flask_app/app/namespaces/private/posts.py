@@ -75,37 +75,18 @@ class Followers_posts(Resource):
 class Get_posts(Resource):
 
     def get(self):
-        allPosts = get_all_posts()
+        allPosts = get_by_offset(page)
         sqlPost = PostSchema()
         sqlPostComment = PostCommentSchema()
-        # for post in allPosts:
-        #     if len(post.comments) > 0:
-        #         comentarios = []
-        #         for comment in post.comments:
-        #             comentarios.append(sqlPostComment.load(comment))
-        #         post.comments = comentarios
-
-            # for key,val in post.__dict__.items():
-            #     print(key,'  _   ',val)
-            # print('çambio')
 
         strPosts = sqlPost.dumps(allPosts, many=True)
         h = json.loads(strPosts)
-        pos = 0
-        for post, j in allPosts, h:
-            strComments = sqlPostComment.dumps(get_post_comments(post.post_id), many=True)
-            print(strComments)
-            j['comments'] = json.loads(strComments)
-            #h[i]['comments'] = json.loads(strComments)
+        for post in h:
+            user = get_user_by_id(post['created_by_fk'])
+            user_resp = marshal(user, creator, skip_none=True)
+            post['creator'] = user_resp
+        return h
 
-        # for post in h:
-        #     if len(post['comments']) > 0:
-        #         comments = []
-        #         for comment in post['comments']:
-        #             comments.append(sqlPostComment.dump(comment))
-        #         post['comments'] = comments.copy()
-            
-        return marshal(h, posts)
 
 @post.route('/gpost/<int:id>')
 class get_post(Resource):

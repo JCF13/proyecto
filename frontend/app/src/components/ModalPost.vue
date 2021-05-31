@@ -5,7 +5,7 @@
                 <div id="card-left">
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
 
-                    <img id="image" :src="post.photo" alt="">
+                    <img id="image" :src="post.picture" alt="">
 
                     <div id="pie-de-foto" class="absolute-bottom text-subtitle2">
                         {{post.caption}}
@@ -14,8 +14,11 @@
 
                 <q-card-actions vertical id="card-right">
                     <div id="modal-user">
-                        <q-avatar size="30px" class="avatar">
-                            <img :src="post.creator.profilePic" alt="">
+                        <q-avatar v-if="post.creator.picture === '1'">
+                            <q-icon name='person' />
+                        </q-avatar>
+                        <q-avatar v-else size="30px" class="avatar">
+                            <img :src="post.creator.picture" alt="">
                         </q-avatar>
                         <h6>{{post.creator.username}}</h6>
                     </div>
@@ -30,17 +33,20 @@
                         </div>
                     </div>
                     <div id="creation-date">
-                        <p>{{post.creationDate}}</p>
+                        <p>{{post.created_on}}</p>
                     </div>
                     <div id="comments">
                         <div v-for="comment in post.comments" :key="comment.id">
-                            <q-avatar size="20px" class="avatar">
-                                <img :src="comment.user.profilePic" alt="">
+                            <!--<q-avatar v-if="comment.user.picture == 1">
+                                <q-icon name='person' />
+                            </q-avatar>
+                            <q-avatar v-else>
+                                <img :src="comment.user.picture" />
                             </q-avatar>
                             <p>
                                 <span>{{comment.user.username}}.</span>
                                 {{comment.message}}
-                            </p>
+                            </p>-->
                         </div>
                         <q-icon v-if="post.comments.length>5" name="add_circle_outline" size="25px" />
                     </div>
@@ -63,35 +69,35 @@ export default {
         return {
             dialog: true,
             post: {
-                id: 1,
-                creationDate: '15/04/2021',
-                photo: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg',
-                caption: 'Pie de foto',
+                post_id: 0,
+                created_on: '',
+                picture: '',
+                caption: '',
                 creator: {
-                    id: 1,
-                    username: 'Nombre_de_usuario',
-                    profilePic: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg'
+                    user_id: 0,
+                    username: '',
+                    picture: ''
                 },
                 likes: [
                     {
-                        id: 1,
+                        id: 0,
                         user: {
-                            id: 2,
-                            username: 'Nombre_usuario_2',
-                            profilePic: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg'
+                            user_id: 0,
+                            username: '',
+                            picture: ''
                         }
                     }
                 ],
                 comments: [
                     {
-                        id: 1,
+                        id: 0,
                         user: {
-                            id: 2,
-                            username: 'Nombre_usuario_2',
-                            profilePic: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg'
+                            user_id: 0,
+                            username: '',
+                            picture: ''
                         },
-                        creationDate: '15/04/2021',
-                        message: 'Comentario1'
+                        creationDate: '',
+                        message: ''
                     }
                 ]
             },
@@ -101,10 +107,38 @@ export default {
             message: null
         }
     },
-    created() {
+    async created() {
         const postId = this.$route.params.id;
+        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`);
+        const post = await postFetch.json();
 
-        //getPost(postId);
+        const imgFetch = await fetch('http://localhost:5000/my/image', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(post.picture)
+        })
+        const img = await imgFetch.json()
+
+        img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+        img.picture = img.picture.replace("'", '');
+        post.picture = img.picture;
+
+        const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(post.creator.picture)
+        })
+
+        const profilePic = await profilePicFetch.json();
+        profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+        profilePic.picture = profilePic.picture.replace("'", '');
+        post.creator.picture = profilePic.picture;
+
+        this.post = post;
     },
     methods: {
         close() {
@@ -127,7 +161,7 @@ export default {
                 method: 'POST',
                 body: JSON.stringify({
                     post: postId,
-                    creator: this.post.creator.id,
+                    creator: this.post.creator.user_id,
                     user: this.user.id,
                     message: this.message
                 })
@@ -148,6 +182,7 @@ export default {
         width: 100%;
         max-width: 800px;
     }
+
 
     #image {
         justify-self: center;
@@ -175,6 +210,11 @@ export default {
             "fecha fecha"
             "comments comments"
             "comment comment";
+    }
+
+    #card-right img {
+        object-fit: contain;
+        border: 2px solid black;
     }
 
     #modal-user {

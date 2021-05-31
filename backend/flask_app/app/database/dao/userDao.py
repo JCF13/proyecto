@@ -48,3 +48,9 @@ def follows_to(follow: Followers):
     db.session.add(follow)
     db.session.commit()
     pass
+
+
+def set_profile_pic(user: User):
+    db.session.add(user)
+    db.session.commit()
+    return 

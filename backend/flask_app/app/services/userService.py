@@ -1,6 +1,6 @@
-from flask_app.app.database.models import User, Followers
-from flask_app.app.database.dao.userDao import (
-    generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email
+
+from datetime import datetime
+from backend.flask_app.app.database.schemas import UserRegisterSchema
 )
 from flask_app.app import bcrypt
 from flask_app.app.database import db

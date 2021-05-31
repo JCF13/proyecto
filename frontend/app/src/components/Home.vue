@@ -4,13 +4,16 @@
             <q-card class="my-card" v-for="post in posts" :key="post.id">
                 <q-item class="card-top">
                     <q-item-section avatar>
-                        <q-avatar>
-                            <img :src="post.creator.profilePic" alt="">
+                        <q-avatar v-if="post.creator.picture == 1">
+                            <q-icon name='person' />
+                        </q-avatar>
+                        <q-avatar v-else>
+                            <img :src="post.creator.picture" />
                         </q-avatar>
                     </q-item-section>
 
                     <q-item-section>
-                        <q-item-label>{{post.creator.username}}</q-item-label>
+                        <q-item-label><strong>{{post.creator.username}}</strong></q-item-label>
                         <q-item-label>{{post.caption}}</q-item-label>
                     </q-item-section>
 
@@ -24,35 +27,36 @@
                     </q-item-section>
                 </q-item>
 
-                <img :src="post.photo" @click="openPost(post.id)" @dblclick="sendLike">
+                <q-icon class="liked" :data-post='post.post_id' @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; right: 0; font-size: 40px;" />
+
+                <img @click="openPost(post.post_id)" :src="post.picture" alt="">
             </q-card>
             
             <div id="more">
                 <q-icon name="add_circle_outline" size="30px" @click="loadMore" />
             </div>
         </div>
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+            <q-btn fab icon="arrow_upward" color="blue" />
+        </q-page-sticky>
         <router-view/>
     </q-page>
 </template>
 
 <script>
 export default {
-    // "https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg"
-    // "https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg"
-    // "https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg"
-    
     data() {
         return {
             posts: [
                 {
                     id: 0,
-                    photo: '',
+                    picture: '',
                     caption: '',
                     creationDate: '',
                     creator: {
-                        id: 0,
+                        user_id: 0,
                         username: '',
-                        profilePic: ''
+                        picture: ''
                     },
                     comments: [
                         {
@@ -65,6 +69,7 @@ export default {
                             creationDate: ''
                         }
                     ],
+                    liked: false,
                     likes: [
                         {
                             id: 0,
@@ -76,49 +81,86 @@ export default {
                     ]
                 },
             ],
-            offset: 0,
+            page: 0,
             user: {
                 id: null,
             }
         }
     },
     async created() {
-        const postsFetch = await fetch('http://localhost:5000/post/gposts');
+        const postsFetch = await fetch(`http://localhost:5000/post/gposts/${this.page}`);
         const posts = await postsFetch.json();
+
+        posts.forEach(async post => {
+            const imgFetch = await fetch('http://localhost:5000/my/image', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(post.picture)
+            })
+            const img = await imgFetch.json()
+
+            img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+            img.picture = img.picture.replace("'", '');
+            post.picture = img.picture;
+
+            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(post.creator.picture)
+            })
+
+            const profilePic = await profilePicFetch.json();
+            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+            profilePic.picture = profilePic.picture.replace("'", '');
+            post.creator.picture = profilePic.picture;
+        })
 
         this.posts = posts;
     },
     methods: {
-        // Abrir información del post
         openPost(id) {
             this.$router.push(`/inside/home/post/${id}`)
         },
-        
-        // Nuevo like y notificación
+
         async sendLike(id) {
-            const post = this.posts.filter(post => post.id === id);
-            
-            const likeFetch = await fetch('http://localhost:5000/private/post/like', {
-                method: 'POST',
-                body: JSON.stringify({
-                    post: id,
-                    creator: post.creator.id,
-                    user: this.user.id
-                })
-            });
+            this.posts.filter(post => {
+                if (post.post_id === id) {
+                    document.querySelector(`i[data-post='${id}']`).innerHTML = 'favorite'
+                }
+            })
         },
 
-        // Cargar siguientes 10 posts
         async loadMore() {
-            this.offset += 10;
+            this.page += 1;
 
-            const postsFetch = await fetch(`http://localhost:5000/private/posts/${this.user.id}/${this.offset}`);
-            const posts = postsFetch.json();
+            const postsFetch = await fetch(`http://localhost:5000/post/gposts/${this.page}`);
+            const posts = await postsFetch.json();
 
-            posts.forEach(post => {
+            posts.forEach(async post => {
+                const imgFetch = await fetch('http://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(post.picture)
+                })
+                const img = await imgFetch.json()
+
+                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
+                img.picture = img.picture.replace("'", '');
+                post.picture = img.picture;
+                
                 this.posts.push(post);
-            });
-        }
+            })
+
+            if (posts.length < 10) {
+                document.querySelector('#more i').style.display = 'none'
+            }
+        },
     }
 }
 </script>
