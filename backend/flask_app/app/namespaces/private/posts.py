@@ -1,11 +1,12 @@
-from backend.flask_app.app.services.commentService import (
+from flask_app.app.services.userService import get_user_by_id
+from flask_app.app.services.commentService import (
     generate_comment, get_post_comments
 )
 from flask import request, json, current_app
 from flask_app.app.services.postService import (
-    get_all_posts, generate_post, get_post_by_id
+    get_all_posts, create_post, get_post_by_id
 )
-from backend.flask_app.app.namespaces.private.schemas import (
+from flask_app.app.namespaces.private.schemas import (
                     postModel,
                     userModel,
                     commentModel,
@@ -14,7 +15,7 @@ from backend.flask_app.app.namespaces.private.schemas import (
                     createPostModel,
                     simpleUser,
                     posts,
-                    commentUser
+                    commentUser, postUnit
                     )
 from flask_restx import Namespace, Resource, marshal
 from flask_jwt_extended import (
@@ -32,6 +33,7 @@ post.models[likeModel.name] = likeModel
 post.models[likeListModel.name] = likeListModel
 post.models[commentModel.name] = commentModel
 post.models[postModel.name] = postModel
+post.models[postUnit.name] = postUnit
 post.models[createPostModel.name] = createPostModel
 post.models[simpleUser.name] = simpleUser
 post.models[posts.name] = posts
@@ -51,11 +53,22 @@ class Make_post(Resource):
 
         marshaledPost = marshal(newPost, createPostModel, skip_none=True)
 
-        generate_post(get_jwt_identity(), marshaledPost)
+        create_post(get_jwt_identity(), marshaledPost)
         # sqlPost = PostSchema()
         # sqlPost.load(marshaledPost,session= db.session)
 
         return marshaledPost
+
+
+@post.route('/myfeed')
+class Followers_posts(Resource):
+
+    @post.expect(parser)
+    @jwt_required()
+    def get(self):
+        userAuth = get_user_by_id(get_jwt_identity())
+        print(userAuth.following)
+        return 0
 
 
 @post.route('/gposts')

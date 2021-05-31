@@ -1,5 +1,5 @@
-from backend.flask_app.app.database.models import PostComment
-import backend.flask_app.app.database.dao.commentDao as dao
+from flask_app.app.database.models import PostComment
+import flask_app.app.database.dao.commentDao as dao
 
 
 def generate_comment(creator, postId, bodyPost):

@@ -1,9 +1,9 @@
 from flask import request
 from flask_restx import Namespace, Resource
 from flask_app.app.namespaces.private.schemas import (
-    simpleUser, followModel, profilePicture, picture
+    simpleUser, followModel, profilePicture, picture, userProfile
 )
-from backend.flask_app.app.namespaces.auth.schemas import userProfile
+
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )

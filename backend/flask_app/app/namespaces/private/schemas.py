@@ -52,10 +52,10 @@ commentModel = Model('Comment', {
 createPostModel = Model('PostCreate', {
     'caption': fields.String(),
     'path': fields.String(),
-    'fname': fields.String(),
+    
 })
 
-postModel = Model('Post',{
+postModel = Model('Post', {
     # 'id': fields.Integer(attribute='post_id'),
     'user_id': fields.Integer(attribute='created_by_fk'),
     'caption': fields.String(attribute='caption'),
@@ -65,6 +65,21 @@ postModel = Model('Post',{
     'comments': fields.List(fields.Nested(commentModel)),
 })
 
+postOnlyAttr = Model('PostOnly', {
+    'user': fields.Nested(userProfile),
+    'picture': fields.String(attribute='picture'),
+    'caption': fields.String(attribute='caption'),
+
+})
+
+
+postUnit = Model('PostUnit', {
+    'user': fields.Nested(userProfile),
+    'post': fields.Nested(postOnlyAttr),
+    'likes': fields.Nested(likeListModel),
+    'comments': fields.List(fields.Nested(commentModel)),
+
+})
 
 
 commentUser = Model('commentUser', {
@@ -90,5 +105,4 @@ posts = Model('allPosts', {
 followModel = Model('followModel', {
     'user': fields.Nested(simpleUser),
     'follows': fields.Boolean(default=False),
-    
 })

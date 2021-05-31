@@ -114,10 +114,12 @@ class ChatImage(db.Model, Image):
 
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
 
+
 class PostImage(db.Model, Image):
     __tablename__ = 'post_image'
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+
 
 class ProfileImage(db.Model):
     __tablename__ = 'profile_image'

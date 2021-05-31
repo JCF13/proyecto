@@ -1,6 +1,6 @@
 import datetime
 from flask_restx import Model, fields
-from backend.flask_app.app.namespaces.private.schemas import postModel
+from flask_app.app.namespaces.private.schemas import postModel
 
 userModel = Model('User',{ 
     'user_id': fields.Integer(),
@@ -20,10 +20,10 @@ userRegister = Model('userRegister', {
     'surname': fields.String(),
     'password': fields.String(),
     'email': fields.String(),
-    'picture': fields.String(),
 })
 
 auth_token = Model('auth_token', {
+    'username': fields.String(),
     'access_token': fields.String(),
     'refresh_token': fields.String()
 

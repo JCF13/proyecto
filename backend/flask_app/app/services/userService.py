@@ -1,5 +1,3 @@
-
-from flask_app.app.database.schemas import UserRegisterSchema
 from flask_app.app.database.models import User, Followers
 from flask_app.app.database.dao.userDao import (
     generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email
@@ -16,7 +14,7 @@ def user_follows_to(follower, followed):
 
 def create_user(user):
     if user['username'] != '' \
-        and user['password'] != '' \
+        and user['passwd'] != '' \
         and user['email'] != '' \
         and user['name'] != '':
         if find_user_by_username(user['username']):
@@ -32,19 +30,15 @@ def create_user(user):
             }
 
         creado = User()
-        passwordHash = bcrypt.generate_password_hash(user['password'])
+        passwordHash = bcrypt.generate_password_hash(user['passwd'])
         print(user)
         creado.password = passwordHash
         creado.username = user['username']
         creado.name = user['name']
         creado.surname = user['surname']
         creado.email = user['email']
-        creado.profile_pic_fname = user['profile_pic_fname']
+        creado.picture = 1
 
-        if user['picture'] is None:
-            creado.picture = user['picture']
-        else:
-            creado.picture = 1
         generate_user(creado)
         return {
             'type': 'positive',
