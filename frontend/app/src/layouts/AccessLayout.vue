@@ -1,7 +1,7 @@
 <template>
     <q-layout view="hHh lpR fFf" id="access-layout">
         <div id="menu-access">
-            <q-toolbar class="row d-flex justify-content-center">
+            <q-toolbar class="row d-flex justify-content-center" id="option-access">
                 <q-tabs class="col-md-12">
                     <router-link to="/login" class="col-md-6">
                         <q-tab name="tab1" label="ENTRAR" />
@@ -41,6 +41,7 @@ export default {
         width: 70%;
         margin: 0 auto;
         padding: 5%;
+        background: #b3e5fc;
     }
 
     a {
@@ -49,9 +50,10 @@ export default {
     }
 
     #menu-access {
-        background: white;
+        background: linear-gradient(to left, #4fc3f7, #b2ff59);
         box-shadow: 0 0 10px rgb(161, 161, 161);
         border-radius: 10px;
     }
+
 
 </style>

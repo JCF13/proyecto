@@ -11,6 +11,7 @@ from backend.flask_app.app.namespaces.auth.schemas import auth_token, errorSchem
 def make_header(user):
     valido = False
     usuario = find_user_by_username(user['username'])
+
     if bcrypt.check_password_hash(usuario.password,user['passwd']):
         valido = True
 

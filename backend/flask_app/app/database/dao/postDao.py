@@ -15,11 +15,17 @@ def generate_post(post: Post):
     return post.post_id
 
 
-def find_by_offset(page):
+def find_by_offset(page, users):
     """
     Return all the Post objects of the data base
     """
-    return Post.query.limit(10).offset(page*10)
+    ids = []
+    for user in users:
+        ids.append(user.user_id)
+    print(ids)
+
+    return Post.query.filter(Post.created_by_fk.in_(ids)).order_by(Post.created_on).limit(10).offset(page*10)
+    #return Post.query.limit(10).offset(page*10)
 
 
 def find_post_by_id(id):

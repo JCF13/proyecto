@@ -1,7 +1,8 @@
 <template>
     <div>
         <q-form>
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Nombre de usuario"
                 color="black"
@@ -12,7 +13,8 @@
                 </template>
             </q-input>
             
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Contraseña"
                 type="password"
@@ -29,7 +31,7 @@
                 <img src="./../assets/google.svg" alt="">
             </q-btn>
 
-            <q-btn label="ENTRAR" type="button" color="black" id="entrar" @click="logIn"/>
+            <q-btn label="ENTRAR" type="button" id="entrar" @click="logIn"/>
         </q-form>
     </div>
 </template>

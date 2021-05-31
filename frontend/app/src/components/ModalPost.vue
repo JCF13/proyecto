@@ -125,18 +125,22 @@ export default {
         img.picture = img.picture.replace("'", '');
         post.picture = img.picture;
 
-        const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(post.creator.picture)
-        })
+        if (post.creator.picture !== '1') {
+            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(post.creator.picture)
+            })
 
-        const profilePic = await profilePicFetch.json();
-        profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-        profilePic.picture = profilePic.picture.replace("'", '');
-        post.creator.picture = profilePic.picture;
+            const profilePic = await profilePicFetch.json();
+            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+            profilePic.picture = profilePic.picture.replace("'", '');
+            post.creator.picture = profilePic.picture;
+        }
+        
+        
 
         this.post = post;
     },

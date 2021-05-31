@@ -1,7 +1,8 @@
 <template>
     <div>
         <q-form>
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Nombre"
                 color="black"
@@ -16,7 +17,8 @@
                 </template>
             </q-input>
 
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Apellidos"
                 color="black"
@@ -27,7 +29,8 @@
                 </template>
             </q-input>
 
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Correo electrónico"
                 color="black"
@@ -41,7 +44,8 @@
                 </template>
             </q-input>
 
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Nombre de usuario"
                 color="black"
@@ -54,7 +58,8 @@
                 </template>
             </q-input>
             
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Contraseña"
                 type="password"
@@ -66,7 +71,8 @@
                 </template>
             </q-input>
 
-            <q-input
+            <q-input 
+                class="bg-white"
                 filled
                 label="Repetir contraseña"
                 type="password"
@@ -80,7 +86,7 @@
                 </template>
             </q-input>
 
-            <q-btn label="REGISTRARSE" type="button" color="black" id="register" @click="register"/>
+            <q-btn label="REGISTRARSE" type="button" id="register" @click="register"/>
         </q-form>
     </div>
 </template>
@@ -162,5 +168,6 @@ export default {
         margin: 0 auto;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
+        font-weight: bold;
     }
 </style>
