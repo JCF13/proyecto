@@ -57,10 +57,18 @@ class Make_post(Resource):
 @post.route('/gposts/<int:page>')
 class Get_posts(Resource):
 
+    @jwt_required()
     def get(self, page):
-        allPosts = get_by_offset(page)
+        user = get_user_by_id(get_jwt_identity())
+        
+        following = []
+
+        for follow in user.following:
+            following.append(get_user_by_id(follow.followed_id))
+        
+        allPosts = get_by_offset(page, following)
+
         sqlPost = PostSchema()
-        sqlPostComment = PostCommentSchema()
 
         strPosts = sqlPost.dumps(allPosts, many=True)
         h = json.loads(strPosts)

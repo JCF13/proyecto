@@ -9,8 +9,8 @@ from backend.flask_app.app.namespaces.private.schemas import postModel
 import backend.flask_app.app.database.dao.postDao as dao
 from backend.flask_app.app.services.imageService import save_picture
 
-def get_by_offset(page):
-    return dao.find_by_offset(page)
+def get_by_offset(page, users):
+    return dao.find_by_offset(page, users)
     
 def get_post_by_id(id):
     return dao.find_post_by_id(id)

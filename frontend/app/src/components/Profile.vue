@@ -33,9 +33,9 @@
                                 </router-link>
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal style="margin-top:5%">
-                                <q-btn class="bg-white" push label="SEGUIR" @click="follow" />
+                                <q-btn v-if="!isUser" class="bg-white" push label="SEGUIR" @click="follow" />
                                 <q-btn class="bg-white" push label="DEJAR DE SEGUIR" style="display:none" />
-                                <q-btn class="bg-white" push label="TE SIGUE" />
+                                <q-btn v-if="!isUser" class="bg-white" push label="TE SIGUE" />
                             </q-card-section>
                         </q-card-section>
                     </q-card>
@@ -51,6 +51,9 @@
                     <q-icon v-if="user.posts.length>5" name="add_circle_outline" size="30px"/>
                 </div>
             </div>
+            <div v-else>
+                <h5 style="margin-left: 5%; margin-top: 5%;">Todavía no hay publicaciones</h5>
+            </div>
         </div>
         <router-view/>
     </q-page>
@@ -64,8 +67,8 @@ export default {
                 user_id: 0,
                 username: '',
                 picture: '',
-                followers: 2,
-                following: 4,
+                followers: 0,
+                following: 0,
                 posts: [
                     {
                         post_id: 0,
@@ -73,7 +76,8 @@ export default {
                         caption: '',
                     },
                 ],
-            },            
+            },
+            isUser: true      
         }
     },
     async created() {
@@ -97,19 +101,22 @@ export default {
                 post.picture = img.picture;
             })
 
-            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(profile.picture)
-            })
+            if (profile.picture !== '1') {
+                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(profile.picture)
+                })
 
-            const profilePic = await profilePicFetch.json();
-            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-            profilePic.picture = profilePic.picture.replace("'", '');
-            profile.picture = profilePic.picture;
-            
+                const profilePic = await profilePicFetch.json();
+                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+                profilePic.picture = profilePic.picture.replace("'", '');
+                profile.picture = profilePic.picture;
+            }
+
+            this.isUser = false;
             this.user = profile;
         } else {
             const profileFetch = await fetch(`http://localhost:5000/my/getProfile`, {
@@ -135,18 +142,22 @@ export default {
                 post.picture = img.picture;
             });
 
-            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(profile.picture)
-            })
+            if (profile.picture !== '1') {
+                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(profile.picture)
+                })
 
-            const profilePic = await profilePicFetch.json();
-            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-            profilePic.picture = profilePic.picture.replace("'", '');
-            profile.picture = profilePic.picture;
+                const profilePic = await profilePicFetch.json();
+                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+                profilePic.picture = profilePic.picture.replace("'", '');
+                profile.picture = profilePic.picture;
+            }
+
+            
             
             this.user = profile;
         }

@@ -49,12 +49,15 @@ class Follow(Resource):
 class GetUser(Resource):
     def get(self, username):
         user = get_user_by_username(username)
+        print(user.following)
         sqlPost = PostSchema()
 
         strPosts = sqlPost.dumps(user.posts, many=True)
 
         resp = marshal(user, creator, skip_none=True)
         resp['posts'] = json.loads(strPosts)
+        resp['followers'] = len(user.followers)
+        resp['following'] = len(user.following)
         
         return resp
 
@@ -70,6 +73,8 @@ class GetProfile(Resource):
 
         resp = marshal(user, creator, skip_none=True)
         resp['posts'] = json.loads(strPosts)
+        resp['followers'] = len(user.followers)
+        resp['following'] = len(user.following)
 
         return resp
 
