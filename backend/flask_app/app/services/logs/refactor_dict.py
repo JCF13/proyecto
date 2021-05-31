@@ -2,16 +2,25 @@
 def del_null_values(myDict):
     newDict = {}
     for key, value in myDict.items():
-        
+
         if type(value) is dict:
 
             for key2, value2 in value.items():
+                print('(((')
+                print(value2)
+                print('value2')
+                print('___')
+                print(key2)
+                print('key2')
+                print('))))')
+                # if key2 is 
                 if value2 is not None:
                     newDict[key2] = value2
-            
+
         else:
             if key != 'date_time':
                 newDict[key] = value
+
     return newDict
 
 
@@ -27,10 +36,11 @@ def gen_log(myDict, level):
 
 def gen_simple_log(myDict):
     theLog = ''
-    
+
     # my_values = ['request','result','your_auth','listart','empid','artid','artdes','dptid','famid','grpid','lpreid','tipart','error_type','error_desc']
-    my_values = ['username', 'email', 'user', 'cantidad', 'caption', 'photo', 'creator', 'user', 'follows']
-    
+    my_values = ['username', 'email', 'user', 'cantidad', 'caption', 'photo', 'creator', 'user', 'follows', 'access_token', 'username']
+    _logged_in = ''
+    print(myDict.items())
     for key, value in myDict.items():
         for attr_log in my_values:
             if key == attr_log:
@@ -43,10 +53,17 @@ def gen_simple_log(myDict):
                     #     pass
                     #     # for keyErr, valErr in value:
                     #     #     theLog = theLog + keyErr + ': ' + str(valErr) + ' | '                        
-                    # elif key == 'your_auth':
-                    #     pass
-                    # else:
-                    theLog = theLog + key + ': ' + str(value) + ' | '
+                    if key == 'username':
+                        _logged_in = value
+
+                    elif key == 'access_token':
+                        if len(value) > 64:
+                            theLog = theLog + 'logged in ' + str(_logged_in) + ' | '
+                        else:
+                            theLog = theLog + 'No se ha conectado | '
+
+                    else:
+                        theLog = theLog + key + ': ' + str(value) + ' | '
     return theLog
 
 
