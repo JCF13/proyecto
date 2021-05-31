@@ -1,5 +1,5 @@
-from flask_app.app.database.models import Post
-from flask_app.app.database import db
+from backend.flask_app.app.database.models import Post
+from backend.flask_app.app.database import db
 
 
 def generate_post(post: Post):
@@ -10,7 +10,9 @@ def generate_post(post: Post):
                  saved at the data base
     """
     db.session.add(post)
+    db.session.flush()
     db.session.commit()
+    return post.post_id
 
 
 def find_by_offset(page):
@@ -20,13 +22,6 @@ def find_by_offset(page):
     return Post.query.limit(10).offset(page*10)
 
 
-def find_all_posts():
-    """
-    Return all the Post objects of the data base
-    """
-    return Post.query.all()
-
-
 def find_post_by_id(id):
     """
     Return the Post object wich is identical
@@ -34,3 +29,7 @@ def find_post_by_id(id):
     :param id: int
     """
     return Post.query.filter(Post.post_id == id).first()
+
+
+def find_by_offset_and_followed(page):
+    pass

@@ -1,8 +1,8 @@
 import datetime
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from flask_app.app.database import db
-from flask_app.app.database.mixins import CreatedMixin
+from backend.flask_app.app.database import db
+from backend.flask_app.app.database.mixins import CreatedMixin
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy import Column, Integer, String
 
@@ -98,32 +98,33 @@ class ChatMessages(db.Model, CreatedMixin):
 
     chat = db.relationship('Chat', back_populates='messages')
 
-# class Image(CreatedMixin):
 
-#     @declared_attr
-#     def image_id(self):
-#         return Column(Integer, primary_key=True)
+#class Image(CreatedMixin):
 
-#     @declared_attr
-#     def image(self):
-#         return Column(String(), nullable=False)
+#    @declared_attr
+#    def image_id(self):
+#        return Column(Integer, primary_key=True)
 
-
-# class ChatImage(db.Model, Image):
-#     __tablename__ = 'chat_image'
-#     chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
+#    @declared_attr
+#    def image(self):
+#        return Column(String(), nullable=False)
 
 
-# class PostImage(db.Model, Image):
-#     __tablename__ = 'post_image'
-#     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+#class ChatImage(db.Model, Image):
+#    __tablename__ = 'chat_image'
 
+#    chat_id = db.Column(db.Integer, db.ForeignKey('chat.chat_id'))
 
-# class ProfileImage(db.Model):
-#     __tablename__ = 'profile_image'
-#     image_id = db.Column(Integer, primary_key=True)
-#     image = db.Column(String(), nullable=False)
-#     created_on = db.Column(db.DateTime, default=datetime.datetime.now(), nullable=False)
+#class PostImage(db.Model, Image):
+#    __tablename__ = 'post_image'
+
+#    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+
+#class ProfileImage(db.Model):
+#    __tablename__ = 'profile_image'
+#    image_id = db.Column(Integer, primary_key=True)
+#    image = db.Column(String(), nullable=False)
+#    created_on = db.Column(db.DateTime, default=datetime.datetime.now(), nullable=False)
     
 
 # class NotificationLike(db.Model, CreatedMixin):

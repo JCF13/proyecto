@@ -1,9 +1,13 @@
 
 from datetime import datetime
 from backend.flask_app.app.database.schemas import UserRegisterSchema
+from backend.flask_app.app.database.models import User, Followers
+from backend.flask_app.app.database.dao.userDao import (
+    generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email, set_profile_pic
 )
-from flask_app.app import bcrypt
-from flask_app.app.database import db
+from backend.flask_app.app import bcrypt
+from backend.flask_app.app.database import db
+from backend.flask_app.app.services.imageService import save_picture
 
 
 def user_follows_to(follower, followed):
@@ -14,7 +18,7 @@ def user_follows_to(follower, followed):
 
 def create_user(user):
     if user['username'] != '' \
-        and user['passwd'] != '' \
+        and user['password'] != '' \
         and user['email'] != '' \
         and user['name'] != '':
         if find_user_by_username(user['username']):
@@ -30,15 +34,18 @@ def create_user(user):
             }
 
         creado = User()
-        passwordHash = bcrypt.generate_password_hash(user['passwd'])
+        passwordHash = bcrypt.generate_password_hash(user['password'])
         print(user)
         creado.password = passwordHash
         creado.username = user['username']
         creado.name = user['name']
         creado.surname = user['surname']
         creado.email = user['email']
-        creado.picture = 1
 
+        if user['picture'] != '':
+            creado.picture = user['picture']
+        else:
+            creado.picture = 1
         generate_user(creado)
         return {
             'type': 'positive',
@@ -57,3 +64,13 @@ def get_user_by_username(username):
 
 def get_user_by_id(id):
     return find_user_by_id(id)
+
+
+def update_profile_pic(user):
+    user_to_update = get_user_by_id(user['user'])
+    user_to_update.picture = save_picture(user['picture'], str(user['user'])+str(datetime.now()).replace(' ', '-').replace('.', '').replace(':', ''))
+    set_profile_pic(user_to_update)
+    return {
+        'type': 'positive',
+        'message': 'Foto de perfil actualizada correctamente'
+    }

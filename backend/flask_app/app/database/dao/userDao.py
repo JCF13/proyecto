@@ -1,5 +1,5 @@
-from flask_app.app.database.models import User, Followers
-from flask_app.app.database import db
+from backend.flask_app.app.database.models import User, Followers
+from backend.flask_app.app.database import db
 
 
 def find_user_by_username(username: str):
@@ -7,9 +7,8 @@ def find_user_by_username(username: str):
     Return the user object wich is identical
     with the param of the data base
 
-    :param username: str
+    :param id: int
     """
-    print(User.query.filter(User.username == username).first())
     return User.query.filter(User.username == username).first()
 
 
@@ -47,7 +46,6 @@ def follows_to(follow: Followers):
     """
     db.session.add(follow)
     db.session.commit()
-    pass
 
 
 def set_profile_pic(user: User):

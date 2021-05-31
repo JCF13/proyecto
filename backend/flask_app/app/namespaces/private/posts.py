@@ -1,28 +1,27 @@
-from flask_app.app.services.userService import get_user_by_id
-from flask_app.app.services.commentService import (
-    generate_comment, get_post_comments
-)
-from flask import request, json, current_app
-from flask_app.app.services.postService import (
-    get_all_posts, create_post, get_post_by_id
-)
-from flask_app.app.namespaces.private.schemas import (
-                    postModel,
-                    userModel,
-                    commentModel,
-                    likeListModel,
-                    likeModel,
-                    createPostModel,
-                    simpleUser,
-                    posts,
-                    commentUser, postUnit
-                    )
+from backend.flask_app.app.database.schemas import (PostCommentSchema,
+                                                    PostSchema,
+                                                    UserRegisterSchema)
+from backend.flask_app.app.namespaces.private.schemas import (commentModel,
+                                                              commentUser,
+                                                              createPostModel,
+                                                              likeListModel,
+                                                              likeModel,
+                                                              postModel, posts,
+                                                              simpleUser,
+                                                              userModel)
+from backend.flask_app.app.services.commentService import (generate_comment,
+                                                           get_post_comments)
+from backend.flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.postService import (generate_post,
+                                                        get_by_offset,
+                                                        get_post_by_id)
+from flask import current_app, json, request
+from flask_jwt_extended import (get_jwt_identity, jwt_required,
+                                verify_jwt_in_request)
 from flask_restx import Namespace, Resource, marshal
-from flask_jwt_extended import (
-    jwt_required, get_jwt_identity,  verify_jwt_in_request
-)
-from flask_app.app.database.schemas import PostSchema, PostCommentSchema, UserRegisterSchema
-from flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.userService import get_user_by_id
+from backend.flask_app.app.namespaces.auth.schemas import userProfile, creator
+from backend.flask_app.app.services.imageService import get_picture
 
 post = Namespace('post', 'todas las rutas de Posts irán a aquí')
 
@@ -33,7 +32,6 @@ post.models[likeModel.name] = likeModel
 post.models[likeListModel.name] = likeListModel
 post.models[commentModel.name] = commentModel
 post.models[postModel.name] = postModel
-post.models[postUnit.name] = postUnit
 post.models[createPostModel.name] = createPostModel
 post.models[simpleUser.name] = simpleUser
 post.models[posts.name] = posts
@@ -53,28 +51,13 @@ class Make_post(Resource):
 
         marshaledPost = marshal(newPost, createPostModel, skip_none=True)
 
-        create_post(get_jwt_identity(), marshaledPost)
-        # sqlPost = PostSchema()
-        # sqlPost.load(marshaledPost,session= db.session)
-
-        return marshaledPost
+        return generate_post(get_jwt_identity(), marshaledPost)
 
 
-@post.route('/myfeed')
-class Followers_posts(Resource):
-
-    @post.expect(parser)
-    @jwt_required()
-    def get(self):
-        userAuth = get_user_by_id(get_jwt_identity())
-        print(userAuth.following)
-        return 0
-
-
-@post.route('/gposts')
+@post.route('/gposts/<int:page>')
 class Get_posts(Resource):
 
-    def get(self):
+    def get(self, page):
         allPosts = get_by_offset(page)
         sqlPost = PostSchema()
         sqlPostComment = PostCommentSchema()
@@ -85,8 +68,8 @@ class Get_posts(Resource):
             user = get_user_by_id(post['created_by_fk'])
             user_resp = marshal(user, creator, skip_none=True)
             post['creator'] = user_resp
-        return h
 
+        return h
 
 @post.route('/gpost/<int:id>')
 class get_post(Resource):
@@ -105,6 +88,12 @@ class get_post(Resource):
 
         jsonPost['comments'] = json.loads(strComments)
 
+        user = get_user_by_id(jsonPost['created_by_fk'])
+        creator_post = marshal(user, creator, skip_none=True)
+        jsonPost['creator'] = creator_post
+
+        print(jsonPost)
+
         return jsonPost
     
     @post.expect(commentModel, parser)
@@ -115,3 +104,5 @@ class get_post(Resource):
         generate_comment(get_jwt_identity(), id, commentJson)
 
         return commentJson
+
+

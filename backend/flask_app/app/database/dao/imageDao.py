@@ -1,5 +1,4 @@
-from flask_app.app.database.models import ChatImage, PostImage, ProfileImage
-from flask_app.app.database import db
+from backend.flask_app.app.database import db
 
 
 def generate_image(image):
@@ -14,14 +13,14 @@ def generate_image(image):
     db.session.commit()
 
 
-def find_last_profile_image():
-    """
-    Find the last image_id from ProfileImage object
+#def find_last_profile_image():
+#    """
+#    Find the last image_id from ProfileImage object
 
-    Return int
-    """
-    last = ProfileImage.query.order_by(ProfileImage.image_id.desc()).first()
-    if last != 0:
-        return last.image_id
-    else:
-        return 0
+#    Return int
+#    """
+#    last = ProfileImage.query.order_by(ProfileImage.image_id.desc()).first()
+#    if last != 0:
+#        return last.image_id
+#    else:
+#        return 0

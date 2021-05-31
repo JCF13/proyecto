@@ -1,15 +1,18 @@
-from flask import request
-from flask_restx import Namespace, Resource
-from flask_app.app.namespaces.private.schemas import (
-    simpleUser, followModel, profilePicture, picture, userProfile
+from flask import request, json
+from flask.helpers import send_file
+from flask_restx import Namespace, Resource, marshal
+from backend.flask_app.app.namespaces.private.schemas import (
+    simpleUser, followModel, profilePicture, picture, profilePicModel
 )
-
+from backend.flask_app.app.namespaces.auth.schemas import userProfile, picture, creator
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
-from flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to
-from flask_app.app.services.imageService import create_image
-from flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to, update_profile_pic
+#from backend.flask_app.app.services.imageService import create_image
+from backend.flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.database.schemas import PostSchema
+from backend.flask_app.app.services.imageService import get_picture
 
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
 
