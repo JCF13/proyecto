@@ -3,7 +3,7 @@ from datetime import datetime
 from backend.flask_app.app.database.schemas import UserRegisterSchema
 from backend.flask_app.app.database.models import User, Followers
 from backend.flask_app.app.database.dao.userDao import (
-    generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email, set_profile_pic
+    generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email, set_profile_pic, get_follow, unfollows_to, find_users_by
 )
 from backend.flask_app.app import bcrypt
 from backend.flask_app.app.database import db
@@ -11,9 +11,27 @@ from backend.flask_app.app.services.imageService import save_picture
 
 
 def user_follows_to(follower, followed):
-    follows = Followers(followed_id=followed.user_id, follower_id=follower.user_id)
-    follows_to(follows)
-    pass
+    if follower.user_id != followed.user_id:
+        follows = Followers(followed_id=followed.user_id, follower_id=follower.user_id)
+        follows_to(follows)
+        return {
+            'type': 'positive',
+            'message': 'Has seguido a ' + followed.username
+        }
+    else:
+        return {
+            'type': 'negative',
+            'message': 'No puedes seguirte a tí mismo'
+        }
+
+
+def user_unfollows_to(follower, unfollowed):
+    unfollow = get_follow(follower.user_id, unfollowed.user_id)
+    unfollows_to(unfollow)
+    return {
+        'type': 'positive',
+        'message': 'Has dejado de seguir a ' + unfollowed.username
+    }
 
 
 def create_user(user):
@@ -74,3 +92,7 @@ def update_profile_pic(user):
         'type': 'positive',
         'message': 'Foto de perfil actualizada correctamente'
     }
+
+
+def search_users(search, user_id):
+    return find_users_by(search, user_id)

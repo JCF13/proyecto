@@ -48,7 +48,20 @@ def follows_to(follow: Followers):
     db.session.commit()
 
 
+def unfollows_to(follow: Followers):
+    db.session.delete(follow)
+    db.session.commit()
+
+
+def get_follow(follower: int, followed: int):
+    return Followers.query.filter(Followers.follower_id==follower, Followers.followed_id==followed).first()
+
+
 def set_profile_pic(user: User):
     db.session.add(user)
     db.session.commit()
     return 
+
+
+def find_users_by(search: str, user_id: int):
+    return User.query.filter(User.username.like('%'+search+'%'), User.user_id!=user_id).limit(10)

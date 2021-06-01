@@ -35,20 +35,20 @@
                     <div id="creation-date">
                         <p>{{post.created_on}}</p>
                     </div>
-                    <div id="comments">
-                        <div v-for="comment in post.comments" :key="comment.id">
-                            <!--<q-avatar v-if="comment.user.picture == 1">
-                                <q-icon name='person' />
-                            </q-avatar>
-                            <q-avatar v-else>
-                                <img :src="comment.user.picture" />
-                            </q-avatar>
-                            <p>
-                                <span>{{comment.user.username}}.</span>
-                                {{comment.message}}
-                            </p>-->
-                        </div>
-                        <q-icon v-if="post.comments.length>5" name="add_circle_outline" size="25px" />
+                    <div>
+                        <q-list>
+                            <q-item v-for="comment in post.comments" :key="comment.id">
+                                <q-item-section avatar>
+                                <q-avatar v-if="comment.user.picture == 1">
+                                    <q-icon name='person' />
+                                </q-avatar>
+                                <q-avatar v-else>
+                                    <img :src="comment.user.picture" />
+                                </q-avatar>
+                                </q-item-section>
+                                <q-item-section>{{comment.message}}</q-item-section>
+                            </q-item>
+                        </q-list>
                     </div>
                     <div id="new-comment">
                         <q-input label="Escribe un comentario" color="black" v-model="message">
@@ -109,7 +109,11 @@ export default {
     },
     async created() {
         const postId = this.$route.params.id;
-        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`);
+        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            }
+        });
         const post = await postFetch.json();
 
         const imgFetch = await fetch('http://localhost:5000/my/image', {
@@ -120,6 +124,8 @@ export default {
             body: JSON.stringify(post.picture)
         })
         const img = await imgFetch.json()
+
+        post.created_on = post.created_on.split('.')[0].replace('T', ' ')
 
         img.picture = img.picture.replace("b'", 'data:image/png;base64,');
         img.picture = img.picture.replace("'", '');
@@ -139,8 +145,6 @@ export default {
             profilePic.picture = profilePic.picture.replace("'", '');
             post.creator.picture = profilePic.picture;
         }
-        
-        
 
         this.post = post;
     },
@@ -149,27 +153,30 @@ export default {
             this.$router.go(-1)
         },
 
-        // Cargar post
-        async getPost(id) {
-            const postFetch = await fetch(`http://localhost:5000/private/post/${id}`)
-            const post = postFetch.json();
-
-            this.post = post;
-        },
-
-        // Enviar comentario y nueva notificación
         async newComment() {
             const postId = this.$route.params.id;
             
-            const comment = await fetch('http://localhost:5000/private/post/comment', {
-                method: 'POST',
+            const commentFetch = await fetch('http://localhost:5000/my/comment', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    'Content-type': 'application/json'
+                },
                 body: JSON.stringify({
-                    post: postId,
-                    creator: this.post.creator.user_id,
-                    user: this.user.id,
+                    post_id: postId,
                     message: this.message
                 })
             });
+
+            const comment = await commentFetch.json()
+
+            if (comment.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: comment.message,
+                    position: 'top-right'
+                })
+            }
         }
     }
 }

@@ -60,7 +60,7 @@ class Get_posts(Resource):
     @jwt_required()
     def get(self, page):
         user = get_user_by_id(get_jwt_identity())
-        
+
         following = []
 
         for follow in user.following:
@@ -82,9 +82,10 @@ class Get_posts(Resource):
 @post.route('/gpost/<int:id>')
 class get_post(Resource):
 
-
-    # @post.marshal_with(postModel)
+    @jwt_required()
     def get(self, id):
+        myself = get_user_by_id(get_jwt_identity())
+
         elpost = get_post_by_id(id)
         sqlPost = PostSchema()
         sqlComment = PostCommentSchema()
@@ -93,24 +94,16 @@ class get_post(Resource):
         jsonPost = json.loads(strPosts)
 
         strComments = sqlComment.dumps(elpost.comments, many=True)
+        jsonComments = json.loads(strComments)
 
-        jsonPost['comments'] = json.loads(strComments)
+        for comment in jsonComments:
+            comment['user'] = marshal(get_user_by_id(comment['created_by']), creator, skip_none=True)
+        
+        jsonPost['comments'] = jsonComments
 
         user = get_user_by_id(jsonPost['created_by_fk'])
         creator_post = marshal(user, creator, skip_none=True)
         jsonPost['creator'] = creator_post
 
-        print(jsonPost)
-
         return jsonPost
-    
-    @post.expect(commentModel, parser)
-    @jwt_required()
-    def patch(self, id):
-        commentJson = request.get_json()
-        # marshalledComment = marshal(commentJson, commentModel, skip_none=True)
-        generate_comment(get_jwt_identity(), id, commentJson)
-
-        return commentJson
-
 

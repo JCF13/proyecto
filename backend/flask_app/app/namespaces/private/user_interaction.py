@@ -8,11 +8,12 @@ from backend.flask_app.app.namespaces.auth.schemas import userProfile, picture, 
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity,  verify_jwt_in_request
 )
-from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to, update_profile_pic
+from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to, update_profile_pic, user_unfollows_to, search_users
 #from backend.flask_app.app.services.imageService import create_image
 from backend.flask_app.app.services.logs import complex_file_handler
 from backend.flask_app.app.database.schemas import PostSchema
 from backend.flask_app.app.services.imageService import get_picture
+from backend.flask_app.app.services.commentService import generate_comment
 
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
 
@@ -37,27 +38,71 @@ class Follow(Resource):
         username_follower = get_jwt_identity()
         body = request.get_json()
         user_follower = get_user_by_id(username_follower)
-        user_followed = get_user_by_username(body['user']['username'])
+        user_followed = get_user_by_id(body['user'])
         foll = user_follows_to(user_follower, user_followed)
-        print(foll)
-        print(user_followed)
-        print(user_follower)
-        pass
+        
+        return foll
+
+
+@myNS.route('/unfoll')
+class  Unfollow(Resource):
+
+    @myNS.expect(followModel, parser)
+    @jwt_required()
+    def patch(self):
+        username_follower = get_jwt_identity()
+        body = request.get_json()
+        user_follower = get_user_by_id(username_follower)
+        user_unfollowed = get_user_by_id(body['user'])
+        unfoll = user_unfollows_to(user_follower, user_unfollowed)
+
+        return unfoll
+
+
+@myNS.route('/searchUsers')
+class SearchUsers(Resource):
+    @jwt_required()
+    def post(self):
+        search_by = request.get_json()
+        user = get_user_by_id(get_jwt_identity())
+
+        users = search_users(search_by['search'], user.user_id)
+        users_json = []
+
+        for user in users:
+            users_json.append(marshal(user, creator, skip_none=True))
+
+        return users_json
+
 
 
 @myNS.route('/getUser/<string:username>')
 class GetUser(Resource):
+    @jwt_required()
     def get(self, username):
-        user = get_user_by_username(username)
-        print(user.following)
+        user = get_user_by_id(get_jwt_identity())
+        user_profile = get_user_by_username(username)
+        following = False
+        follow_you = False
+
         sqlPost = PostSchema()
 
-        strPosts = sqlPost.dumps(user.posts, many=True)
+        for foll in user_profile.followers:
+            if get_user_by_id(foll.follower_id).username == user.username:
+                following = True
 
-        resp = marshal(user, creator, skip_none=True)
+        for foll in user.followers:
+            if get_user_by_id(foll.follower_id).username == username:
+                follow_you = True
+
+        strPosts = sqlPost.dumps(user_profile.posts, many=True)
+
+        resp = marshal(user_profile, creator, skip_none=True)
         resp['posts'] = json.loads(strPosts)
-        resp['followers'] = len(user.followers)
-        resp['following'] = len(user.following)
+        resp['followers'] = len(user_profile.followers)
+        resp['following'] = len(user_profile.following)
+        resp['followed'] = following
+        resp['followYou'] = follow_you
         
         return resp
 
@@ -97,3 +142,14 @@ class SetProfilePic(Resource):
         pic_req['user'] = get_jwt_identity()
         profile_pic = marshal(pic_req, profilePicModel, skip_none=True)
         return update_profile_pic(pic_req)
+
+
+@myNS.route('/comment')
+class NewComment(Resource):
+
+    @jwt_required()
+    def patch(self):
+        commentJson = request.get_json()
+        user_id = get_jwt_identity()
+
+        return generate_comment(user_id, commentJson['post_id'], commentJson['message'])

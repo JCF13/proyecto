@@ -38,15 +38,13 @@
 
                     <q-separator />
                     
-                    <router-link to="/inside/settings/account-information">
-                        <q-item clickable v-ripple>
-                            <q-item-section avatar>
-                            <q-icon color="black" name="manage_accounts" />
-                            </q-item-section>
+                    <q-item clickable v-ripple @click="logout">
+                        <q-item-section avatar>
+                        <q-icon color="black" name="logout" />
+                        </q-item-section>
 
-                            <q-item-section>Información</q-item-section>
-                        </q-item>
-                    </router-link>
+                        <q-item-section>Cerrar sesión</q-item-section>
+                    </q-item>
                     
                     <q-separator />
                 </q-list>
@@ -62,8 +60,16 @@
 export default {
     data() {
         return {
+
         }
     },
+    methods: {
+        logout() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            this.$router.push('/');
+        }
+    }
 }
 </script>
 

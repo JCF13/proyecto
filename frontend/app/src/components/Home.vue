@@ -31,8 +31,9 @@
 
                 <img @click="openPost(post.post_id)" :src="post.picture" alt="">
             </q-card>
+            <h5 v-if="posts.length === 0">Todavía no hay publicaciones para ver</h5>
             
-            <div id="more">
+            <div id="more" v-if="posts.lenght > 0">
                 <q-icon name="add_circle_outline" size="30px" @click="loadMore" />
             </div>
         </div>
