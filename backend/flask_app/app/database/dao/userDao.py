@@ -1,5 +1,5 @@
-from backend.flask_app.app.database.models import User, Followers
-from backend.flask_app.app.database import db
+from flask_app.app.database.models import User, Followers
+from flask_app.app.database import db
 
 
 def find_user_by_username(username: str):
