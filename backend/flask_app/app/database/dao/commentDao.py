@@ -1,4 +1,4 @@
-from backend.flask_app.app.database.models import PostComment
+from backend.flask_app.app.database.models import PostComment, PostLikes
 from backend.flask_app.app.database import db
 
 

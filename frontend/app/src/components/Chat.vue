@@ -1,23 +1,22 @@
 <template>
     <div id="main-chat">
         <div id="messages">
-            <div v-for="message in messages" :key="message.id">
-                <div v-if="message.creator.id == creator.id" style="margin-bottom: 1%">
-                    <q-chat-message :id="'message'+message.id"
+            <div v-for="message in chat.messages" :key="message.message_id">
+                <div v-if="(partner == chat.creator.user_id) && (message.created_by == partner)" style="margin-bottom: 1%">
+                    <q-chat-message :id="message.message_id"
                         :text="[message.message]"
-                        stamp="7 minutes ago"
+                        :stamp="[message.created_on]"
+                        size="5"
+                        bg-color="blue-grey-1"
+                    />
+                </div>
+                <div v-else style="margin-bottom: 1%">
+                    <q-chat-message :id="'message'+message.message_id"
+                        :text="[message.message]"
+                        :stamp="[message.created_on]"
                         size="5"
                         sent
                         bg-color="grey-2"
-                    />
-                </div>
-
-                <div v-else style="margin-bottom: 1%">
-                    <q-chat-message :id="message.id"
-                        :text="[message.message]"
-                        stamp="7 minutes ago"
-                        size="5"
-                        bg-color="blue-grey-1"
                     />
                 </div>
             </div>
@@ -36,107 +35,42 @@
 export default {
     data() {
         return {
-            creator: {
-                id: 1,
+            chat: {
+                chat_id: 0,
+                creator: {
+                    user_id: 0,
+                    username: '',
+                    picture: ''
+                },
+                partner: {
+                    user_id: 0,
+                    username: '',
+                    picture: ''
+                },
+                messages: [{
+                    message_id: 0,
+                    created_by: 0,
+                    created_on: '',
+                    message: ''
+                }]
             },
-            partner: {
-                id: 2,
-            },
-            messages: [
-                {
-                    id: 1,
-                    creator: {
-                        id: 1,
-                    },
-                    message: 'Hey, how are you?'
-                },
-                {
-                    id: 2,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 3,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 4,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 5,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 6,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 7,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 8,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 9,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 10,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 11,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 12,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                },
-                {
-                    id: 13,
-                    creator: {
-                        id: 2,
-                    },
-                    message: 'Fine, hoy are you?'
-                }
-            ],
-            message: ''
+            message: '',
+            partner: 0
         }
+    },
+    async created() {
+        const partner = this.$route.params.id;
+        this.partner = partner;
+
+        const chatFetch = await fetch(`http://localhost:5000/chat/getChat/${partner}`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+
+        const chat = await chatFetch.json();
+
+        this.chat = chat;
     },
     methods: {
         sendMessage() {

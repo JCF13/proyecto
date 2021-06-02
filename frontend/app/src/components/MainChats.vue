@@ -3,20 +3,26 @@
         <div id="main">
             <div id="left">
                 <q-list id="chat-list">
-                    <router-link v-for="(chat,count) in chats" :to="'/inside/chats/'+chat.partner.id" :key="chat.id" >
-                        <q-item class="chat-item" clickable v-ripple @click="selectChat(count)" :active="chat.active" 
+                    <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.user_id" :key="chat.chat_id" >
+                        <q-item class="chat-item" clickable v-ripple @click="selectChat(chat.chat_id)" :active="chat.active" 
                             active-class="bg-grey text-white">
-                            <q-img
-                                :src="chat.partner.profilePic" class="bg-white"
-                                style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
-                                    border-radius:50%; border: 1px solid black; margin: 5%;"
-                                contain
-                            />
+                            <q-item-section avatar v-if="chat.partner.picture == 1">
+                                <q-icon name='person' />
+                            </q-item-section>
+                            <q-item-section avatar v-else>
+                                <q-img
+                                    :src="chat.partner.picture" class="bg-white"
+                                    style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
+                                        border-radius:50%; border: 1px solid black; margin: 5%;"
+                                    contain
+                                />
+                            </q-item-section>
+                            
 
                             <q-item-section>{{chat.partner.username}}</q-item-section>
 
                             <q-item-section side>
-                                <q-icon @click="deleteChat(chat.id)" name="delete" style="font-size:30px; color:red; display:none"/>
+                                <q-icon @click="deleteChat(chat.chat_id)" name="delete" style="font-size:30px; color:red; display:none"/>
                             </q-item-section>
                         </q-item>
                         <q-separator/>
@@ -36,34 +42,45 @@ export default {
         return {
             chats: [
                 {
-                    id: 1,
+                    id: 0,
                     partner: {
-                        id: 2,
-                        username: 'Nombre_usuario_2',
-                        profilePic: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg'
+                        user_id: 0,
+                        username: '',
+                        picture: ''
                     },
                     active: false
                 },
-                {
-                    id: 2,
-                    partner: {
-                        id: 3,
-                        username: 'Nombre_usuario_3',
-                        profilePic: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg'
-                    },
-                    active: false
-                },
-                {
-                    id: 3,
-                    partner: {
-                        id: 4,
-                        username: 'Nombre_usuario_4',
-                        profilePic: 'https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg'
-                    },
-                    active: false
-                },
-            ]
+            ],
+            user: 0
         }
+    },
+    async created() {
+        const userFetch = await fetch('http://localhost:5000/my/getProfile', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const user = await userFetch.json();
+
+        this.user = user.user_id;
+        
+        const chatsFetch = await fetch('http://localhost:5000/chat/getChats', {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const chats = await chatsFetch.json()
+
+        chats.forEach(a => {
+            if (this.user === a.partner) {
+                console.log('si')
+            }
+        })
+
+        this.chats = chats;
     },
     methods: {
         selectChat(index) {

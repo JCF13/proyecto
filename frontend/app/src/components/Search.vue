@@ -53,7 +53,17 @@ export default {
                 });
 
                 const search = await searchFetch.json();
-                this.results = search;
+
+                if (search.length > 0) {
+                    this.results = search;
+                } else {
+                    this.$q.notify({
+                        type: 'warning',
+                        message: 'No se han encontrado resultados',
+                        position: 'top'
+                    })
+                }
+
             }
             
         }

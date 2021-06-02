@@ -41,6 +41,9 @@ export default {
         }
     },
     created() {
+        if (!localStorage.getItem('access_token')) {
+            this.$router.push('/')
+        } 
     },
     methods: {
         goToPost() {

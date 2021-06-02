@@ -1,24 +1,31 @@
-from flask import request, json
-from flask.helpers import send_file
-from flask_restx import Namespace, Resource, marshal
-from backend.flask_app.app.namespaces.private.schemas import (
-    simpleUser, followModel, profilePicture, picture, profilePicModel
-)
-from backend.flask_app.app.namespaces.auth.schemas import userProfile, picture, creator
-from flask_jwt_extended import (
-    jwt_required, get_jwt_identity,  verify_jwt_in_request
-)
-from backend.flask_app.app.services.userService import get_user_by_id, get_user_by_username, user_follows_to, update_profile_pic, user_unfollows_to, search_users
+from backend.flask_app.app.database.schemas import PostSchema
+from backend.flask_app.app.namespaces.auth.schemas import (creator, picture,
+                                                           userProfile)
+from backend.flask_app.app.namespaces.private.schemas import (followModel,
+                                                              picture,
+                                                              profilePicModel,
+                                                              profilePicture,
+                                                              simpleUser)
+from backend.flask_app.app.services.commentService import generate_comment
+from backend.flask_app.app.services.imageService import get_picture
 #from backend.flask_app.app.services.imageService import create_image
 from backend.flask_app.app.services.logs import complex_file_handler
-from backend.flask_app.app.database.schemas import PostSchema
-from backend.flask_app.app.services.imageService import get_picture
-from backend.flask_app.app.services.commentService import generate_comment
+from backend.flask_app.app.services.postService import new_like
+from backend.flask_app.app.services.userService import (get_user_by_id,
+                                                        get_user_by_username,
+                                                        search_users,
+                                                        update_profile_pic,
+                                                        user_follows_to,
+                                                        user_unfollows_to)
+from flask import json, request
+from flask.helpers import send_file
+from flask_jwt_extended import (get_jwt_identity, jwt_required,
+                                verify_jwt_in_request)
+from flask_restx import Namespace, Resource, marshal
 
 myNS = Namespace('my', 'Interacciones de usuarios entre sí. Follow y Chat.')
 
 myNS.logger.addHandler(complex_file_handler)
-print(myNS.logger.handlers)
 
 myNS.models[simpleUser.name] = simpleUser
 myNS.models[followModel.name] = followModel
@@ -130,7 +137,7 @@ class SendImage(Resource):
     def post(self):
         image = request.get_json()
         pic = get_picture(image)
-        return marshal(pic, picture, skip_none=True)
+        return marshal(pic, profilePicModel, skip_none=True)
 
 
 @myNS.route('/profilepic')
@@ -153,3 +160,14 @@ class NewComment(Resource):
         user_id = get_jwt_identity()
 
         return generate_comment(user_id, commentJson['post_id'], commentJson['message'])
+
+
+@myNS.route('/like')
+class NewLike(Resource):
+
+    @jwt_required()
+    def patch(self):
+        likeJson = request.get_json()
+        user_id = get_jwt_identity()
+
+        return new_like(user_id, likeJson['post_id'])

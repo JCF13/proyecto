@@ -43,10 +43,8 @@ class Post(db.Model, CreatedMixin):
     __tablename__ = "post"
 
     post_id = db.Column(db.Integer, primary_key=True)
-    #nullables cambiados
     caption = db.Column(db.String(20), nullable=True)
 
-    #picture = db.Column(db.Integer, db.ForeignKey('post_image.image_id'))
     picture = db.Column(db.String, nullable=False)
     
     likes = db.relationship('PostLikes', backref='post')

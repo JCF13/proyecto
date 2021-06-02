@@ -18,7 +18,8 @@
                                 <h5><strong>{{user.username}}</strong></h5>
 
                                 <q-card-actions horizontal class="q-px-md">
-                                    <q-btn flat color="black" icon="chat_bubble_outline" />
+                                    <q-btn v-if="!isUser" flat color="black" icon="chat_bubble_outline" @click="createChat" />
+                                    
                                     <router-link to="/inside/settings">
                                         <q-btn flat round color="black" icon="settings" />
                                     </router-link>
@@ -230,6 +231,30 @@ export default {
                 });
                 this.user.followers++;
                 this.user.followed = true
+            }
+        },
+        async createChat() {
+            const chatFetch = await fetch('http://localhost:5000/chat/create', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    partner_id: this.user.user_id
+                })
+            });
+
+            const chat = await chatFetch.json();
+
+            if (chat.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: chat.message,
+                    position: 'top-right'
+                });
+
+                this.$router.push(`/inside/chats/${chat.partner_id}`)
             }
         }
     }

@@ -53,7 +53,6 @@ class Login(Resource):
     def post(self):
 
         load_user = request.get_json()
-        # request.get_data()
 
         user_dict = marshal(load_user, loginReq)
 

@@ -1,4 +1,4 @@
-from backend.flask_app.app.database.schemas import (PostCommentSchema,
+from backend.flask_app.app.database.schemas import (PostCommentSchema, PostLikeSchema,
                                                     PostSchema,
                                                     UserRegisterSchema)
 from backend.flask_app.app.namespaces.private.schemas import (commentModel,
@@ -72,11 +72,13 @@ class Get_posts(Resource):
 
         strPosts = sqlPost.dumps(allPosts, many=True)
         h = json.loads(strPosts)
+
         for post in h:
             user = get_user_by_id(post['created_by_fk'])
             user_resp = marshal(user, creator, skip_none=True)
             post['creator'] = user_resp
-
+            post['likes'] = len(post['likes'])
+        
         return h
 
 @post.route('/gpost/<int:id>')

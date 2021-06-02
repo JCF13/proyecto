@@ -1,4 +1,4 @@
-from backend.flask_app.app.database.models import PostComment
+from backend.flask_app.app.database.models import PostComment, PostLikes
 import backend.flask_app.app.database.dao.commentDao as dao
 
 

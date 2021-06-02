@@ -22,12 +22,13 @@
                             {{post.comments.length}} <q-icon name="comment" />
                         </q-item-label>
                         <q-item-label>
-                            {{post.likes.length}} <q-icon name="favorite" color="red" @click="sendLike(post.id)" />
+                            {{post.likes}} <q-icon name="favorite" color="red" />
                         </q-item-label>
                     </q-item-section>
                 </q-item>
 
-                <q-icon class="liked" :data-post='post.post_id' @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; right: 0; font-size: 40px;" />
+                <q-icon v-if="!post.liked" @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; right: 0; font-size: 40px;" />
+                <q-icon v-else name='favorite' color='red' style="position: absolute; right: 0; font-size: 40px;" />
 
                 <img @click="openPost(post.post_id)" :src="post.picture" alt="">
             </q-card>
@@ -71,15 +72,7 @@ export default {
                         }
                     ],
                     liked: false,
-                    likes: [
-                        {
-                            id: 0,
-                            user: {
-                                id: 0,
-                                username: ''
-                            }
-                        },
-                    ]
+                    likes: 0
                 },
             ],
             page: 0,
@@ -136,9 +129,40 @@ export default {
         },
 
         async sendLike(id) {
-            this.posts.filter(post => {
+            this.posts.filter(async post => {
                 if (post.post_id === id) {
-                    document.querySelector(`i[data-post='${id}']`).innerHTML = 'favorite'
+                    const likeFetch = await fetch('http://localhost:5000/my/like', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                        },
+                        body: JSON.stringify({
+                            post_id: id
+                        })
+                    });
+
+                    const like = await likeFetch.json()
+
+                    if (like.type === 'positive') {
+                        this.$q.notify({
+                            type: 'positive',
+                            message: like.message,
+                            position: 'top-right'
+                        });
+                        post.likes++;
+                        post.liked = true;
+                    }
+
+                    if (like.type === 'warning') {
+                        this.$q.notify({
+                            type: 'warning',
+                            message: like.message,
+                            position: 'top-right'
+                        })
+                        post.liked = true;
+                    }
+
                 }
             })
         },
