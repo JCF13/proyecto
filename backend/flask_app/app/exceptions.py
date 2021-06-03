@@ -7,3 +7,6 @@ class InvalidUsername(AttributeError):
 
 class EmailUsed(IntegrityError):
     pass
+
+class UsernameUsed(IntegrityError):
+    pass

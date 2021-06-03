@@ -175,3 +175,123 @@
 
     INFO :: 2021-06-02 16:23:49,903  _ handler_invalid_username_login : request:  _  | 
                     
+
+    INFO :: 2021-06-03 14:55:31,801  _ handler_email_used_login : request:  _  | 
+                    
+
+    INFO :: 2021-06-03 14:57:04,796  _ handler_email_used_login : request:  _  | 
+                    
+
+    INFO :: 2021-06-03 14:57:47,164  _ handler_email_used_login : request:  _  | 
+                    
+
+    INFO :: 2021-06-03 14:58:42,286  _ handler_email_used_login : request:  _  | 
+                    
+
+    CRITICAL :: 2021-06-03 14:59:34,829  _ handler_email_used_login : request:  _  | result: -1 | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:46:50,467  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:47:18,133  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:48:50,108  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:53:49,546  _ post : username: ToniJSB | email: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:54:15,984  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:54:16,934  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:56:11,724  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:56:12,101  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:56:41,303  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:56:41,695  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:56:58,895  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:56:59,256  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:57:14,716  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:57:15,065  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 15:59:00,437  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:59:29,135  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:59:56,647  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 15:59:57,001  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 16:04:59,306  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 16:04:59,677  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-03 16:10:32,328  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 16:10:32,788  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-03 16:14:41,963  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 16:14:42,358  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-03 16:16:21,746  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 16:16:22,126  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-03 16:17:01,440  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 16:17:01,854  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-03 16:17:37,964  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 16:17:38,319  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-03 16:18:20,336  _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-03 16:18:20,838  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    
+
+    INFO :: 2021-06-03 16:18:41,912  _ post : 
+                    
+
+    INFO :: 2021-06-03 16:20:22,963  _ post : 
+                    
+
+    INFO :: 2021-06-03 16:20:23,427  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    

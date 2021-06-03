@@ -1,4 +1,5 @@
-from flask_app.app.exceptions import InvalidUsername
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from flask_app.app.exceptions import EmailUsed, InvalidUsername
 from flask_app.app.namespaces.auth.jwt_auth import make_header
 from flask.globals import request
 from flask_restx import Namespace, Resource
@@ -42,9 +43,10 @@ def handler_non_auth(error):
     resultado['error'] = errorDoc
 
     respuesta = marshal(resultado, loginResp)
+    
     elLog = gen_log(respuesta, _LEVELLOG_)
     authorization.logger.log(_LEVELLOG_, elLog)
-
+    
     return respuesta
 
 
@@ -60,6 +62,28 @@ def handler_invalid_username_login(error):
     fallo = {}
     fallo['error_type'] = 26
     fallo['error_desc'] = error
+    errorDoc = marshal(fallo, errorSchema)
+    resultado['error'] = errorDoc
+    
+    respuesta = marshal(resultado, loginResp)
+
+    elLog = gen_log(respuesta, _LEVELLOG_)
+    authorization.logger.log(_LEVELLOG_, elLog)
+    return respuesta
+
+
+@authorization.errorhandler(SQLAlchemyError)
+def handler_email_used_login(error):
+
+    load_user = request.get_json()
+    print(load_user)
+    resultado = {}
+    resultado['result'] = -1
+    resultado['request'] = ' _ '
+
+    fallo = {}
+    fallo['error_type'] = 26
+    fallo['error_desc'] = error.statement
     errorDoc = marshal(fallo, errorSchema)
     resultado['error'] = errorDoc
     
@@ -154,6 +178,8 @@ class Register(Resource):
         to_register = request.get_json()
         marshalled = marshal(to_register, userRegister, skip_none=True)
         
+        elLog = gen_log(marshalled, _LEVELLOG_)
+        authorization.logger.log(_LEVELLOG_, elLog)
         return create_user(marshalled)
 
 

@@ -1,6 +1,6 @@
 
 from datetime import datetime
-from flask_app.app.exceptions import EmailUsed
+from flask_app.app.exceptions import EmailUsed, UsernameUsed
 
 from sqlalchemy.exc import IntegrityError
 from flask_app.app.database.schemas import UserRegisterSchema
@@ -37,16 +37,16 @@ def verify_user(user):
 
 
 def create_user(user):
+    creado = User()
     try:
-        creado = User()
         passwordHash = bcrypt.generate_password_hash(user['password'])
         print(user)
         creado.password = passwordHash
         creado.username = user['username']
         creado.name = user['name']
         creado.surname = user['surname']
-        creado.email = None
-        # creado.email = user['email']
+        # creado.email = None
+        creado.email = user['email']
 
         if user['picture'] != '':
             creado.picture = user['picture']
@@ -57,9 +57,16 @@ def create_user(user):
             'type': 'positive',
             'message': 'Usuario registrado correctamente'
         }
-    except IntegrityError:
-        raise EmailUsed
+    except (EmailUsed, UsernameUsed) as expt:
+        print('_____________')
+        print(expt.args)
+        print('_____________')
 
+        if expt.statement == 'username':
+            raise UsernameUsed(params=user['username'], orig=IntegrityError, statement='El email no es valido')
+            
+        elif expt.statement == 'email':
+            raise EmailUsed(params=user['email'], orig=IntegrityError, statement='El email no es valido')
 
 
 def get_user_by_username(username):
