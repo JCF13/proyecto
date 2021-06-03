@@ -1,5 +1,7 @@
-from backend.flask_app.app.database.models import User, Followers
-from backend.flask_app.app.database import db
+from sqlalchemy.exc import IntegrityError
+from flask_app.app.exceptions import InvalidUsername
+from flask_app.app.database.models import User, Followers
+from flask_app.app.database import db
 
 
 def find_user_by_username(username: str):
@@ -9,7 +11,13 @@ def find_user_by_username(username: str):
 
     :param id: int
     """
-    return User.query.filter(User.username == username).first()
+    try:
+        user = User.query.filter(User.username == username).first()
+        print(user.username)
+        print('user')
+        return user
+    except AttributeError:
+        raise InvalidUsername('invalid username')
 
 
 def find_user_by_id(id: int):
@@ -33,9 +41,11 @@ def generate_user(user: User):
     :param user: the actual object which will be
                  saved at the data base
     """
-    db.session.add(user)
-    db.session.commit()
-
+    try:
+        db.session.add(user)
+        db.session.commit()
+    except IntegrityError:
+        print(IntegrityError('fallo de username'))
 
 def follows_to(follow: Followers):
     """

@@ -1,8 +1,8 @@
 import datetime
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from backend.flask_app.app.database import db
-from backend.flask_app.app.database.mixins import CreatedMixin
+from flask_app.app.database import db
+from flask_app.app.database.mixins import CreatedMixin
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy import Column, Integer, String
 
@@ -15,13 +15,13 @@ class User(db.Model):
     name = db.Column(db.String(20), nullable=False)
     surname = db.Column(db.String(20), nullable=True)
     password = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique = True)
     picture = db.Column(db.String, nullable=True)
     #picture = db.Column(db.Integer, db.ForeignKey('profile_image.image_id'))
 
     posts = db.relationship('Post', back_populates='created_by', viewonly=True)
-    followers = db.relationship('Followers',primaryjoin='User.user_id==Followers.followed_id', viewonly=True)
-    following = db.relationship('Followers',primaryjoin='User.user_id==Followers.follower_id', viewonly=True)
+    followers = db.relationship('Followers',primaryjoin='User.user_id==Followers.follower_id', viewonly=True)
+    following = db.relationship('Followers',primaryjoin='User.user_id==Followers.followed_id', viewonly=True)
     chats = db.relationship('Chat', primaryjoin='User.user_id==Chat.created_by_fk', viewonly=True)
     # like_notifications = db.relationship('NotificationLike', back_populates='receiver')
     # comment_notifications = db.relationship('NotificationComment', back_populates='receiver')
