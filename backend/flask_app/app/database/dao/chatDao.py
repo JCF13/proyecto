@@ -23,3 +23,12 @@ def new_message(message: ChatMessages):
     db.session.flush()
     db.session.commit()
     return message
+
+
+def delete(chat: Chat):
+    db.session.delete(chat)
+    db.session.commit()
+
+
+def find_by_id(chat_id: int):
+    return Chat.query.filter(Chat.chat_id==chat_id).first()

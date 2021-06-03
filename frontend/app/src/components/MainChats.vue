@@ -3,9 +3,8 @@
         <div id="main">
             <div id="left">
                 <q-list id="chat-list">
-                    <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.user_id" :key="chat.chat_id" >
-                        <q-item class="chat-item" clickable v-ripple @click="selectChat(chat.chat_id)" :active="chat.active" 
-                            active-class="bg-grey text-white">
+                    <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.user_id" :key="chat.chat_id">
+                        <q-item class="chat-item" clickable v-ripple>
                             <q-item-section avatar v-if="chat.partner.picture == 1" style="padding-left: 5%;">
                                 <q-icon name='person' />
                             </q-item-section>
@@ -29,7 +28,13 @@
                 </q-list>
             </div>
             <div id="right">
-                <router-view/>
+                <div style="padding-top: 5%; display: flex; justify-content: space-between;" v-if="chats.length == 0">
+                    <h5>Todavía no hay chats creados</h5>
+                    <router-link to="/inside/search">
+                        <q-btn color='black' push label="BUSCAR USUARIOS"/>
+                    </router-link>
+                </div>
+                <router-view v-else />
             </div>
         </div>
     </q-page>
@@ -74,7 +79,8 @@ export default {
         const chats = await chatsFetch.json()
 
         chats.forEach(async a => {
-            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            if (a.partner.picture !== '1') {
+                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -86,20 +92,35 @@ export default {
                 profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
                 profilePic.picture = profilePic.picture.replace("'", '');
                 a.partner.picture = profilePic.picture;
-        })
+            }
+        });
 
         this.chats = chats;
     },
     methods: {
-        selectChat(index) {
-            this.chats.forEach((a, i) => {
-                if (i == index) {
-                    a.active = true
-                } else a.active = false
-            })
-        },
-        deleteChat(id) {
-            console.log(id)
+        async deleteChat(id) {
+            const deleteFetch = await fetch('http://localhost:5000/chat/deleteChat', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    chat_id: id
+                })
+            });
+
+            const deleteResp = await deleteFetch.json();
+
+            if (deleteResp.type === 'positive') {
+                this.$q.notify({
+                    type: 'warning',
+                    message: deleteResp.message,
+                    position: 'top-right'
+                })
+
+                this.$router.push('/inside')
+            }
         }
     }
 }

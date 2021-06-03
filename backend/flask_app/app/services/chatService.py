@@ -1,7 +1,7 @@
 from flask import json
 from backend.flask_app.app.database.schemas import ChatMessageSchema
 from datetime import datetime
-from backend.flask_app.app.database.dao.chatDao import generate_chat, find_by_user_id, find_by_users, new_message
+from backend.flask_app.app.database.dao.chatDao import generate_chat, find_by_user_id, find_by_users, new_message, delete, find_by_id
 from backend.flask_app.app.database.models import Chat, ChatMessages
 
 def create_chat(user_id, partner_id):
@@ -56,4 +56,17 @@ def send_message(created_by, chat_id, message_text):
             'message': message.message,
             'message_id': message.message_id
         }
+    }
+
+
+def get_chat_by_id(chat_id):
+    return find_by_id(chat_id)
+
+
+def delete_chat(chat_id):
+    delete(get_chat_by_id(chat_id))
+
+    return {
+        'type': 'positive',
+        'message': 'Chat eliminado'
     }

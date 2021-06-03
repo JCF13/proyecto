@@ -4,6 +4,7 @@
             <q-card-section horizontal>
                 <div id="card-left">
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
+                    <q-icon v-if="post.creator.user_id === user.user_id" id="delete" color='red' name='delete' size='30px' />
 
                     <img id="image" :src="post.picture" alt="">
 
@@ -101,13 +102,21 @@ export default {
                     }
                 ]
             },
-            user: {
-                id: null,
-            },
+            user: null,
             message: null
         }
     },
     async created() {
+        const userFetch = await fetch('http://localhost:5000/my/getProfile', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const user = await userFetch.json();
+
+        this.user = user;
+        
         const postId = this.$route.params.id;
         const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`, {
             headers: {
@@ -267,6 +276,13 @@ export default {
 
     #close {
         cursor: pointer;
+    }
+
+    #delete {
+        cursor: pointer;
+        position: absolute;
+        right: 50%;
+        margin: 1%;
     }
 
     #comments {

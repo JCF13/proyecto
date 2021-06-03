@@ -65,3 +65,13 @@ def set_profile_pic(user: User):
 
 def find_users_by(search: str, user_id: int):
     return User.query.filter(User.username.like('%'+search+'%'), User.user_id!=user_id).limit(10)
+
+
+def set_username(user: User):
+    db.session.add(user)
+    db.session.commit()
+
+
+def set_password(user: User):
+    db.session.add(user)
+    db.session.commit()

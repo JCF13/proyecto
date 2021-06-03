@@ -2,7 +2,7 @@
     <div id="main-chat">
         <div id="messages">
             <div v-for="message in chat.messages" :key="message.message_id">
-                <div v-if="(message.created_by == partner)" style="margin-bottom: 1%">
+                <div v-if="(message.created_by == partner)" style="margin-bottom: 1%" :id="'message'+message.message_id">
                     <q-chat-message :id="message.message_id"
                         :text="[message.message]"
                         :stamp="[message.created_on]"
@@ -10,7 +10,7 @@
                         bg-color="blue-grey-1"
                     />
                 </div>
-                <div v-else style="margin-bottom: 1%">
+                <div v-else style="margin-bottom: 1%" :id="'message'+message.message_id">
                     <q-chat-message :id="'message'+message.message_id"
                         :text="[message.message]"
                         :stamp="[message.created_on]"
@@ -70,9 +70,11 @@ export default {
 
         const chat = await chatFetch.json();
 
-        this.chat = chat;
+        chat.messages.forEach(a => {
+            a.created_on = a.created_on.split('.')[0].replace('T', ' ')
+        })
 
-        document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight
+        this.chat = chat;
     },
     methods: {
         async sendMessage() {
@@ -100,24 +102,15 @@ export default {
                 this.chat.messages.push({
                     message_id: message.new_message.message_id,
                     created_by: message.new_message.created_by,
-                    created_on: message.new_message.created_on,
+                    created_on: message.new_message.created_on.split('.')[0].replace('T', ' '),
                     message: message.new_message.message
                 })
             }
-
-            /*console.log(document.querySelector('#messages').offsetHeight)
-            this.messages.push({
-                id: 14,
-                creator: {
-                    id: 1,
-                },
-                message: this.message
-            });*/
-
-            document.querySelector('#messages').scrollTo(0, document.querySelector('#messages').scrollHeight)
-
         },
     },
+    updated() {
+        document.querySelector(`#message${this.chat.messages[this.chat.messages.length-1].message_id}`).scrollIntoView()
+    }
 }
 </script>
 

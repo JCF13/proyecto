@@ -198,7 +198,6 @@ export default {
 
                 this.user.followers--;
                 this.user.followed = false;
-                this.user
             }
         },
         async follow() {

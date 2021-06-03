@@ -3,7 +3,7 @@ from datetime import datetime
 from backend.flask_app.app.database.schemas import UserRegisterSchema
 from backend.flask_app.app.database.models import User, Followers
 from backend.flask_app.app.database.dao.userDao import (
-    generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email, set_profile_pic, get_follow, unfollows_to, find_users_by
+    generate_user, find_user_by_username, find_user_by_id, follows_to, find_user_by_email, set_password, set_profile_pic, get_follow, unfollows_to, find_users_by, set_username
 )
 from backend.flask_app.app import bcrypt
 from backend.flask_app.app.database import db
@@ -88,6 +88,7 @@ def update_profile_pic(user):
     user_to_update = get_user_by_id(user['user'])
     user_to_update.picture = save_picture(user['picture'], str(user['user'])+str(datetime.now()).replace(' ', '-').replace('.', '').replace(':', ''))
     set_profile_pic(user_to_update)
+    
     return {
         'type': 'positive',
         'message': 'Foto de perfil actualizada correctamente'
@@ -96,3 +97,29 @@ def update_profile_pic(user):
 
 def search_users(search, user_id):
     return find_users_by(search, user_id)
+
+
+def update_username(user, username):
+    user.username = username
+    set_username(user)
+
+    return {
+        'type': 'positive',
+        'message': 'Nombre de usuario cambiado correctamente'
+    }
+
+
+def update_password(user, password, new_password):
+    if bcrypt.check_password_hash(user.password, password):
+        user.password = bcrypt.generate_password_hash(new_password)
+        set_password(user)
+
+        return {
+            'type': 'positive',
+            'message': 'Contraseña actualizada correctamente'
+        }
+    else:
+        return {
+            'type': 'negative',
+            'message': 'La contraseña no es correcta'
+        }

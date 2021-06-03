@@ -32,9 +32,14 @@
 
                 <img @click="openPost(post.post_id)" :src="post.picture" alt="">
             </q-card>
-            <h5 v-if="posts.length === 0">Todavía no hay publicaciones para ver</h5>
+            <div v-if="posts.length === 0" style="display: flex; flex-direction: column;">
+                <h5>Todavía no hay publicaciones para ver</h5>
+                <router-link to="/inside/search">
+                    <q-btn style="width: 100%;" label='Buscar otros usuarios' color='black' />
+                </router-link>
+            </div>
             
-            <div id="more" v-if="posts.lenght > 0">
+            <div id="more" v-else>
                 <q-icon name="add_circle_outline" size="30px" @click="loadMore" />
             </div>
         </div>
@@ -127,7 +132,6 @@ export default {
         openPost(id) {
             this.$router.push(`/inside/home/post/${id}`)
         },
-
         async sendLike(id) {
             this.posts.filter(async post => {
                 if (post.post_id === id) {
@@ -166,7 +170,6 @@ export default {
                 }
             })
         },
-
         async loadMore() {
             this.page += 1;
 

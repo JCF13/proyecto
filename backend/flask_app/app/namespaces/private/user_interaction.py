@@ -13,8 +13,9 @@ from backend.flask_app.app.services.logs import complex_file_handler
 from backend.flask_app.app.services.postService import new_like
 from backend.flask_app.app.services.userService import (get_user_by_id,
                                                         get_user_by_username,
-                                                        search_users,
+                                                        search_users, update_password,
                                                         update_profile_pic,
+                                                        update_username,
                                                         user_follows_to,
                                                         user_unfollows_to)
 from flask import json, request
@@ -81,6 +82,33 @@ class SearchUsers(Resource):
 
         return users_json
 
+
+@myNS.route('/getFollowers')
+class GetFollowers(Resource):
+
+    @jwt_required()
+    def get(self):
+        myself = get_user_by_id(get_jwt_identity())
+        followers = []
+
+        for user in myself.followers:
+            followers.append(marshal(get_user_by_id(user.follower_id), creator, skip_none=True))
+
+        return followers
+
+
+@myNS.route('/getFollowing')
+class GetFollowing(Resource):
+
+    @jwt_required()
+    def get(self):
+        myself = get_user_by_id(get_jwt_identity())
+        following = []
+
+        for user in myself.following:
+            following.append(marshal(get_user_by_id(user.followed_id), creator, skip_none=True))
+
+        return following
 
 
 @myNS.route('/getUser/<string:username>')
@@ -171,3 +199,25 @@ class NewLike(Resource):
         user_id = get_jwt_identity()
 
         return new_like(user_id, likeJson['post_id'])
+
+
+@myNS.route('/changeUsername')
+class ChangeUsername(Resource):
+
+    @jwt_required()
+    def post(self):
+        new_username = request.get_json()
+        user = get_user_by_id(get_jwt_identity())
+
+        return update_username(user, new_username['username'])
+
+
+@myNS.route('/changePassword')
+class ChangePassword(Resource):
+
+    @jwt_required()
+    def post(self):
+        new_password = request.get_json()
+        user = get_user_by_id(get_jwt_identity())
+
+        return update_password(user, new_password['password'], new_password['new_password'])
