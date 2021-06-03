@@ -2,7 +2,7 @@
     <div id="main-chat">
         <div id="messages">
             <div v-for="message in chat.messages" :key="message.message_id">
-                <div v-if="(partner == chat.creator.user_id) && (message.created_by == partner)" style="margin-bottom: 1%">
+                <div v-if="(message.created_by == partner)" style="margin-bottom: 1%">
                     <q-chat-message :id="message.message_id"
                         :text="[message.message]"
                         :stamp="[message.created_on]"
@@ -71,19 +71,50 @@ export default {
         const chat = await chatFetch.json();
 
         this.chat = chat;
+
+        document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight
     },
     methods: {
-        sendMessage() {
-            console.log(document.querySelector('#messages').offsetHeight)
+        async sendMessage() {
+            const messageFetch = await fetch('http://localhost:5000/chat/newMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    chat_id: this.chat.chat_id,
+                    message: this.message
+                })
+            });
+
+            const message = await messageFetch.json();
+
+            if (message.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: message.message,
+                    position: 'top-right'
+                })
+
+                this.chat.messages.push({
+                    message_id: message.new_message.message_id,
+                    created_by: message.new_message.created_by,
+                    created_on: message.new_message.created_on,
+                    message: message.new_message.message
+                })
+            }
+
+            /*console.log(document.querySelector('#messages').offsetHeight)
             this.messages.push({
                 id: 14,
                 creator: {
                     id: 1,
                 },
                 message: this.message
-            });
+            });*/
 
-            document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+            document.querySelector('#messages').scrollTo(0, document.querySelector('#messages').scrollHeight)
 
         },
     },

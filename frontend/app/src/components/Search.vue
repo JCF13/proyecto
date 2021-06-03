@@ -15,7 +15,12 @@
                             <q-icon name='person' />
                         </q-avatar>
                         <q-avatar v-else>
-                            <img :src="user.picture" />
+                            <q-img
+                                    :src="user.picture" class="bg-white"
+                                    style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
+                                        border-radius:50%; border: 1px solid grey; margin: 5%;"
+                                    contain
+                                />
                         </q-avatar>
                     </q-item-section>
                     <q-item-section>{{user.username}}</q-item-section>
@@ -55,6 +60,21 @@ export default {
                 const search = await searchFetch.json();
 
                 if (search.length > 0) {
+                    search.forEach(async a => {
+                        const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                            method: 'POST',
+                            headers: {
+                                'Content-type': 'application/json'
+                            },
+                            body: JSON.stringify(a.picture)
+                        })
+
+                        const profilePic = await profilePicFetch.json();
+                        profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+                        profilePic.picture = profilePic.picture.replace("'", '');
+                        a.picture = profilePic.picture;
+                    })
+
                     this.results = search;
                 } else {
                     this.$q.notify({

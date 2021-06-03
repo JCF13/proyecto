@@ -256,6 +256,10 @@ export default {
 
                 this.$router.push(`/inside/chats/${chat.partner_id}`)
             }
+
+            if (chat.type === 'warning') {
+                this.$router.push(`/inside/chats/${chat.partner_id}`)
+            }
         }
     }
 }

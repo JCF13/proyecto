@@ -1,4 +1,4 @@
-from backend.flask_app.app.database.models import Chat
+from backend.flask_app.app.database.models import Chat, ChatMessages
 from backend.flask_app.app.database import db
 from sqlalchemy import or_
 
@@ -10,9 +10,16 @@ def generate_chat(chat: Chat):
 
 
 def find_by_user_id(user_id: int):
-    return Chat.query.filter((Chat.created_by_fk==user_id) or (Chat.partner_id==user_id)).all()
+    return Chat.query.filter((Chat.created_by_fk==user_id) | (Chat.partner_id==user_id)).all()
 
 
 def find_by_users(user_id: int, partner_id: int):
-    return Chat.query.filter((Chat.created_by_fk==user_id and Chat.partner_id==partner_id) or 
-        (Chat.created_by_fk==partner_id and Chat.partner_id==user_id)).first()
+    return Chat.query.filter(((Chat.created_by_fk==user_id) & (Chat.partner_id==partner_id)) | 
+        ((Chat.created_by_fk==partner_id) & (Chat.partner_id==user_id))).first()
+
+
+def new_message(message: ChatMessages):
+    db.session.add(message)
+    db.session.flush()
+    db.session.commit()
+    return message

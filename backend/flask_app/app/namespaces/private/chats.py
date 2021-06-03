@@ -7,7 +7,7 @@ from backend.flask_app.app.services.logs import complex_file_handler
 from flask_jwt_extended import (get_jwt_identity, jwt_required,
                                 verify_jwt_in_request)
 from flask_restx import Namespace, Resource, marshal
-from backend.flask_app.app.services.chatService import create_chat, get_chats_by_user, get_chat_by_users
+from backend.flask_app.app.services.chatService import create_chat, get_chats_by_user, get_chat_by_users, send_message
 from backend.flask_app.app.namespaces.private.schemas import chatModel
 from backend.flask_app.app.namespaces.auth.schemas import creator
 
@@ -76,3 +76,19 @@ class GetChat(Resource):
         jsonChat['partner'] = marshal(get_user_by_id(jsonChat['partner']), creator, skip_none=True)
 
         return jsonChat
+
+
+@chat.route('/newMessage')
+class NewMessage(Resource):
+
+    @jwt_required()
+    def post(self):
+        creator = get_jwt_identity()
+        chat_req = request.get_json()
+
+        return send_message(creator, chat_req['chat_id'], chat_req['message'])
+
+
+@chat.route('/deleteChat')
+class DeleteChat(Resource):
+    pass

@@ -6,10 +6,10 @@
                     <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.user_id" :key="chat.chat_id" >
                         <q-item class="chat-item" clickable v-ripple @click="selectChat(chat.chat_id)" :active="chat.active" 
                             active-class="bg-grey text-white">
-                            <q-item-section avatar v-if="chat.partner.picture == 1">
+                            <q-item-section avatar v-if="chat.partner.picture == 1" style="padding-left: 5%;">
                                 <q-icon name='person' />
                             </q-item-section>
-                            <q-item-section avatar v-else>
+                            <q-item-section avatar v-else style="padding-left: 2%;">
                                 <q-img
                                     :src="chat.partner.picture" class="bg-white"
                                     style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
@@ -17,7 +17,6 @@
                                     contain
                                 />
                             </q-item-section>
-                            
 
                             <q-item-section>{{chat.partner.username}}</q-item-section>
 
@@ -74,10 +73,19 @@ export default {
 
         const chats = await chatsFetch.json()
 
-        chats.forEach(a => {
-            if (this.user === a.partner) {
-                console.log('si')
-            }
+        chats.forEach(async a => {
+            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(a.partner.picture)
+                })
+
+                const profilePic = await profilePicFetch.json();
+                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+                profilePic.picture = profilePic.picture.replace("'", '');
+                a.partner.picture = profilePic.picture;
         })
 
         this.chats = chats;
