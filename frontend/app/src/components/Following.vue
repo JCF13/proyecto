@@ -38,7 +38,9 @@ export default {
         }
     },
     async created() {
-        const followingFetch = await fetch('http://localhost:5000/my/getFollowing', {
+        const id = this.$route.params.id;
+
+        const followingFetch = await fetch(`http://localhost:5000/my/getFollowing`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }

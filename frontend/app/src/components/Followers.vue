@@ -21,8 +21,8 @@
                 </q-item-section>
             </q-item>
         </q-list>
-        <div v-else style="padding-left: 5%; padding-bottom: 2%;">
-            <h5>Todavía no tienes ningún seguidor</h5>
+        <div v-else style="padding-left: 5%; padding-bottom: 1%;">
+            <h6>Todavía no hay ningún seguidor</h6>
         </div>
     </div>
 </template>
@@ -35,7 +35,9 @@ export default {
         }
     },
     async created() {
-        const followersFetch = await fetch('http://localhost:5000/my/getFollowers', {
+        const id = this.$route.params.id;
+
+        const followersFetch = await fetch(`http://localhost:5000/my/getFollowers`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }

@@ -26,12 +26,14 @@
                                 </q-card-actions>
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal>
-                                <router-link to="/inside/social/followers">
+                                <router-link v-if="isUser" to="/inside/social/followers">
                                     <q-btn class="bg-white" push :label="user.followers+' SEGUIDORES'" />
                                 </router-link>
-                                <router-link to="/inside/social/following">
+                                <q-btn v-else class="bg-white" push :label="user.followers+' SEGUIDORES'" />
+                                <router-link v-if="isUser" to="/inside/social/following">
                                     <q-btn class="bg-white" push :label="user.following+' SEGUIDOS'" />
                                 </router-link>
+                                <q-btn v-else class="bg-white" push :label="user.following+' SEGUIDOS'" />
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal style="margin-top:5%">
                                 <q-btn v-if="!isUser && !user.followed" class="bg-positive text-white" push label="SEGUIR" @click="follow" />

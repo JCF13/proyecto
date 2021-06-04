@@ -27,7 +27,7 @@
                     </q-item-section>
                 </q-item>
 
-                <q-icon v-if="!post.liked" @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; right: 0; font-size: 40px;" />
+                <q-icon v-if="!post.liked" @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; left: 0; bottom: 0; font-size: 40px;" />
                 <q-icon v-else name='favorite' color='red' style="position: absolute; right: 0; font-size: 40px;" />
 
                 <img @click="openPost(post.post_id)" :src="post.picture" alt="">
