@@ -295,3 +295,105 @@
 
     INFO :: 2021-06-03 16:20:23,427  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
+
+    INFO :: 2021-06-04 09:10:50,366  _ post : username: ToniJSB | email: ToniJSB | 
+                    
+
+    INFO :: 2021-06-04 09:13:50,553  _ post : username: ToniJSB | email: ToniJSB | 
+                    
+
+    INFO :: 2021-06-04 09:14:35,312  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 17:58:42,312  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 17:59:02,476  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 17:59:53,207  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 17:59:54,371  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:01:18,403  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:01:19,348  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:11:53,848  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:11:54,900  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: name | 
+                    
+
+    INFO :: 2021-06-04 18:12:40,262  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:12:41,445  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: name | 
+                    
+
+    INFO :: 2021-06-04 18:13:32,606  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:13:34,011  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:17:20,293  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:17:21,178  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: name | 
+                    
+
+    INFO :: 2021-06-04 18:22:43,397  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:22:44,197  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:25:05,966  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:25:07,018  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:25:33,795  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:25:35,042  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:26:18,576  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:26:19,132  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:28:45,775  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:28:46,667  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:31:25,309  _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-04 18:32:50,186  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:32:51,374  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:34:46,587  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:34:47,527  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:36:18,098  _ post : username: Admin | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:39:34,457  _ post : username: Admin | email: toponipi1@gmail.com | 
+                    

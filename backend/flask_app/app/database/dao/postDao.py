@@ -21,7 +21,7 @@ def find_by_offset(page, users):
     """
     ids = []
     for user in users:
-        ids.append(user.user_id)
+        ids.append(user.id)
     print(ids)
 
     return Post.query.filter(Post.created_by_fk.in_(ids)).order_by(Post.created_on).limit(10).offset(page*10)

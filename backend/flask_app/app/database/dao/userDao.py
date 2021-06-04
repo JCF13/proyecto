@@ -1,5 +1,5 @@
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from flask_app.app.exceptions import EmailUsed, InvalidUsername, UsernameUsed
+from flask_app.app.exceptions import EmailUsed, InvalidUsername, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
 from flask_app.app.database.models import User, Followers
 from flask_app.app.database import db
 
@@ -27,7 +27,7 @@ def find_user_by_id(id: int):
 
     :param id: int
     """
-    return User.query.filter(User.user_id == id).first()
+    return User.query.filter(User.id == id).first()
 
 
 def find_user_by_email(email: str):
@@ -42,27 +42,37 @@ def generate_user(user: User):
                  saved at the data base
     """
     try:
-        for key, val in user.__dict__.items():
-            print('_____________')
-            print(key, '____', val)
-            print('_____________')
+        # for key, val in user.__dict__.items():
+        #     print('_____________')
+        #     print(key, '____', val)
+        #     print('_____________')
+        print(user.name)
         db.session.add(user)
         db.session.commit()
     except IntegrityError as expt:
-
-        fail = str(expt.orig).split(' ')[0]
-        obj_attr = str(expt.orig).split(' ')[3].split('.')
-        attr = obj_attr[1]
-        # print('_____________')
-        # print(fail)
-        # print(obj_attr)
-        # print(attr)
-        # print('_____________')
+        desglosado = str(expt.orig).split(' ')
+        fail = desglosado[0]
         if fail == 'UNIQUE':
+            obj_attr = desglosado[3].split('.')
+            attr = obj_attr
+
             if attr == 'username':
-                raise UsernameUsed(params=expt.params, orig=SQLAlchemyError, statement=attr)
+                raise UsernameUsed(statement=attr, params=fail, orig=SQLAlchemyError)
             elif attr == 'email':
-                raise EmailUsed(params=expt.params, orig=SQLAlchemyError, statement=attr)
+                raise EmailUsed(statement=attr, params=fail, orig=SQLAlchemyError)
+        elif fail == 'NOT':
+            noNul = str(expt.orig).split(' ')[0] +' '+ str(expt.orig).split(' ')[1]
+            obj_attr = desglosado[4].split('.')
+            attr = obj_attr[1]
+            if attr == 'username':
+                raise RequiredUsername(statement=attr, params=noNul, orig=SQLAlchemyError)
+            elif attr == 'name':
+                raise RequiredName(statement=attr, params=noNul, orig=SQLAlchemyError)
+            elif attr == 'password':
+                raise RequiredPassword(statement=attr, params=noNul, orig=SQLAlchemyError)
+            elif attr == 'email':
+                raise RequiredEmail(statement=attr, params=noNul, orig=SQLAlchemyError)
+
         raise expt
 
 def follows_to(follow: Followers):
@@ -92,4 +102,4 @@ def set_profile_pic(user: User):
 
 
 def find_users_by(search: str, user_id: int):
-    return User.query.filter(User.username.like('%'+search+'%'), User.user_id!=user_id).limit(10)
+    return User.query.filter(User.username.like('%'+search+'%'), User.id!=user_id).limit(10)

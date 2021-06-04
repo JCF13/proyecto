@@ -8,5 +8,22 @@ class InvalidUsername(AttributeError):
 class EmailUsed(IntegrityError):
     pass
 
+
 class UsernameUsed(IntegrityError):
+    pass
+
+
+class RequiredEmail(IntegrityError):
+    pass
+
+
+class RequiredUsername(IntegrityError):
+    pass
+
+
+class RequiredName(IntegrityError):
+    pass
+
+
+class RequiredPassword(IntegrityError):
     pass

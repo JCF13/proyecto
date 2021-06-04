@@ -2,12 +2,11 @@ from getpass import getpass
 import click
 from flask import current_app
 from flask.cli import with_appcontext
+from flask_security.utils import hash_password
 
 from flask_app.app.database import db
 from flask_app.app.database.models import User
-from flask_bcrypt import Bcrypt
 
-bcrypt = Bcrypt()
 
 @click.command(name='database')
 @with_appcontext
@@ -28,7 +27,7 @@ def create_admin():
     confirm_password = getpass('confirm password: ')
 
     if password == confirm_password:
-        hashed_pass = bcrypt.generate_password_hash(password).decode('utf-8')
+        hashed_pass = hash_password(password)
         user = User(username = username,name=name,email=email,password=hashed_pass)
         # user.username = username
         # user.name=name
