@@ -4,7 +4,7 @@
             <q-card-section horizontal>
                 <div id="card-left">
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
-                    <q-icon v-if="post.creator.user_id === user.user_id" id="delete" color='red' name='delete' size='30px' />
+                    <q-icon v-if="post.creator.user_id === user.user_id" id="delete" color='red' name='delete' size='30px' @click="deletePost" />
 
                     <img id="image" :src="post.picture" alt="">
 
@@ -185,6 +185,27 @@ export default {
                     message: comment.message,
                     position: 'top-right'
                 })
+            }
+        },
+
+        async deletePost() {
+            const deleteFetch = await fetch(`http://localhost:5000/post/deletepost/${this.post.post_id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            });
+
+            const resp = await deleteFetch.json();
+
+            if (resp.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: resp.message,
+                    position: 'top-right'
+                });
+
+                this.$router.push('/inside/')
             }
         }
     }

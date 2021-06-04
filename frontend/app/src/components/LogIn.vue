@@ -72,13 +72,19 @@ export default {
                 })
             });
 
-            if (logInFetch.status === 200) {
-                const token = await logInFetch.json();
-    
-                localStorage.setItem('access_token', token.your_auth.access_token);
-                localStorage.setItem('refresh_token', token.your_auth.refresh_token);
+            const login = await logInFetch.json();
+
+            if (!login.error.error_type) {
+                localStorage.setItem('access_token', login.your_auth.access_token);
+                localStorage.setItem('refresh_token', login.your_auth.refresh_token);
 
                 this.$router.push('/inside')
+            } else {
+                this.$q.notify({
+                    type: 'negative',
+                    message: login.error.error_desc,
+                    position: 'top'
+                });
             }
 
         }

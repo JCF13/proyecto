@@ -48,3 +48,8 @@ def add_like(like: PostLikes):
 
 def find_like_by_id(id: int):
     return PostLikes.query.filter(PostLikes.id)
+
+
+def delete_post(post: Post):
+    db.session.delete(post)
+    db.session.commit()

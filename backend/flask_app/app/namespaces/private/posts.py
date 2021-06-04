@@ -14,7 +14,8 @@ from backend.flask_app.app.services.commentService import (generate_comment,
 from backend.flask_app.app.services.logs import complex_file_handler
 from backend.flask_app.app.services.postService import (generate_post,
                                                         get_by_offset,
-                                                        get_post_by_id)
+                                                        get_post_by_id,
+                                                        delete_post_by_id)
 from flask import current_app, json, request
 from flask_jwt_extended import (get_jwt_identity, jwt_required,
                                 verify_jwt_in_request)
@@ -109,3 +110,10 @@ class get_post(Resource):
 
         return jsonPost
 
+
+@post.route('/deletepost/<int:id>')
+class DeletePost(Resource):
+
+    @jwt_required()
+    def post(self, id):
+        return delete_post_by_id(id)

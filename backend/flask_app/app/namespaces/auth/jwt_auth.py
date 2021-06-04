@@ -12,8 +12,9 @@ def make_header(user):
     valido = False
     usuario = find_user_by_username(user['username'])
 
-    if bcrypt.check_password_hash(usuario.password,user['passwd']):
-        valido = True
+    if not usuario is None:
+        if bcrypt.check_password_hash(usuario.password,user['passwd']):
+            valido = True
 
     if valido is True:
         respuesta = {}
@@ -30,7 +31,7 @@ def make_header(user):
         respuesta = {}
         fallo = {
             'error_type': 24 ,
-            'error_desc':  'Credenciales Autorización incorrectas' ,
+            'error_desc':  'El usuario o la contraseña no son correctos' ,
         }
         respuesta['result'] = -1
         

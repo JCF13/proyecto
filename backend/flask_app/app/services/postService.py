@@ -60,3 +60,20 @@ def new_like(user_id, post_id):
             'type': 'warning',
             'message': 'Ya has indicado que te gusta esta publicación'
         }
+
+
+def delete_post_by_id(post_id):
+    post = dao.find_post_by_id(post_id)
+
+    if not post is None:
+        dao.delete_post(post)
+        
+        return {
+            'type': 'positive',
+            'message': 'Post eliminado correctamente'
+        }
+    else:
+        return {
+            'type': 'negative',
+            'message': 'Ha ocurrido un error'
+        }
