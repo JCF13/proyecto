@@ -34,7 +34,4 @@ class Config():
     MAIL_USE_SSL =  True
     MAIL_DEFAULT_SENDER = 'toponipi1@gmail.com'
     MAIL_USERNAME = 'toponipi1'
-    
-    
-    
     MAIL_PASSWORD = os.environ.get('COLAO')

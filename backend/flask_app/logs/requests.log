@@ -397,3 +397,27 @@
 
     INFO :: 2021-06-04 18:39:34,457  _ post : username: Admin | email: toponipi1@gmail.com | 
                     
+
+    INFO :: 2021-06-05 17:01:01,197  _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-05 17:02:45,920  _ handler_wrong_token : request:  _  | error_type: 29 | error_desc: Only refresh tokens are allowed | 
+                    
+
+    INFO :: 2021-06-05 17:03:22,858  _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-05 17:04:10,637  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header string: 'utf-8' codec can't decode byte 0x88 in position 24: invalid start byte | 
+                    
+
+    INFO :: 2021-06-05 17:28:00,724  _ get : request: /auth/login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-05 17:30:50,399  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header string: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte | 
+                    
+
+    INFO :: 2021-06-05 17:34:21,154  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header string: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte | 
+                    
+
+    INFO :: 2021-06-05 17:35:09,300  _ get : request: /auth/login | username: ToniJSB | 
+                    
