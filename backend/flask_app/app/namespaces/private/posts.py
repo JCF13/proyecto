@@ -1,23 +1,28 @@
 from flask_app.app.database.schemas import (PostCommentSchema,
-                                                    PostSchema,
-                                                    UserRegisterSchema)
+                                            PostSchema,
+                                            UserRegisterSchema
+                                            )
 from flask_app.app.namespaces.private.schemas import (commentModel,
-                                                              commentUser,
-                                                              createPostModel,
-                                                              likeListModel,
-                                                              likeModel,
-                                                              postModel, posts,
-                                                              simpleUser,
-                                                              userModel)
+                                                      commentUser,
+                                                      createPostModel,
+                                                      likeListModel,
+                                                      likeModel,
+                                                      postModel, posts,
+                                                      simpleUser,
+                                                      userModel
+                                                      )
 from flask_app.app.services.commentService import (generate_comment,
-                                                           get_post_comments)
+                                                   get_post_comments
+                                                   )
 from flask_app.app.services.logs import complex_file_handler
 from flask_app.app.services.postService import (generate_post,
-                                                        get_by_offset,
-                                                        get_post_by_id)
+                                                get_by_offset,
+                                                get_post_by_id
+                                                )
 from flask import current_app, json, request
 from flask_jwt_extended import (get_jwt_identity, jwt_required,
-                                verify_jwt_in_request)
+                                verify_jwt_in_request
+                                )
 from flask_restx import Namespace, Resource, marshal
 from flask_app.app.services.userService import get_user_by_id
 from flask_app.app.namespaces.auth.schemas import userProfile, creator
@@ -60,12 +65,12 @@ class Get_posts(Resource):
     @jwt_required()
     def get(self, page):
         user = get_user_by_id(get_jwt_identity())
-        
+
         following = []
 
         for follow in user.following:
             following.append(get_user_by_id(follow.followed_id))
-        
+
         allPosts = get_by_offset(page, following)
 
         sqlPost = PostSchema()
@@ -103,7 +108,7 @@ class get_post(Resource):
         print(jsonPost)
 
         return jsonPost
-    
+
 
     @post.expect(commentModel, parser)
     @jwt_required()

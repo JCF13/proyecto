@@ -44,4 +44,3 @@ def make_header_from_identity(identity):
     respuesta['your_auth'] = marshal(tok, auth_token) 
 
     return marshal(respuesta, loginResp, skip_none=True)
-

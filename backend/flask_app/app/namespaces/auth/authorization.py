@@ -162,7 +162,7 @@ def handler_wrong_token(error):
     errorDoc = marshal(fallo, errorSchema)
     resultado['error'] = errorDoc
     respuesta = marshal(resultado, loginResp)
-    
+
     elLog = gen_log(respuesta, _LEVELLOG_)
     authorization.logger.log(_LEVELLOG_, elLog)
 
@@ -173,15 +173,11 @@ def handler_wrong_token(error):
 @authorization.route('/logon')
 class Register(Resource):
 
-    def get(self):
-
-        pass
-
     @authorization.expect(userRegister)
     def post(self):
         to_register = request.get_json()
         marshalled = marshal(to_register, userRegister, skip_none=True)
-        
+
         elLog = gen_log(marshalled, _LEVELLOG_)
         authorization.logger.log(_LEVELLOG_, elLog)
         return create_user(marshalled)
@@ -195,6 +191,7 @@ class LogOut(Resource):
 
 parser = authorization.parser()
 parser.add_argument('Authorization', location='headers', required=True)
+
 
 @authorization.route('/login')
 class Login(Resource):
@@ -213,7 +210,7 @@ class Login(Resource):
         authorization.logger.log(_LEVELLOG_, elLog)
 
         return header
-    
+
 
     @authorization.expect(parser)
     @jwt_required(refresh=True)
