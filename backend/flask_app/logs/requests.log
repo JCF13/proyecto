@@ -110,218 +110,314 @@
     INFO :: 2021-05-31 17:55:35,362  _ post : 
                     
 
-    INFO :: 2021-06-01 16:36:25,171  _ post : 
+    INFO :: 2021-06-01 16:52:21,854  _ post : 
                     
 
-    INFO :: 2021-06-01 16:38:26,970  _ post : 
+    INFO :: 2021-06-02 14:57:32,690  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 16:43:00,112  _ post : 
+    INFO :: 2021-06-02 15:00:14,146  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 16:43:34,223  _ post : 
+    INFO :: 2021-06-02 15:01:11,278  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 16:44:09,244  _ post : 
+    INFO :: 2021-06-02 15:05:17,087  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 16:47:01,824  _ post : 
+    INFO :: 2021-06-02 15:11:33,984  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 16:48:04,934  _ post : 
+    INFO :: 2021-06-02 15:18:28,163  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 17:05:59,222  _ post : 
+    INFO :: 2021-06-02 15:18:54,951  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 17:06:20,257  _ post : 
+    INFO :: 2021-06-02 15:19:49,219  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 18:14:53,652  _ post : 
+    INFO :: 2021-06-02 15:20:55,642  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 22:02:47,829  _ post : 
+    INFO :: 2021-06-02 15:21:33,094  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-01 23:35:05,049  _ post : 
+    INFO :: 2021-06-02 15:22:11,696  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-02 15:38:45,390  _ post : 
+    INFO :: 2021-06-02 15:23:02,409  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-02 15:38:57,115  _ post : 
+    INFO :: 2021-06-02 15:24:57,843  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-02 15:39:20,498  _ post : 
+    INFO :: 2021-06-02 15:27:04,351  _ handler_invalid_username_login : 
                     
 
-    INFO :: 2021-06-02 15:53:25,298  _ post : 
+    INFO :: 2021-06-02 15:27:54,163  _ handler_invalid_username_login : username: AdminBack | 
                     
 
-    INFO :: 2021-06-02 15:53:52,439  _ post : 
+    INFO :: 2021-06-02 15:30:52,312  _ post : 
                     
 
-    INFO :: 2021-06-02 15:54:15,778  _ post : 
+    INFO :: 2021-06-02 15:31:22,804  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-02 16:04:37,965  _ post : 
+    INFO :: 2021-06-02 15:38:52,136  _ post : request: Login | username: ToniJSB | 
                     
 
-    INFO :: 2021-06-02 16:09:41,033  _ post : 
+    INFO :: 2021-06-02 15:48:36,087  _ handler_invalid_username_login : request:  _  | 
                     
 
-    INFO :: 2021-06-02 16:09:59,556  _ post : 
+    INFO :: 2021-06-02 16:22:35,658  _ handler_invalid_username_login : request:  _  | 
                     
 
-    INFO :: 2021-06-02 16:45:47,000  _ post : 
+    INFO :: 2021-06-02 16:23:49,903  _ handler_invalid_username_login : request:  _  | 
                     
 
-    INFO :: 2021-06-02 16:47:33,736  _ post : 
+    INFO :: 2021-06-03 14:55:31,801  _ handler_email_used_login : request:  _  | 
                     
 
-    INFO :: 2021-06-02 16:56:26,732  _ post : 
+    INFO :: 2021-06-03 14:57:04,796  _ handler_email_used_login : request:  _  | 
                     
 
-    INFO :: 2021-06-02 17:38:57,403  _ post : 
+    INFO :: 2021-06-03 14:57:47,164  _ handler_email_used_login : request:  _  | 
                     
 
-    INFO :: 2021-06-02 21:23:07,504  _ post : 
+    INFO :: 2021-06-03 14:58:42,286  _ handler_email_used_login : request:  _  | 
                     
 
-    INFO :: 2021-06-02 22:33:55,354  _ post : 
+    CRITICAL :: 2021-06-03 14:59:34,829  _ handler_email_used_login : request:  _  | result: -1 | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-02 22:37:30,699  _ post : 
+    INFO :: 2021-06-03 15:46:50,467  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 15:25:49,282  _ post : 
+    INFO :: 2021-06-03 15:47:18,133  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 15:32:08,075  _ post : 
+    INFO :: 2021-06-03 15:48:50,108  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 15:34:15,630  _ post : 
+    INFO :: 2021-06-03 15:53:49,546  _ post : username: ToniJSB | email: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 16:30:28,509  _ post : 
+    INFO :: 2021-06-03 15:54:15,984  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 16:44:04,956  _ post : 
+    INFO :: 2021-06-03 15:54:16,934  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 17:09:37,967  _ post : 
+    INFO :: 2021-06-03 15:56:11,724  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 17:38:56,752  _ post : 
+    INFO :: 2021-06-03 15:56:12,101  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 17:40:01,842  _ post : 
+    INFO :: 2021-06-03 15:56:41,303  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 21:25:51,319  _ post : 
+    INFO :: 2021-06-03 15:56:41,695  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 21:40:09,430  _ post : 
+    INFO :: 2021-06-03 15:56:58,895  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 21:44:57,675  _ post : 
+    INFO :: 2021-06-03 15:56:59,256  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 21:45:17,978  _ post : 
+    INFO :: 2021-06-03 15:57:14,716  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 21:51:28,272  _ post : 
+    INFO :: 2021-06-03 15:57:15,065  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 21:51:39,786  _ post : 
+    INFO :: 2021-06-03 15:59:00,437  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 21:55:31,494  _ post : 
+    INFO :: 2021-06-03 15:59:29,135  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 22:00:53,126  _ post : 
+    INFO :: 2021-06-03 15:59:56,647  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-03 22:40:32,499  _ post : 
+    INFO :: 2021-06-03 15:59:57,001  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-03 22:47:20,513  _ post : 
+    INFO :: 2021-06-03 16:04:59,306  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 15:59:32,150  _ post : 
+    INFO :: 2021-06-03 16:04:59,677  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 16:01:41,152  _ post : 
+    INFO :: 2021-06-03 16:10:32,328  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 16:03:55,465  _ post : 
+    INFO :: 2021-06-03 16:10:32,788  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 16:39:38,816  _ post : 
+    INFO :: 2021-06-03 16:14:41,963  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 16:39:48,072  _ post : 
+    INFO :: 2021-06-03 16:14:42,358  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 16:39:58,209  _ post : 
+    INFO :: 2021-06-03 16:16:21,746  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 16:42:53,934  _ post : 
+    INFO :: 2021-06-03 16:16:22,126  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 16:43:57,382  _ post : 
+    INFO :: 2021-06-03 16:17:01,440  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 16:44:14,597  _ post : 
+    INFO :: 2021-06-03 16:17:01,854  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 16:45:41,973  _ post : 
+    INFO :: 2021-06-03 16:17:37,964  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 16:45:48,485  _ post : 
+    INFO :: 2021-06-03 16:17:38,319  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (username, name, surname, password, email, picture) VALUES (?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 16:49:09,193  _ post : 
+    INFO :: 2021-06-03 16:18:20,336  _ post : username: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 16:50:19,195  _ post : 
+    INFO :: 2021-06-03 16:18:20,838  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-04 16:50:52,728  _ post : 
+    INFO :: 2021-06-03 16:18:41,912  _ post : 
                     
 
-    INFO :: 2021-06-04 16:50:57,348  _ post : 
+    INFO :: 2021-06-03 16:20:22,963  _ post : 
                     
 
-    INFO :: 2021-06-04 16:51:00,875  _ post : 
+    INFO :: 2021-06-03 16:20:23,427  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
 
-    INFO :: 2021-06-04 17:13:44,150  _ post : 
+    INFO :: 2021-06-04 09:10:50,366  _ post : username: ToniJSB | email: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 17:14:05,122  _ post : 
+    INFO :: 2021-06-04 09:13:50,553  _ post : username: ToniJSB | email: ToniJSB | 
                     
 
-    INFO :: 2021-06-04 17:29:20,152  _ post : 
+    INFO :: 2021-06-04 09:14:35,312  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
                     
 
-    INFO :: 2021-06-04 17:30:35,670  _ post : 
+    INFO :: 2021-06-04 17:58:42,312  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
                     
 
-    INFO :: 2021-06-04 17:34:08,565  _ post : 
+    INFO :: 2021-06-04 17:59:02,476  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
                     
 
-    INFO :: 2021-06-04 17:34:28,232  _ post : 
+    INFO :: 2021-06-04 17:59:53,207  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
                     
 
-    INFO :: 2021-06-04 18:03:56,540  _ post : 
+    INFO :: 2021-06-04 17:59:54,371  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 18:07:22,116  _ post : 
+    INFO :: 2021-06-04 18:01:18,403  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
                     
 
-    INFO :: 2021-06-04 18:12:36,864  _ post : 
+    INFO :: 2021-06-04 18:01:19,348  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
                     
 
-    INFO :: 2021-06-04 18:23:48,299  _ post : 
+    INFO :: 2021-06-04 18:11:53,848  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:11:54,900  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: name | 
+                    
+
+    INFO :: 2021-06-04 18:12:40,262  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:12:41,445  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: name | 
+                    
+
+    INFO :: 2021-06-04 18:13:32,606  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:13:34,011  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:17:20,293  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:17:21,178  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: name | 
+                    
+
+    INFO :: 2021-06-04 18:22:43,397  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:22:44,197  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:25:05,966  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:25:07,018  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:25:33,795  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:25:35,042  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:26:18,576  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:26:19,132  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:28:45,775  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:28:46,667  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro | 
+                    
+
+    INFO :: 2021-06-04 18:31:25,309  _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-04 18:32:50,186  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:32:51,374  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:34:46,587  _ post : username: ToniJSB | email: tjimenezsblanca@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:34:47,527  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-04 18:36:18,098  _ post : username: Admin | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-04 18:39:34,457  _ post : username: Admin | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-05 17:01:01,197  _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-05 17:02:45,920  _ handler_wrong_token : request:  _  | error_type: 29 | error_desc: Only refresh tokens are allowed | 
+                    
+
+    INFO :: 2021-06-05 17:03:22,858  _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-05 17:04:10,637  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header string: 'utf-8' codec can't decode byte 0x88 in position 24: invalid start byte | 
+                    
+
+    INFO :: 2021-06-05 17:28:00,724  _ get : request: /auth/login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-05 17:30:50,399  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header string: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte | 
+                    
+
+    INFO :: 2021-06-05 17:34:21,154  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header string: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte | 
+                    
+
+    INFO :: 2021-06-05 17:35:09,300  _ get : request: /auth/login | username: ToniJSB | 
                     

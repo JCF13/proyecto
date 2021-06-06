@@ -18,11 +18,12 @@ from backend.flask_app.app.services.postService import (generate_post,
                                                         delete_post_by_id)
 from flask import current_app, json, request
 from flask_jwt_extended import (get_jwt_identity, jwt_required,
-                                verify_jwt_in_request)
+                                verify_jwt_in_request
+                                )
 from flask_restx import Namespace, Resource, marshal
-from backend.flask_app.app.services.userService import get_user_by_id
-from backend.flask_app.app.namespaces.auth.schemas import userProfile, creator
-from backend.flask_app.app.services.imageService import get_picture
+from flask_app.app.services.userService import get_user_by_id
+from flask_app.app.namespaces.auth.schemas import userProfile, creator
+from flask_app.app.services.imageService import get_picture
 
 post = Namespace('post', 'todas las rutas de Posts irán a aquí')
 
@@ -66,7 +67,7 @@ class Get_posts(Resource):
 
         for follow in user.following:
             following.append(get_user_by_id(follow.followed_id))
-        
+
         allPosts = get_by_offset(page, following)
 
         sqlPost = PostSchema()
