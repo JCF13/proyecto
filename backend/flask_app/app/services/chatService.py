@@ -11,20 +11,20 @@ def create_chat(user_id, partner_id):
         if chat is None:
             chat = Chat(created_by_fk=user_id, partner_id=partner_id)
             return {
-                'type': 'positive',
-                'message': 'Chat creado',
+                'error_type': 'positive',
+                'error_desc': 'Chat creado',
                 'partner_id': generate_chat(chat)
             }
         else:
             return {
-                'type': 'warning',
-                'message': '',
+                'error_type': 'warning',
+                'error_desc': '',
                 'partner_id': partner_id
             }
 
     return {
-        'type': 'negative',
-        'message': 'Es tu propio perfil'
+        'error_type': 'error',
+        'error_desc': 'Es tu propio perfil'
     }
 
 
@@ -48,8 +48,8 @@ def send_message(created_by, chat_id, message_text):
     print(message.message)
     
     return {
-        'type': 'positive',
-        'message': 'Enviado',
+        'error_type': 'positive',
+        'error_desc': 'Enviado',
         'new_message': {
             'created_on': str(message.created_on),
             'created_by': message.created_by_fk,
@@ -67,6 +67,6 @@ def delete_chat(chat_id):
     delete(get_chat_by_id(chat_id))
 
     return {
-        'type': 'positive',
-        'message': 'Chat eliminado'
+        'error_type': 'positive',
+        'error_desc': 'Chat eliminado'
     }

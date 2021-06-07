@@ -103,14 +103,16 @@ errorSchema = Model('error', {
     'error_desc': fields.String(description='Descripción del error'),
 })
 
+makePostResp = Model('makePostResp',{
+    'post_id': fields.Integer(),
+})
 
 wildcardResp = Model('response', {
         'date_time': fields.DateTime(default=datetime.now()),
         'request': fields.String(),
         'result': fields.Integer(),
         'response': fields.Nested([postModel, followModel], description='''
-        El access_token será tu Header de autorización
-        para siguientes consultas. El refresh_token tarda más en expirar,
+        Las respuesta de todo
         '''),
         'error': fields.Nested(errorSchema, required=False)
 })

@@ -1,7 +1,7 @@
 from flask_jwt_extended.utils import get_jwt_identity
 from flask_jwt_extended.view_decorators import verify_jwt_in_request
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from flask_app.app.exceptions import EmailUsed, InvalidUsername
+from flask_app.app.exceptions import EmailUsed, InvalidPassword, InvalidUsername
 from flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
 from flask.globals import request
 from flask_restx import Namespace, Resource
@@ -62,6 +62,27 @@ def handler_invalid_username_login(error):
     resultado = {}
     resultado['result'] = -1
     resultado['request'] = ' _ '
+
+    fallo = {}
+    fallo['error_type'] = 26
+    fallo['error_desc'] = error
+    errorDoc = marshal(fallo, errorSchema)
+    resultado['error'] = errorDoc
+    
+    respuesta = marshal(resultado, loginResp)
+
+    elLog = gen_log(respuesta, _LEVELLOG_)
+    authorization.logger.log(_LEVELLOG_, elLog)
+    return respuesta
+
+@authorization.errorhandler(InvalidPassword)
+def handler_invalid_password(error):
+
+    load_user = request.get_json()
+    print(load_user)
+    resultado = {}
+    resultado['result'] = -1
+    resultado['request'] = 'login / register'
 
     fallo = {}
     fallo['error_type'] = 26

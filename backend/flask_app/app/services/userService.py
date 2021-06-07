@@ -22,13 +22,13 @@ def user_follows_to(follower, followed):
         follows = Followers(followed_id=followed.user_id, follower_id=follower.user_id)
         follows_to(follows)
         return {
-            'type': 'positive',
-            'message': 'Has seguido a ' + followed.username
+            'error_type': 'positive',
+            'error_desc': 'Has seguido a ' + followed.username
         }
     else:
         return {
-            'type': 'negative',
-            'message': 'No puedes seguirte a tí mismo'
+            'error_type': 'error',
+            'error_desc': 'No puedes seguirte a tí mismo'
         }
 
 
@@ -36,22 +36,22 @@ def user_unfollows_to(follower, unfollowed):
     unfollow = get_follow(follower.user_id, unfollowed.user_id)
     unfollows_to(unfollow)
     return {
-        'type': 'positive',
-        'message': 'Has dejado de seguir a ' + unfollowed.username
+        'error_type': 'positive',
+        'error_desc': 'Has dejado de seguir a ' + unfollowed.username
     }
 
 
 def verify_user(user):
     if find_user_by_username(user['username']):
         return {
-            'type': 'error',
-            'message': 'El nombre de usuario ya está en uso'
+            'error_type': 'error',
+            'error_desc': 'El nombre de usuario ya está en uso'
         }
 
     if find_user_by_email(user['email']):
         return {
-            'type': 'error',
-            'message': 'El correo electrónico ya está en uso'
+            'error_type': 'error',
+            'error_desc': 'El correo electrónico ya está en uso'
         }
     return True
 
@@ -86,8 +86,8 @@ def create_user(user):
         generate_user(creado)
         send_confirm_mail(creado)
         return {
-            'type': 'positive',
-            'message': 'Usuario registrado correctamente'
+            'error_type': 'positive',
+            'error_desc': 'Usuario registrado correctamente'
         }
     except (EmailUsed, UsernameUsed, RequiredUsername,
             RequiredName, RequiredPassword, RequiredEmail) as expt:
@@ -130,8 +130,8 @@ def update_profile_pic(user):
     set_profile_pic(user_to_update)
     
     return {
-        'type': 'positive',
-        'message': 'Foto de perfil actualizada correctamente'
+        'error_type': 'positive',
+        'error_desc': 'Foto de perfil actualizada correctamente'
     }
 
 
@@ -144,8 +144,8 @@ def update_username(user, username):
     set_username(user)
 
     return {
-        'type': 'positive',
-        'message': 'Nombre de usuario cambiado correctamente'
+        'error_type': 'positive',
+        'error_desc': 'Nombre de usuario cambiado correctamente'
     }
 
 
@@ -155,11 +155,11 @@ def update_password(user, password, new_password):
         set_password(user)
 
         return {
-            'type': 'positive',
-            'message': 'Contraseña actualizada correctamente'
+            'error_type': 'positive',
+            'error_desc': 'Contraseña actualizada correctamente'
         }
     else:
         return {
-            'type': 'negative',
-            'message': 'La contraseña no es correcta'
+            'error_type': 'error',
+            'error_desc': 'La contraseña no es correcta'
         }

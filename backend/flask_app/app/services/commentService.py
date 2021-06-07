@@ -2,7 +2,7 @@ from flask_app.app.database.models import PostComment, PostLikes
 import flask_app.app.database.dao.commentDao as dao
 
 
-def create_comment(creator, postId, bodyPost):
+def create_comment(creator, post_id, bodyPost):
     comment = PostComment()
     comment.message = message
     comment.post_id = post_id
@@ -11,8 +11,8 @@ def create_comment(creator, postId, bodyPost):
     dao.generate_commentPost(comment)
 
     return {
-        'type': 'positive',
-        'message': 'Mensaje añadido correctamente'
+        'error_type': 'positive',
+        'error_desc': 'Mensaje añadido correctamente'
     }
 
 

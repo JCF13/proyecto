@@ -460,3 +460,48 @@
 
     INFO :: 2021-06-07 08:54:06,052  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
                     
+
+    INFO :: 2021-06-07 15:22:42,973  _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>' | 
+                    
+
+    INFO :: 2021-06-07 15:23:48,049  _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>' | 
+                    
+
+    INFO :: 2021-06-07 15:24:12,143  _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>' | 
+                    
+
+    INFO :: 2021-06-07 15:24:26,303  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-07 15:24:36,817  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header padding | 
+                    
+
+    INFO :: 2021-06-07 15:26:37,128  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Invalid header padding | 
+                    
+
+    INFO :: 2021-06-07 15:28:00,869  _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-07 15:28:18,867  _ post : 
+                    
+
+    INFO :: 2021-06-07 15:34:40,499  _ post : error_type: error | error_desc: Ha ocurrido un error | 
+                    
+
+    INFO :: 2021-06-07 15:35:12,407  _ post : error_type: error | error_desc: Ha ocurrido un error | 
+                    
+
+    INFO :: 2021-06-07 15:37:12,739 _ posts _ flask_restx.namespace.post _ post : error_type: error | error_desc: Ha ocurrido un error | 
+                    
+
+    INFO :: 2021-06-07 18:40:11,300 _ authorization _ 8106203 _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-07 18:42:33,075 _ authorization _ 5749 _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-07 19:06:45,711 _ authorization _ 4154 _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-07 19:11:04,948 _ authorization _ 9450 _ post : request: Login | username: ToniJSB | 
+                    

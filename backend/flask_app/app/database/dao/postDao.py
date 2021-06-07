@@ -1,4 +1,4 @@
-from flask_app.app.database.models import Post
+from flask_app.app.database.models import Post, PostLikes
 from flask_app.app.database import db
 
 

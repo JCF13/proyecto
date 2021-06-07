@@ -1,23 +1,23 @@
 from flask_app.app.database.schemas import PostSchema
 from flask_app.app.namespaces.auth.schemas import (creator, picture,
-                                                           userProfile)
+                                                   userProfile)
 from flask_app.app.namespaces.private.schemas import (followModel,
-                                                              picture,
-                                                              profilePicModel,
-                                                              profilePicture,
-                                                              simpleUser)
-from flask_app.app.services.commentService import generate_comment
+                                                      picture,
+                                                      profilePicModel,
+                                                      profilePicture,
+                                                      simpleUser)
+from flask_app.app.services.commentService import create_comment
 from flask_app.app.services.imageService import get_picture
 #from flask_app.app.services.imageService import create_image
 from flask_app.app.services.logs import complex_file_handler
 from flask_app.app.services.postService import new_like
 from flask_app.app.services.userService import (get_user_by_id,
-                                                        get_user_by_username,
-                                                        search_users, update_password,
-                                                        update_profile_pic,
-                                                        update_username,
-                                                        user_follows_to,
-                                                        user_unfollows_to)
+                                                get_user_by_username,
+                                                search_users, update_password,
+                                                update_profile_pic,
+                                                update_username,
+                                                user_follows_to,
+                                                user_unfollows_to)
 from flask import json, request
 from flask.helpers import send_file
 from flask_jwt_extended import (get_jwt_identity, jwt_required,
@@ -48,12 +48,12 @@ class Follow(Resource):
         user_follower = get_user_by_id(username_follower)
         user_followed = get_user_by_id(body['user'])
         foll = user_follows_to(user_follower, user_followed)
-        
+
         return foll
 
 
 @myNS.route('/unfoll')
-class  Unfollow(Resource):
+class Unfollow(Resource):
 
     @myNS.expect(followModel, parser)
     @jwt_required()
@@ -113,6 +113,7 @@ class GetFollowing(Resource):
 
 @myNS.route('/getUser/<string:username>')
 class GetUser(Resource):
+    
     @jwt_required()
     def get(self, username):
         user = get_user_by_id(get_jwt_identity())
@@ -138,7 +139,7 @@ class GetUser(Resource):
         resp['following'] = len(user_profile.following)
         resp['followed'] = following
         resp['followYou'] = follow_you
-        
+    
         return resp
 
 
@@ -187,7 +188,7 @@ class NewComment(Resource):
         commentJson = request.get_json()
         user_id = get_jwt_identity()
 
-        return generate_comment(user_id, commentJson['post_id'], commentJson['message'])
+        return create_comment(user_id, commentJson['post_id'], commentJson['message'])
 
 
 @myNS.route('/like')
