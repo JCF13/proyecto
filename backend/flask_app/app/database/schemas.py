@@ -35,6 +35,7 @@ class PostLikeSchema(SQLAlchemyAutoSchema):
 class PostCommentSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.PostComment
+        include_relationships = True
 
 class ChatSchema(SQLAlchemyAutoSchema):
     class Meta:

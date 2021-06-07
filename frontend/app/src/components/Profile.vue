@@ -18,24 +18,29 @@
                                 <h5><strong>{{user.username}}</strong></h5>
 
                                 <q-card-actions horizontal class="q-px-md">
-                                    <q-btn flat color="black" icon="chat_bubble_outline" />
+                                    <q-btn v-if="!isUser" flat color="black" icon="chat_bubble_outline" @click="createChat" />
+                                    
                                     <router-link to="/inside/settings">
                                         <q-btn flat round color="black" icon="settings" />
                                     </router-link>
                                 </q-card-actions>
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal>
-                                <router-link to="/inside/social/followers">
+                                <router-link v-if="isUser" to="/inside/social/followers">
                                     <q-btn class="bg-white" push :label="user.followers+' SEGUIDORES'" />
                                 </router-link>
-                                <router-link to="/inside/social/following">
+                                <q-btn v-else class="bg-white" push :label="user.followers+' SEGUIDORES'" />
+                                <router-link v-if="isUser" to="/inside/social/following">
                                     <q-btn class="bg-white" push :label="user.following+' SEGUIDOS'" />
                                 </router-link>
+                                <q-btn v-else class="bg-white" push :label="user.following+' SEGUIDOS'" />
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal style="margin-top:5%">
-                                <q-btn v-if="!isUser" class="bg-white" push label="SEGUIR" @click="follow" />
-                                <q-btn class="bg-white" push label="DEJAR DE SEGUIR" style="display:none" />
-                                <q-btn v-if="!isUser" class="bg-white" push label="TE SIGUE" />
+                                <q-btn v-if="!isUser && !user.followed" class="bg-positive text-white" push label="SEGUIR" @click="follow" />
+                                <q-btn v-if="!isUser && user.followed" class="bg-positive text-white" push label="SEGUIDO"/>
+                                
+                                <q-btn v-if="!isUser && user.followed" class="bg-negative text-white" push label="DEJAR DE SEGUIR" @click="unfollow" />
+                                <q-btn v-if="!isUser && user.followYou" class="bg-positive text-white" push label="TE SIGUE" />
                             </q-card-section>
                         </q-card-section>
                     </q-card>
@@ -76,13 +81,19 @@ export default {
                         caption: '',
                     },
                 ],
+                followed: false,
+                followYou: false
             },
-            isUser: true      
+            isUser: true,
         }
     },
     async created() {
         if (this.$route.params.username) {
-            const profileFetch = await fetch(`http://localhost:5000/my/getUser/${this.$route.params.username}`)
+            const profileFetch = await fetch(`http://localhost:5000/my/getUser/${this.$route.params.username}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            })
             const profile = await profileFetch.json();
             
             profile.posts.forEach(async post => {
@@ -166,22 +177,90 @@ export default {
         openPost(id) {
             this.$router.push(`/inside/profile/post/${id}`)
         },
-        async follow() {
-            const follow = await fetch('http://localhost:5000/my/foll', {
+        async unfollow() {
+            const unfollowFetch = await fetch('http://localhost:5000/my/unfoll', {
                 method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user: {
-                        id: 2,
-                        username: 'prueba1',
-                        profilePic: ''
-                    },
-                    follows: false
+                    user: this.user.user_id
+                })
+            });
+
+            const unfollow = await unfollowFetch.json();
+
+            if (unfollow.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: unfollow.message,
+                    position: 'top-right'
+                })
+
+                this.user.followers--;
+                this.user.followed = false;
+            }
+        },
+        async follow() {
+            const followFetch = await fetch('http://localhost:5000/my/foll', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user: this.user.user_id
                 })
             })
+
+            const follow = await followFetch.json()
+
+            if (follow.type === 'negative') {
+                this.$q.notify({
+                    type: 'negative',
+                    message: follow.message,
+                    position: 'top-right'
+                });
+            }
+
+            if (follow.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: follow.message,
+                    position: 'top-right'
+                });
+                this.user.followers++;
+                this.user.followed = true
+            }
+        },
+        async createChat() {
+            const chatFetch = await fetch('http://localhost:5000/chat/create', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    partner_id: this.user.user_id
+                })
+            });
+
+            const chat = await chatFetch.json();
+
+            if (chat.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: chat.message,
+                    position: 'top-right'
+                });
+
+                this.$router.push(`/inside/chats/${chat.partner_id}`)
+            }
+
+            if (chat.type === 'warning') {
+                this.$router.push(`/inside/chats/${chat.partner_id}`)
+            }
         }
     }
 }

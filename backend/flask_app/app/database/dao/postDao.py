@@ -39,3 +39,17 @@ def find_post_by_id(id):
 
 def find_by_offset_and_followed(page):
     pass
+
+
+def add_like(like: PostLikes):
+    db.session.add(like)
+    db.session.commit()
+
+
+def find_like_by_id(id: int):
+    return PostLikes.query.filter(PostLikes.id)
+
+
+def delete_post(post: Post):
+    db.session.delete(post)
+    db.session.commit()

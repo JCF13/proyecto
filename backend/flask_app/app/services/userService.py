@@ -18,10 +18,27 @@ from flask_app.app.services.imageService import save_picture
 
 
 def user_follows_to(follower, followed):
-    follows = Followers(followed_id=followed.id,
-                        follower_id=follower.id)
-    follows_to(follows)
-    pass
+    if follower.user_id != followed.user_id:
+        follows = Followers(followed_id=followed.user_id, follower_id=follower.user_id)
+        follows_to(follows)
+        return {
+            'type': 'positive',
+            'message': 'Has seguido a ' + followed.username
+        }
+    else:
+        return {
+            'type': 'negative',
+            'message': 'No puedes seguirte a tí mismo'
+        }
+
+
+def user_unfollows_to(follower, unfollowed):
+    unfollow = get_follow(follower.user_id, unfollowed.user_id)
+    unfollows_to(unfollow)
+    return {
+        'type': 'positive',
+        'message': 'Has dejado de seguir a ' + unfollowed.username
+    }
 
 
 def verify_user(user):
@@ -111,7 +128,38 @@ def update_profile_pic(user):
     user_to_update = get_user_by_id(user['user'])
     user_to_update.picture = save_picture(user['picture'], str(user['user'])+str(datetime.now()).replace(' ', '-').replace('.', '').replace(':', ''))
     set_profile_pic(user_to_update)
+    
     return {
         'type': 'positive',
         'message': 'Foto de perfil actualizada correctamente'
     }
+
+
+def search_users(search, user_id):
+    return find_users_by(search, user_id)
+
+
+def update_username(user, username):
+    user.username = username
+    set_username(user)
+
+    return {
+        'type': 'positive',
+        'message': 'Nombre de usuario cambiado correctamente'
+    }
+
+
+def update_password(user, password, new_password):
+    if bcrypt.check_password_hash(user.password, password):
+        user.password = bcrypt.generate_password_hash(new_password)
+        set_password(user)
+
+        return {
+            'type': 'positive',
+            'message': 'Contraseña actualizada correctamente'
+        }
+    else:
+        return {
+            'type': 'negative',
+            'message': 'La contraseña no es correcta'
+        }

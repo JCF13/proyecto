@@ -1,14 +1,19 @@
-from flask_app.app.database.models import PostComment
-import flask_app.app.database.dao.commentDao as dao
+from backend.flask_app.app.database.models import PostComment, PostLikes
+import backend.flask_app.app.database.dao.commentDao as dao
 
 
 def create_comment(creator, postId, bodyPost):
     comment = PostComment()
-    comment.message = bodyPost.get('message')
-    # post.post_id = bodyPost.get('id')
-    comment.post_id = postId
+    comment.message = message
+    comment.post_id = post_id
     comment.created_by_fk = creator
+    
     dao.generate_commentPost(comment)
+
+    return {
+        'type': 'positive',
+        'message': 'Mensaje añadido correctamente'
+    }
 
 
 def get_post_comments(post_id):

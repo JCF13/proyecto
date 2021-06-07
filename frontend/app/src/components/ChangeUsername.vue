@@ -5,7 +5,7 @@
             <q-input
                 label="Nombre de usuario"
                 readonly
-                :value="username"
+                :value="user.username"
             />
 
             <q-input
@@ -13,7 +13,7 @@
                 v-model="newUsername"
             />
 
-            <q-btn label="GUARDAR" type="submit" color="black"/>
+            <q-btn label="GUARDAR" type="submit" color="black" @click="updateUsername"/>
         </q-form>
     </div>
 </template>
@@ -22,8 +22,48 @@
 export default {
     data() {
         return {
-            username: 'Nombre_de_usuario',
-            newUsername: null
+            user: {
+                user_id: 0,
+                username: '',
+                picture: ''
+            },
+            newUsername: ''
+        }
+    },
+    async created() {
+        const profileFetch = await fetch('http://localhost:5000/my/getProfile', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+
+        const profile = await profileFetch.json();
+        this.user = profile;
+    },
+    methods: {
+        async updateUsername() {
+            const usernameFetch = await fetch('http://localhost:5000/my/changeUsername', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    username: this.newUsername
+                })
+            });
+
+            const resp = await usernameFetch.json();
+
+            if (resp.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: resp.message,
+                    position: 'top-right'
+                });
+
+                this.$router.push('/inside/profile')
+            }
         }
     }
 }

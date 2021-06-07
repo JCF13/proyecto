@@ -11,6 +11,7 @@ userModel = Model('User', {
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
+
 simpleUser = Model('simpleUser', {
     'id': fields.Integer(),
     'username': fields.String(),
@@ -24,6 +25,7 @@ userProfile = Model('UserProfile', {
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
+
 picture = Model('picture', {
     'kind': fields.String(description='CHOICES: profile, chat, post'),
     'blurb': fields.String(),
@@ -67,8 +69,6 @@ postModel = Model('Post',{
     'comments': fields.List(fields.Nested(commentModel)),
 })
 
-
-
 commentUser = Model('commentUser', {
     # 'id': fields.Integer(),
     'user': fields.Nested(simpleUser, attribute='created_by'),
@@ -90,8 +90,7 @@ posts = Model('allPosts', {
 })
 
 followModel = Model('followModel', {
-    'user': fields.Nested(simpleUser),
-    'follows': fields.Boolean(default=False),  
+    'user': fields.Integer(),
 })
 
 profilePicModel = Model('profilePicModel', {
@@ -114,4 +113,15 @@ wildcardResp = Model('response', {
         para siguientes consultas. El refresh_token tarda más en expirar,
         '''),
         'error': fields.Nested(errorSchema, required=False)
+})
+
+createChat = Model('createChat', {
+    'user': fields.Integer(),
+    'partner': fields.Integer()
+})
+
+chatModel = Model('chatModel', {
+    'chat_id': fields.Integer(),
+    'user': fields.Nested(simpleUser, attribute='created_by_fk'),
+    'partner': fields.Nested(simpleUser),
 })

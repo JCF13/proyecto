@@ -4,6 +4,7 @@
             <q-card-section horizontal>
                 <div id="card-left">
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
+                    <q-icon v-if="post.creator.user_id === user.user_id" id="delete" color='red' name='delete' size='30px' @click="deletePost" />
 
                     <img id="image" :src="post.picture" alt="">
 
@@ -35,20 +36,20 @@
                     <div id="creation-date">
                         <p>{{post.created_on}}</p>
                     </div>
-                    <div id="comments">
-                        <div v-for="comment in post.comments" :key="comment.id">
-                            <!--<q-avatar v-if="comment.user.picture == 1">
-                                <q-icon name='person' />
-                            </q-avatar>
-                            <q-avatar v-else>
-                                <img :src="comment.user.picture" />
-                            </q-avatar>
-                            <p>
-                                <span>{{comment.user.username}}.</span>
-                                {{comment.message}}
-                            </p>-->
-                        </div>
-                        <q-icon v-if="post.comments.length>5" name="add_circle_outline" size="25px" />
+                    <div>
+                        <q-list>
+                            <q-item v-for="comment in post.comments" :key="comment.id">
+                                <q-item-section avatar>
+                                <q-avatar v-if="comment.user.picture == 1">
+                                    <q-icon name='person' />
+                                </q-avatar>
+                                <q-avatar v-else>
+                                    <img :src="comment.user.picture" />
+                                </q-avatar>
+                                </q-item-section>
+                                <q-item-section>{{comment.message}}</q-item-section>
+                            </q-item>
+                        </q-list>
                     </div>
                     <div id="new-comment">
                         <q-input label="Escribe un comentario" color="black" v-model="message">
@@ -101,15 +102,27 @@ export default {
                     }
                 ]
             },
-            user: {
-                id: null,
-            },
+            user: null,
             message: null
         }
     },
     async created() {
+        const userFetch = await fetch('http://localhost:5000/my/getProfile', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const user = await userFetch.json();
+
+        this.user = user;
+        
         const postId = this.$route.params.id;
-        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`);
+        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            }
+        });
         const post = await postFetch.json();
 
         const imgFetch = await fetch('http://localhost:5000/my/image', {
@@ -120,6 +133,8 @@ export default {
             body: JSON.stringify(post.picture)
         })
         const img = await imgFetch.json()
+
+        post.created_on = post.created_on.split('.')[0].replace('T', ' ')
 
         img.picture = img.picture.replace("b'", 'data:image/png;base64,');
         img.picture = img.picture.replace("'", '');
@@ -139,8 +154,6 @@ export default {
             profilePic.picture = profilePic.picture.replace("'", '');
             post.creator.picture = profilePic.picture;
         }
-        
-        
 
         this.post = post;
     },
@@ -149,27 +162,51 @@ export default {
             this.$router.go(-1)
         },
 
-        // Cargar post
-        async getPost(id) {
-            const postFetch = await fetch(`http://localhost:5000/private/post/${id}`)
-            const post = postFetch.json();
-
-            this.post = post;
-        },
-
-        // Enviar comentario y nueva notificación
         async newComment() {
             const postId = this.$route.params.id;
             
-            const comment = await fetch('http://localhost:5000/private/post/comment', {
-                method: 'POST',
+            const commentFetch = await fetch('http://localhost:5000/my/comment', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    'Content-type': 'application/json'
+                },
                 body: JSON.stringify({
-                    post: postId,
-                    creator: this.post.creator.user_id,
-                    user: this.user.id,
+                    post_id: postId,
                     message: this.message
                 })
             });
+
+            const comment = await commentFetch.json()
+
+            if (comment.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: comment.message,
+                    position: 'top-right'
+                })
+            }
+        },
+
+        async deletePost() {
+            const deleteFetch = await fetch(`http://localhost:5000/post/deletepost/${this.post.post_id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            });
+
+            const resp = await deleteFetch.json();
+
+            if (resp.type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: resp.message,
+                    position: 'top-right'
+                });
+
+                this.$router.push('/inside/')
+            }
         }
     }
 }
@@ -260,6 +297,13 @@ export default {
 
     #close {
         cursor: pointer;
+    }
+
+    #delete {
+        cursor: pointer;
+        position: absolute;
+        right: 50%;
+        margin: 1%;
     }
 
     #comments {

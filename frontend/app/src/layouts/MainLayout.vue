@@ -15,13 +15,7 @@
                     <q-tab name="new-post" icon="add_circle" />
                 </router-link>
                 <router-link to="/inside/chats" class="col-md-1">
-                    <q-tab name="chats" icon="chat_bubble_outline">
-                    <q-badge floating color="negative">9</q-badge></q-tab>
-                </router-link>
-                <router-link to="/inside/notifications" class="col-md-1">
-                    <q-tab name="notifications" icon="notifications">
-                        <q-badge floating color="negative">12</q-badge>
-                    </q-tab>
+                    <q-tab name="chats" icon="chat_bubble_outline"></q-tab>
                 </router-link>
                 <router-link to="/inside/profile" class="col-md-1">
                     <q-tab name="profile" icon="person"/>
@@ -41,6 +35,9 @@ export default {
         }
     },
     created() {
+        if (!localStorage.getItem('access_token')) {
+            this.$router.push('/')
+        } 
     },
     methods: {
         goToPost() {

@@ -11,11 +11,11 @@ from flask_app.app.namespaces.private.schemas import (commentModel,
                                                       simpleUser,
                                                       userModel
                                                       )
-from flask_app.app.services.commentService import (create_comment,
+from flask_app.app.services.commentService import (generate_comment,
                                                    get_post_comments
                                                    )
 from flask_app.app.services.logs import complex_file_handler
-from flask_app.app.services.postService import (create_post,
+from flask_app.app.services.postService import (generate_post,
                                                 get_by_offset,
                                                 get_post_by_id
                                                 )
@@ -87,11 +87,13 @@ class Get_posts(Resource):
 
         strPosts = sqlPost.dumps(allPosts, many=True)
         h = json.loads(strPosts)
+
         for post in h:
             user = get_user_by_id(post['created_by_fk'])
             user_resp = marshal(user, creator, skip_none=True)
             post['creator'] = user_resp
-
+            post['likes'] = len(post['likes'])
+        
         return h
 
 @post.route('/gpost/<int:id>')
@@ -99,9 +101,8 @@ class get_post(Resource):
     pistIdParser = post.parser()
     parser.add_argument('id', location='args', required=True)
 
-    # @post.marshal_with(postModel)
-
     @post.expect(parser, pistIdParser)
+    @jwt_required()
     def get(self, id):
         elpost = get_post_by_id(request.args.get('id'))
         sqlPost = PostSchema()
@@ -111,24 +112,23 @@ class get_post(Resource):
         jsonPost = json.loads(strPosts)
 
         strComments = sqlComment.dumps(elpost.comments, many=True)
+        jsonComments = json.loads(strComments)
 
-        jsonPost['comments'] = json.loads(strComments)
+        for comment in jsonComments:
+            comment['user'] = marshal(get_user_by_id(comment['created_by']), creator, skip_none=True)
+        
+        jsonPost['comments'] = jsonComments
 
         user = get_user_by_id(jsonPost['created_by_fk'])
         creator_post = marshal(user, creator, skip_none=True)
         jsonPost['creator'] = creator_post
 
-        print(jsonPost)
-
         return jsonPost
 
 
-    @post.expect(commentModel, parser)
-    @jwt_required()
-    def patch(self, id):
-        commentJson = request.get_json()
-        # marshalledComment = marshal(commentJson, commentModel, skip_none=True)
-        
-        create_comment(get_jwt_identity(), id, commentJson)
+@post.route('/deletepost/<int:id>')
+class DeletePost(Resource):
 
-        return commentJson
+    @jwt_required()
+    def post(self, id):
+        return delete_post_by_id(id)
