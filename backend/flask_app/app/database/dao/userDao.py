@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from flask_app.app.exceptions import EmailUsed, InvalidUsername, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
-from flask_app.app.database.models import User, Followers
-from flask_app.app.database import db
+from backend.flask_app.app.exceptions import EmailUsed, InvalidUsername, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
+from backend.flask_app.app.database.models import User, Followers
+from backend.flask_app.app.database import db
 
 
 def find_user_by_username(username: str):
@@ -102,7 +102,7 @@ def set_profile_pic(user: User):
 
 
 def find_users_by(search: str, user_id: int):
-    return User.query.filter(User.username.like('%'+search+'%'), User.user_id!=user_id).limit(10)
+    return User.query.filter(User.username.like('%'+search+'%'), User.id!=user_id).limit(10)
 
 
 def set_username(user: User):

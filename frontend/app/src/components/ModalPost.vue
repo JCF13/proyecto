@@ -15,7 +15,7 @@
 
                 <q-card-actions vertical id="card-right">
                     <div id="modal-user">
-                        <q-avatar v-if="post.creator.picture === '1'">
+                        <q-avatar v-if="post.creator.picture === '1' || post.creator.picture === ''">
                             <q-icon name='person' />
                         </q-avatar>
                         <q-avatar v-else size="30px" class="avatar">
@@ -36,11 +36,11 @@
                     <div id="creation-date">
                         <p>{{post.created_on}}</p>
                     </div>
-                    <div>
-                        <q-list>
+                    <div id="comments">
+                        <q-list id="comments-post">
                             <q-item v-for="comment in post.comments" :key="comment.id">
                                 <q-item-section avatar>
-                                <q-avatar v-if="comment.user.picture == 1">
+                                <q-avatar v-if="comment.user.picture === '1' || comment.user.picture === ''">
                                     <q-icon name='person' />
                                 </q-avatar>
                                 <q-avatar v-else>
@@ -107,7 +107,7 @@ export default {
         }
     },
     async created() {
-        const userFetch = await fetch('http://localhost:5000/my/getProfile', {
+        const userFetch = await fetch('https://localhost:5000/my/getProfile', {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -118,14 +118,14 @@ export default {
         this.user = user;
         
         const postId = this.$route.params.id;
-        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`, {
+        const postFetch = await fetch(`https://localhost:5000/post/gpost/${postId}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
             }
         });
         const post = await postFetch.json();
 
-        const imgFetch = await fetch('http://localhost:5000/my/image', {
+        const imgFetch = await fetch('https://localhost:5000/my/image', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -140,8 +140,8 @@ export default {
         img.picture = img.picture.replace("'", '');
         post.picture = img.picture;
 
-        if (post.creator.picture !== '1') {
-            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+        if (post.creator.picture !== '1' && post.creator.picture !== '') {
+            const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -155,6 +155,23 @@ export default {
             post.creator.picture = profilePic.picture;
         }
 
+        post.comments.forEach(async a => {
+              if (a.user.picture !== '1' && a.user.picture !== '') {
+                  const profilePicFetch = await fetch('https://localhost:5000/my/image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(a.user.picture)
+                })
+
+                const profilePic = await profilePicFetch.json();
+                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
+                profilePic.picture = profilePic.picture.replace("'", '');
+                a.user.picture = profilePic.picture;
+              }
+        })
+
         this.post = post;
     },
     methods: {
@@ -165,7 +182,7 @@ export default {
         async newComment() {
             const postId = this.$route.params.id;
             
-            const commentFetch = await fetch('http://localhost:5000/my/comment', {
+            const commentFetch = await fetch('https://localhost:5000/my/comment', {
                 method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
@@ -189,7 +206,7 @@ export default {
         },
 
         async deletePost() {
-            const deleteFetch = await fetch(`http://localhost:5000/post/deletepost/${this.post.post_id}`, {
+            const deleteFetch = await fetch(`https://localhost:5000/post/deletepost/${this.post.post_id}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -308,17 +325,6 @@ export default {
 
     #comments {
         grid-area: comments;
-        display: grid;
-    }
-
-    #comments div {
-        display: grid;
-        grid-template-columns: 10% 90%;
-        margin-bottom: 5%;
-    }
-
-    #comments i:last-child {
-        justify-self: center;
     }
 
     #pie-de-foto {
@@ -328,6 +334,18 @@ export default {
         text-align: left;
         padding: 1%;
         height: 7%;
+    }
+
+    #comments-post {
+        grid-area: comments;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 80%;
+        max-width: 100%;
+    }
+
+    #comments-post::-webkit-scrollbar {
+        display: none;
     }
 
     #new-comment {

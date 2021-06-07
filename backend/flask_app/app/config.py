@@ -32,6 +32,6 @@ class Config():
     MAIL_PORT = 465
     MAIL_USE_TLS =  False
     MAIL_USE_SSL =  True
-    MAIL_DEFAULT_SENDER = 'toponipi1@gmail.com'
-    MAIL_USERNAME = 'toponipi1'
-    MAIL_PASSWORD = os.environ.get('COLAO')
+    MAIL_DEFAULT_SENDER = 'jerocf13@gmail.com'
+    MAIL_USERNAME = 'jerocf13'
+    MAIL_PASSWORD = os.environ.get('PASS_GMAIL')

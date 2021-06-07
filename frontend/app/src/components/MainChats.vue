@@ -3,7 +3,7 @@
         <div id="main">
             <div id="left">
                 <q-list id="chat-list">
-                    <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.user_id" :key="chat.chat_id">
+                    <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.id" :key="chat.chat_id">
                         <q-item class="chat-item" clickable v-ripple>
                             <q-item-section avatar v-if="chat.partner.picture == 1" style="padding-left: 5%;">
                                 <q-icon name='person' />
@@ -48,7 +48,7 @@ export default {
                 {
                     id: 0,
                     partner: {
-                        user_id: 0,
+                        id: 0,
                         username: '',
                         picture: ''
                     },
@@ -59,7 +59,7 @@ export default {
         }
     },
     async created() {
-        const userFetch = await fetch('http://localhost:5000/my/getProfile', {
+        const userFetch = await fetch('https://localhost:5000/my/getProfile', {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -69,7 +69,7 @@ export default {
 
         this.user = user.user_id;
         
-        const chatsFetch = await fetch('http://localhost:5000/chat/getChats', {
+        const chatsFetch = await fetch('https://localhost:5000/chat/getChats', {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -79,8 +79,8 @@ export default {
         const chats = await chatsFetch.json()
 
         chats.forEach(async a => {
-            if (a.partner.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            if (a.partner.picture !== '1' && a.partner.picture !== '') {
+                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -99,7 +99,7 @@ export default {
     },
     methods: {
         async deleteChat(id) {
-            const deleteFetch = await fetch('http://localhost:5000/chat/deleteChat', {
+            const deleteFetch = await fetch('https://localhost:5000/chat/deleteChat', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',

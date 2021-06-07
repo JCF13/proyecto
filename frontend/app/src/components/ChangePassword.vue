@@ -37,7 +37,7 @@ export default {
     methods: {
         async updatePassword() {
             if (this.newPassword === this.repeatPassword) {
-                const passwordFetch = await fetch('http://localhost:5000/my/changePassword', {
+                const passwordFetch = await fetch('https://localhost:5000/my/changePassword', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json',

@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         async logIn() {
-            const logInFetch = await fetch('http://localhost:5000/auth/login', {
+            const logInFetch = await fetch('https://localhost:5000/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'

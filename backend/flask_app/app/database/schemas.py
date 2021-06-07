@@ -1,6 +1,6 @@
 from sqlalchemy.orm import load_only
-import flask_app.app.database.models as models
-from flask_app.app.database import ma
+import backend.flask_app.app.database.models as models
+from backend.flask_app.app.database import ma
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
@@ -31,6 +31,8 @@ class PostSchema(SQLAlchemyAutoSchema):
 class PostLikeSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = models.PostLikes
+        include_relationships = True
+        include_fk = True
 
 class PostCommentSchema(SQLAlchemyAutoSchema):
     class Meta:

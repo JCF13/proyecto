@@ -3,7 +3,7 @@
         <q-list v-if="followers.length > 0">
             <q-item v-for="follower in followers" :key="follower.user_id">
                 <q-item-section avatar>
-                    <q-avatar v-if="follower.picture === '1'">
+                    <q-avatar v-if="follower.picture === '1' || follower.picture === ''">
                         <q-icon name='person' />
                     </q-avatar>
                     <q-avatar v-else size="30px" class="avatar">
@@ -37,7 +37,7 @@ export default {
     async created() {
         const id = this.$route.params.id;
 
-        const followersFetch = await fetch(`http://localhost:5000/my/getFollowers`, {
+        const followersFetch = await fetch(`https://localhost:5000/my/getFollowers`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -46,8 +46,8 @@ export default {
         const followers = await followersFetch.json();
 
         followers.forEach(async a => {
-            if (a.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            if (a.picture !== '1' && a.picture !== '') {
+                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'

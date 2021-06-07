@@ -77,7 +77,7 @@ export default {
             this.captionDialog = true;
         },
         async createPost() {
-            const postFetch = await fetch('http://localhost:5000/post/cpost', {
+            const postFetch = await fetch('https://localhost:5000/post/cpost', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),

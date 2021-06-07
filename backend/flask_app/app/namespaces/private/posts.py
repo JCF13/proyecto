@@ -21,9 +21,9 @@ from flask_jwt_extended import (get_jwt_identity, jwt_required,
                                 verify_jwt_in_request
                                 )
 from flask_restx import Namespace, Resource, marshal
-from flask_app.app.services.userService import get_user_by_id
-from flask_app.app.namespaces.auth.schemas import userProfile, creator
-from flask_app.app.services.imageService import get_picture
+from backend.flask_app.app.services.userService import get_user_by_id
+from backend.flask_app.app.namespaces.auth.schemas import userProfile, creator
+from backend.flask_app.app.services.imageService import get_picture
 
 post = Namespace('post', 'todas las rutas de Posts irán a aquí')
 
@@ -71,17 +71,32 @@ class Get_posts(Resource):
         allPosts = get_by_offset(page, following)
 
         sqlPost = PostSchema()
+        sqlLike = PostLikeSchema()
 
-        strPosts = sqlPost.dumps(allPosts, many=True)
-        h = json.loads(strPosts)
+        jsonPosts = []
+        for post in allPosts:
+            strLikes = sqlLike.dumps(post.likes, many=True)
+            jsonLikes = json.loads(strLikes)
+            
+            for like in jsonLikes:
+                like['user'] = marshal(get_user_by_id(like['user_id']), creator, skip_none=True)
 
-        for post in h:
-            user = get_user_by_id(post['created_by_fk'])
+            strPost = sqlPost.dumps(post)
+            jsonPost = json.loads(strPost)
+            jsonPost['likes'] = jsonLikes
+
+            for like in jsonPost['likes']:
+                jsonPost['liked'] = False
+                if user.id == like['user_id']:
+                    jsonPost['liked'] = True
+            
+            user = get_user_by_id(jsonPost['created_by_fk'])
             user_resp = marshal(user, creator, skip_none=True)
-            post['creator'] = user_resp
-            post['likes'] = len(post['likes'])
-        
-        return h
+            jsonPost['creator'] = user_resp
+            jsonPosts.append(jsonPost)
+
+        return jsonPosts
+
 
 @post.route('/gpost/<int:id>')
 class get_post(Resource):

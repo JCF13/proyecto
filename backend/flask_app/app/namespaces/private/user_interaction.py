@@ -1,4 +1,4 @@
-from backend.flask_app.app.database.schemas import PostSchema
+from backend.flask_app.app.database.schemas import FollowerSchema, PostSchema
 from backend.flask_app.app.namespaces.auth.schemas import (creator, picture,
                                                            userProfile)
 from backend.flask_app.app.namespaces.private.schemas import (followModel,
@@ -10,7 +10,7 @@ from backend.flask_app.app.services.commentService import generate_comment
 from backend.flask_app.app.services.imageService import get_picture
 #from backend.flask_app.app.services.imageService import create_image
 from backend.flask_app.app.services.logs import complex_file_handler
-from backend.flask_app.app.services.postService import new_like
+from backend.flask_app.app.services.postService import dislike, new_like
 from backend.flask_app.app.services.userService import (get_user_by_id,
                                                         get_user_by_username,
                                                         search_users, update_password,
@@ -74,7 +74,7 @@ class SearchUsers(Resource):
         search_by = request.get_json()
         user = get_user_by_id(get_jwt_identity())
 
-        users = search_users(search_by['search'], user.user_id)
+        users = search_users(search_by['search'], user.id)
         users_json = []
 
         for user in users:
@@ -199,6 +199,17 @@ class NewLike(Resource):
         user_id = get_jwt_identity()
 
         return new_like(user_id, likeJson['post_id'])
+
+
+@myNS.route('/dislike')
+class DisLike(Resource):
+
+    @jwt_required()
+    def post(self):
+        dislikeJson = request.get_json()
+        user_id = get_jwt_identity()
+
+        return dislike(user_id, dislikeJson['post_id'])
 
 
 @myNS.route('/changeUsername')

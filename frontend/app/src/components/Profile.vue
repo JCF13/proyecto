@@ -3,7 +3,7 @@
         <div id="main">
             <div id="top">
                 <div id="left-top">
-                    <q-img v-if="user.picture !== '1'"
+                    <q-img v-if="user.picture !== '1' && user.picture !== ''"
                         :src="user.picture"
                         style="width:100%; max-width: 200px; height:100%; max-height: 175px; border-radius:50%; border: 2px solid black;"
                         contain
@@ -69,7 +69,7 @@ export default {
     data() {
         return {
             user: {
-                user_id: 0,
+                id: 0,
                 username: '',
                 picture: '',
                 followers: 0,
@@ -89,7 +89,7 @@ export default {
     },
     async created() {
         if (this.$route.params.username) {
-            const profileFetch = await fetch(`http://localhost:5000/my/getUser/${this.$route.params.username}`, {
+            const profileFetch = await fetch(`https://localhost:5000/my/getUser/${this.$route.params.username}`, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
@@ -97,7 +97,7 @@ export default {
             const profile = await profileFetch.json();
             
             profile.posts.forEach(async post => {
-                const imgFetch = await fetch('http://localhost:5000/my/image', {
+                const imgFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -112,8 +112,8 @@ export default {
                 post.picture = img.picture;
             })
 
-            if (profile.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            if (profile.picture !== '1' && profile.picture !== '') {
+                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -130,7 +130,7 @@ export default {
             this.isUser = false;
             this.user = profile;
         } else {
-            const profileFetch = await fetch(`http://localhost:5000/my/getProfile`, {
+            const profileFetch = await fetch(`https://localhost:5000/my/getProfile`, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
@@ -138,7 +138,7 @@ export default {
             const profile = await profileFetch.json();
             
             profile.posts.forEach(async post => {
-                const imgFetch = await fetch('http://localhost:5000/my/image', {
+                const imgFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -153,8 +153,8 @@ export default {
                 post.picture = img.picture;
             });
 
-            if (profile.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            if (profile.picture !== '1' && profile.picture !== '') {
+                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -178,14 +178,14 @@ export default {
             this.$router.push(`/inside/profile/post/${id}`)
         },
         async unfollow() {
-            const unfollowFetch = await fetch('http://localhost:5000/my/unfoll', {
+            const unfollowFetch = await fetch('https://localhost:5000/my/unfoll', {
                 method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user: this.user.user_id
+                    user: this.user.id
                 })
             });
 
@@ -203,14 +203,14 @@ export default {
             }
         },
         async follow() {
-            const followFetch = await fetch('http://localhost:5000/my/foll', {
+            const followFetch = await fetch('https://localhost:5000/my/foll', {
                 method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user: this.user.user_id
+                    user: this.user.id
                 })
             })
 
@@ -235,14 +235,14 @@ export default {
             }
         },
         async createChat() {
-            const chatFetch = await fetch('http://localhost:5000/chat/create', {
+            const chatFetch = await fetch('https://localhost:5000/chat/create', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 },
                 body: JSON.stringify({
-                    partner_id: this.user.user_id
+                    partner_id: this.user.id
                 })
             });
 

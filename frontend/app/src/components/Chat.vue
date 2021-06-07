@@ -62,7 +62,7 @@ export default {
         const partner = this.$route.params.id;
         this.partner = partner;
 
-        const chatFetch = await fetch(`http://localhost:5000/chat/getChat/${partner}`, {
+        const chatFetch = await fetch(`https://localhost:5000/chat/getChat/${partner}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         async sendMessage() {
-            const messageFetch = await fetch('http://localhost:5000/chat/newMessage', {
+            const messageFetch = await fetch('https://localhost:5000/chat/newMessage', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',

@@ -31,7 +31,7 @@ export default {
         }
     },
     async created() {
-        const profileFetch = await fetch('http://localhost:5000/my/getProfile', {
+        const profileFetch = await fetch('https://localhost:5000/my/getProfile', {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         async updateUsername() {
-            const usernameFetch = await fetch('http://localhost:5000/my/changeUsername', {
+            const usernameFetch = await fetch('https://localhost:5000/my/changeUsername', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',

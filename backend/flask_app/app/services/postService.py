@@ -62,6 +62,16 @@ def new_like(user_id, post_id):
         }
 
 
+def dislike(user_id, post_id):
+    like = dao.find_like_by_user_and_post(user_id, post_id)
+    dao.delete_like(like)
+    
+    return {
+        'type': 'positive',
+        'message': 'Has indicado que ya no te gusta esta publicación'
+    }
+
+
 def delete_post_by_id(post_id):
     post = dao.find_post_by_id(post_id)
 

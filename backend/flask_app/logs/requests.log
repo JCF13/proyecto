@@ -421,3 +421,96 @@
 
     INFO :: 2021-06-05 17:35:09,300  _ get : request: /auth/login | username: ToniJSB | 
                     
+
+    INFO :: 2021-06-06 15:02:49,447  _ post : username: prueba | email: prueba@prueba.com | 
+                    
+
+    INFO :: 2021-06-06 15:03:41,002  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-06 15:08:22,959  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-06 15:18:41,638  _ post : username: jcfjcf1324 | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-06 15:21:30,584  _ post : username: jcfjcf1324 | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-06 15:26:49,872  _ post : username: jcfjcf1324 | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-06 15:26:50,124  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-06 15:28:56,849  _ post : request: Login | username: Admin | 
+                    
+
+    INFO :: 2021-06-06 18:12:33,509  _ post : username: jerocf | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-06 18:12:33,760  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-06 18:13:01,282  _ post : username: jcfjcf1324 | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-06 18:17:07,635  _ post : username: jcfjcf1324 | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 16:18:36,774  _ post : username: jerocf | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 16:18:37,117  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-07 16:18:57,379  _ post : username: jerocf | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 16:18:57,602  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-07 16:19:59,975  _ post : username: jcfjcf1324 | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 16:22:19,062  _ handler_invalid_username_login : request:  _  | error_type: 26 | error_desc: Credenciales Autorización incorrectas | 
+                    
+
+    INFO :: 2021-06-07 16:22:32,105  _ post : request: Login | username: jcfjcf1324 | 
+                    
+
+    INFO :: 2021-06-07 17:25:02,128  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-07 17:25:46,868  _ post : request: Login | username: jcfjcf1324 | 
+                    
+
+    INFO :: 2021-06-07 17:34:48,279  _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-07 17:35:23,487  _ post : username: jcfjcf1324 | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 17:36:42,797  _ post : request: Login | username: jcfjcf1324 | 
+                    
+
+    INFO :: 2021-06-07 17:37:06,055  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 17:37:31,994  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-07 17:37:39,275  _ handler_invalid_username_login : request:  _  | error_type: 26 | error_desc: Credenciales Autorización incorrectas | 
+                    
+
+    INFO :: 2021-06-07 17:37:44,408  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-07 17:37:54,744  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-07 17:58:50,271  _ post : request: Login | username: jcfjcf1324 | 
+                    
+
+    INFO :: 2021-06-07 18:21:21,840  _ post : request: Login | username: jcfjcf1324 | 
+                    

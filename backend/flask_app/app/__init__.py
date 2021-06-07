@@ -8,10 +8,10 @@ from flask_cors import CORS
 from flask_migrate import Migrate, MigrateCommand
 from flask_jwt_extended import JWTManager
 from flask_security.utils import hash_password
-from flask_app.app.config import Config
-from flask_app.app.database import db, ma
+from backend.flask_app.app.config import Config
+from backend.flask_app.app.database import db, ma
 from flask_security import Security
-from flask_app.app.database.models import user_datastore
+from backend.flask_app.app.database.models import user_datastore
 from flask_security.mail_util import MailUtil
 from flask_mail import Mail, Message
 cors = CORS()
@@ -44,8 +44,8 @@ def create_app():
     mail.init_app(app)
     security.init_app(app, user_datastore)
 
-    from flask_app.app.namespaces import managment
-    import flask_app.app.cli as cli 
+    from backend.flask_app.app.namespaces import managment
+    import backend.flask_app.app.cli as cli 
     app.register_blueprint(managment)
     app.register_blueprint(cli.gen)
 

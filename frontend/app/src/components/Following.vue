@@ -1,9 +1,9 @@
 <template>
     <div>
         <q-list v-if="following.length > 0">
-            <q-item v-for="followed in following" :key="followed.user_id">
+            <q-item v-for="followed in following" :key="followed.id">
                 <q-item-section avatar>
-                    <q-avatar v-if="followed.picture === '1'">
+                    <q-avatar v-if="followed.picture === '1' || followed.picture === ''">
                         <q-icon name='person' />
                     </q-avatar>
                     <q-avatar v-else size="30px" class="avatar">
@@ -17,7 +17,7 @@
                     </router-link>
                 </q-item-section>
                 <q-item-section>
-                    <q-btn label="DEJAR DE SEGUIR" color="black" @click="unfollow(followed.user_id)" />
+                    <q-btn label="DEJAR DE SEGUIR" color="black" @click="unfollow(followed.id)" />
                 </q-item-section>
             </q-item>
         </q-list>
@@ -40,7 +40,7 @@ export default {
     async created() {
         const id = this.$route.params.id;
 
-        const followingFetch = await fetch(`http://localhost:5000/my/getFollowing`, {
+        const followingFetch = await fetch(`https://localhost:5000/my/getFollowing`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -49,8 +49,8 @@ export default {
         const following = await followingFetch.json();
 
         following.forEach(async a => {
-            if (a.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+            if (a.picture !== '1' && a.picture !== '') {
+                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -69,7 +69,7 @@ export default {
     },
     methods: {
         async unfollow(id) {
-            const unfollowFetch = await fetch('http://localhost:5000/my/unfoll', {
+            const unfollowFetch = await fetch('https://localhost:5000/my/unfoll', {
                 method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
@@ -89,7 +89,7 @@ export default {
                     position: 'top-right'
                 });
 
-                this.following = this.following.filter(a => a.user_id != id)
+                this.following = this.following.filter(a => a.id != id)
             }
 
 

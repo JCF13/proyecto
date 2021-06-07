@@ -1,5 +1,5 @@
-from flask_app.app.database.models import Post
-from flask_app.app.database import db
+from backend.flask_app.app.database.models import Post, PostLikes
+from backend.flask_app.app.database import db
 
 
 def generate_post(post: Post):
@@ -46,10 +46,15 @@ def add_like(like: PostLikes):
     db.session.commit()
 
 
-def find_like_by_id(id: int):
-    return PostLikes.query.filter(PostLikes.id)
-
-
 def delete_post(post: Post):
     db.session.delete(post)
+    db.session.commit()
+
+
+def find_like_by_user_and_post(user_id, post_id):
+    return PostLikes.query.filter(PostLikes.post_id==post_id, PostLikes.user_id==user_id).first()
+
+
+def delete_like(like: PostLikes):
+    db.session.delete(like)
     db.session.commit()

@@ -1,8 +1,8 @@
 import datetime
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from flask_app.app.database import db
-from flask_app.app.database.mixins import CreatedMixin
+from backend.flask_app.app.database import db
+from backend.flask_app.app.database.mixins import CreatedMixin
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy import Column, Integer, String
 from flask_security.models import fsqla_v2 as fsqla
@@ -22,8 +22,8 @@ class User(db.Model, fsqla.FsUserMixin):
     picture = db.Column(db.String, nullable=True)
 
     posts = db.relationship('Post', back_populates='created_by', viewonly=True)
-    followers = db.relationship('Followers',primaryjoin='User.id==Followers.follower_id', viewonly=True)
-    following = db.relationship('Followers',primaryjoin='User.id==Followers.followed_id', viewonly=True)
+    followers = db.relationship('Followers',primaryjoin='User.id==Followers.followed_id', viewonly=True)
+    following = db.relationship('Followers',primaryjoin='User.id==Followers.follower_id', viewonly=True)
     chats = db.relationship('Chat', primaryjoin='User.id==Chat.created_by_fk', viewonly=True)
 
 

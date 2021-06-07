@@ -11,7 +11,7 @@
             <q-list>
                 <q-item v-for="user in results" :key="user.user_id">
                     <q-item-section avatar>
-                        <q-avatar v-if="user.picture == 1">
+                        <q-avatar v-if="user.picture === '1' || user.picture === ''">
                             <q-icon name='person' />
                         </q-avatar>
                         <q-avatar v-else>
@@ -46,7 +46,7 @@ export default {
     methods: {
         async search() {
             if (this.searchBy.length >= 3) {
-                const searchFetch = await fetch('http://localhost:5000/my/searchUsers', {
+                const searchFetch = await fetch('https://localhost:5000/my/searchUsers', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
@@ -61,8 +61,8 @@ export default {
 
                 if (search.length > 0) {
                     search.forEach(async a => {
-                        if (a.picture !== '1') {
-                            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
+                        if (a.picture !== '1' && a.picture !== '') {
+                            const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                                 method: 'POST',
                                 headers: {
                                     'Content-type': 'application/json'

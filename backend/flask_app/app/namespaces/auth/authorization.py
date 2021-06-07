@@ -1,8 +1,8 @@
 from flask_jwt_extended.utils import get_jwt_identity
 from flask_jwt_extended.view_decorators import verify_jwt_in_request
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from flask_app.app.exceptions import EmailUsed, InvalidUsername
-from flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
+from backend.flask_app.app.exceptions import EmailUsed, InvalidUsername
+from backend.flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
 from flask.globals import request
 from flask_restx import Namespace, Resource
 from flask_restx.marshalling import marshal
@@ -12,15 +12,15 @@ from jwt.exceptions import DecodeError, ExpiredSignatureError
 from flask_jwt_extended.exceptions import (
     NoAuthorizationError, InvalidHeaderError, WrongTokenError
 )
-from flask_app.app.namespaces.auth.schemas import (
+from backend.flask_app.app.namespaces.auth.schemas import (
     userModel, auth_token, errorSchema,
     loginReq, loginResp, userRegister
 )
-from flask_app.app.database import db 
-from flask_app.app.services.userService import create_user, get_user_by_id
-from flask_app.app.database.schemas import UserRegisterSchema
-from flask_app.app.services.logs import complex_file_handler
-from flask_app.app.services.logs.refactor_dict import gen_log
+from backend.flask_app.app.database import db 
+from backend.flask_app.app.services.userService import create_user, get_user_by_id
+from backend.flask_app.app.database.schemas import UserRegisterSchema
+from backend.flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.logs.refactor_dict import gen_log
 
 authorization = Namespace('auth')
 _LEVELLOG_ = 20
