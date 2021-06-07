@@ -2,7 +2,7 @@ import base64
 from flask.globals import current_app
 from flask_app.app.services.utils import save_file
 from os import execlp
-import backend.flask_app.app.database.dao.imageDao as dao
+import flask_app.app.database.dao.imageDao as dao
 import os
 import base64
 
