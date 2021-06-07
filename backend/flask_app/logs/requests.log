@@ -421,3 +421,42 @@
 
     INFO :: 2021-06-05 17:35:09,300  _ get : request: /auth/login | username: ToniJSB | 
                     
+
+    INFO :: 2021-06-06 15:51:49,203  _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-06 16:40:22,486  _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-06 16:40:58,818  _ post : 
+                    
+
+    INFO :: 2021-06-07 08:49:59,121  _ post : username: ToniJSB | email: string | 
+                    
+
+    INFO :: 2021-06-07 08:50:00,026  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-07 08:51:59,150  _ post : username: ToniJSB | email: string | 
+                    
+
+    INFO :: 2021-06-07 08:51:59,888  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-07 08:52:52,771  _ post : username: ToniJSB | email: string | 
+                    
+
+    INFO :: 2021-06-07 08:52:53,480  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-07 08:53:28,968  _ post : username: ToniJSB | email: string | 
+                    
+
+    INFO :: 2021-06-07 08:53:29,838  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-07 08:54:05,241  _ post : username: ToniJSB | email: string | 
+                    
+
+    INFO :: 2021-06-07 08:54:06,052  _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email no es valido | 
+                    

@@ -11,11 +11,13 @@ from flask_app.app.services.imageService import save_picture
 
 def get_by_offset(page, users):
     return dao.find_by_offset(page, users)
+
     
 def get_post_by_id(id):
     return dao.find_post_by_id(id)
 
-def generate_post(creator,bodyPost):
+
+def create_post(creator, bodyPost):
     try:
         post = Post()
         post.caption = bodyPost.get('caption')

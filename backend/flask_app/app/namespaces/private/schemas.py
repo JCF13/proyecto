@@ -98,3 +98,20 @@ profilePicModel = Model('profilePicModel', {
     'user': fields.Integer(),
     'picture': fields.String()
 })
+
+errorSchema = Model('error', {
+    'error_type': fields.Integer(description='Código identificador del error'),
+    'error_desc': fields.String(description='Descripción del error'),
+})
+
+
+wildcardResp = Model('response', {
+        'date_time': fields.DateTime(default=datetime.now()),
+        'request': fields.String(),
+        'result': fields.Integer(),
+        'response': fields.Nested([postModel, followModel], description='''
+        El access_token será tu Header de autorización
+        para siguientes consultas. El refresh_token tarda más en expirar,
+        '''),
+        'error': fields.Nested(errorSchema, required=False)
+})

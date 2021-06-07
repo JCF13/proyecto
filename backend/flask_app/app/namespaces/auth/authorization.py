@@ -16,14 +16,14 @@ from flask_app.app.namespaces.auth.schemas import (
     userModel, auth_token, errorSchema,
     loginReq, loginResp, userRegister
 )
-from flask_app.app.database import db 
+from flask_app.app.database import db
+from flask_app.app import _LEVELLOG_
 from flask_app.app.services.userService import create_user, get_user_by_id
 from flask_app.app.database.schemas import UserRegisterSchema
 from flask_app.app.services.logs import complex_file_handler
 from flask_app.app.services.logs.refactor_dict import gen_log
 
 authorization = Namespace('auth')
-_LEVELLOG_ = 20
  
 authorization.logger.addHandler(complex_file_handler)
 

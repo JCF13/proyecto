@@ -14,11 +14,16 @@ from flask_security import Security
 from flask_app.app.database.models import user_datastore
 from flask_security.mail_util import MailUtil
 from flask_mail import Mail, Message
+
+
+
+_LEVELLOG_ = 20
 cors = CORS()
 jwt = JWTManager()
 migrate = Migrate(db=db)
 security = Security()
 mail = Mail()
+
 
 class JSONEncoder(json.JSONEncoder):
 
