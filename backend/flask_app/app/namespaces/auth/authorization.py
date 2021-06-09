@@ -23,7 +23,6 @@ from backend.flask_app.app.services.logs import complex_file_handler
 from backend.flask_app.app.services.logs.refactor_dict import gen_log
 
 authorization = Namespace('auth')
-_LEVELLOG_ = 20
  
 authorization.logger.addHandler(complex_file_handler)
 
@@ -62,6 +61,27 @@ def handler_invalid_username_login(error):
     resultado = {}
     resultado['result'] = -1
     resultado['request'] = ' _ '
+
+    fallo = {}
+    fallo['error_type'] = 26
+    fallo['error_desc'] = error
+    errorDoc = marshal(fallo, errorSchema)
+    resultado['error'] = errorDoc
+    
+    respuesta = marshal(resultado, loginResp)
+
+    elLog = gen_log(respuesta, _LEVELLOG_)
+    authorization.logger.log(_LEVELLOG_, elLog)
+    return respuesta
+
+@authorization.errorhandler(InvalidPassword)
+def handler_invalid_password(error):
+
+    load_user = request.get_json()
+    print(load_user)
+    resultado = {}
+    resultado['result'] = -1
+    resultado['request'] = 'login / register'
 
     fallo = {}
     fallo['error_type'] = 26

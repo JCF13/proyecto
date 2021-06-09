@@ -48,12 +48,12 @@ class Follow(Resource):
         user_follower = get_user_by_id(username_follower)
         user_followed = get_user_by_id(body['user'])
         foll = user_follows_to(user_follower, user_followed)
-        
+
         return foll
 
 
 @myNS.route('/unfoll')
-class  Unfollow(Resource):
+class Unfollow(Resource):
 
     @myNS.expect(followModel, parser)
     @jwt_required()
@@ -113,6 +113,7 @@ class GetFollowing(Resource):
 
 @myNS.route('/getUser/<string:username>')
 class GetUser(Resource):
+    
     @jwt_required()
     def get(self, username):
         user = get_user_by_id(get_jwt_identity())
@@ -138,23 +139,32 @@ class GetUser(Resource):
         resp['following'] = len(user_profile.following)
         resp['followed'] = following
         resp['followYou'] = follow_you
-        
+    
         return resp
 
 
 @myNS.route('/getProfile')
 class GetProfile(Resource):
+
+    @myNS.expect(parser)
     @jwt_required()
     def get(self):
         user = get_user_by_id(get_jwt_identity())
         sqlPost = PostSchema()
-
-        strPosts = sqlPost.dumps(user.posts, many=True)
-
-        resp = marshal(user, creator, skip_none=True)
-        resp['posts'] = json.loads(strPosts)
+        posts = []
+        strPosts = json.loads(sqlPost.dumps(user.posts, many=True))
+        for post in strPosts:
+            post['picture'] = get_picture(post['picture'])
+        # postsMarshalled = marshal(strPosts,p)
+        resp = {}
+        resp['user_id'] = user.id
+        resp['username'] = user.username
+        resp['picture'] = get_picture(user.picture)
+        
+        resp['posts'] = strPosts
         resp['followers'] = len(user.followers)
         resp['following'] = len(user.following)
+        resp = marshal(resp, userProfile, skip_none=True)
 
         return resp
 
@@ -187,7 +197,7 @@ class NewComment(Resource):
         commentJson = request.get_json()
         user_id = get_jwt_identity()
 
-        return generate_comment(user_id, commentJson['post_id'], commentJson['message'])
+        return create_comment(user_id, commentJson['post_id'], commentJson['message'])
 
 
 @myNS.route('/like')

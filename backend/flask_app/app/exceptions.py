@@ -5,6 +5,10 @@ class InvalidUsername(AttributeError):
     pass
 
 
+class InvalidPassword(AttributeError):
+    pass
+
+
 class EmailUsed(IntegrityError):
     pass
 

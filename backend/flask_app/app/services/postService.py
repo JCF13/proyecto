@@ -4,19 +4,21 @@ import os
 
 from flask.globals import current_app
 from sqlalchemy.sql.expression import false, true
-from backend.flask_app.app.database.schemas import PostSchema
-from backend.flask_app.app.database.models import Post, PostLikes
-from backend.flask_app.app.namespaces.private.schemas import postModel
-import backend.flask_app.app.database.dao.postDao as dao
-from backend.flask_app.app.services.imageService import save_picture
+from flask_app.app.database.schemas import PostSchema
+from flask_app.app.database.models import Post, PostLikes
+from flask_app.app.namespaces.private.schemas import postModel
+import flask_app.app.database.dao.postDao as dao
+from flask_app.app.services.imageService import save_picture
 
 def get_by_offset(page, users):
     return dao.find_by_offset(page, users)
+
     
 def get_post_by_id(id):
     return dao.find_post_by_id(id)
 
-def generate_post(creator,bodyPost):
+
+def create_post(creator, bodyPost):
     try:
         post = Post()
         post.caption = bodyPost.get('caption')
@@ -25,14 +27,11 @@ def generate_post(creator,bodyPost):
         
         return {
             'post_id': dao.generate_post(post),
-            'type': 'positive',
-            'message': 'Publicación creada correctamente'
+            'error_type': 'positive',
+            'error_desc': 'Publicación creada correctamente'
         }
     except:
-        return {
-            'type': 'error',
-            'message': 'Ha ocurrido un error'
-        }
+        raise Exception
 
 
 def get_comments_by_post():
@@ -52,13 +51,13 @@ def new_like(user_id, post_id):
         dao.add_like(like)
     
         return {
-            'type': 'positive',
-            'message': 'Has indicado que te gusta esta publicación'
+            'error_type': 'positive',
+            'error_desc': 'Has indicado que te gusta esta publicación'
         }
     else:
         return {
-            'type': 'warning',
-            'message': 'Ya has indicado que te gusta esta publicación'
+            'error_type': 'warning',
+            'error_desc': 'Ya has indicado que te gusta esta publicación'
         }
 
 
@@ -79,11 +78,11 @@ def delete_post_by_id(post_id):
         dao.delete_post(post)
         
         return {
-            'type': 'positive',
-            'message': 'Post eliminado correctamente'
+            'error_type': 'positive',
+            'error_desc': 'Post eliminado correctamente'
         }
     else:
         return {
-            'type': 'negative',
-            'message': 'Ha ocurrido un error'
+            'error_type': 'error',
+            'error_desc': 'Ha ocurrido un error'
         }

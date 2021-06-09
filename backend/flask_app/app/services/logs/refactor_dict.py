@@ -30,8 +30,9 @@ def gen_simple_log(myDict):
     
     # my_values = ['request','result','your_auth','listart','empid','artid','artdes','dptid','famid','grpid','lpreid','tipart','error_type','error_desc']
     my_values = ['username', 'email', 'user', 'request',
-                'cantidad', 'caption', 'photo', 'creator',
-                'user', 'follows', 'error_type', 'error_desc']
+                'cantidad', 'caption', 
+                'user', 'follows', 'error_type', 'error_desc',
+                'post_id']
     
     for key, value in myDict.items():
         for attr_log in my_values:

@@ -1,5 +1,5 @@
 from flask_security.utils import verify_password
-from backend.flask_app.app.exceptions import InvalidUsername
+from flask_app.app.exceptions import InvalidPassword, InvalidUsername
 from functools import wraps
 from flask import request
 from flask_restx.marshalling import marshal
@@ -14,7 +14,9 @@ def make_header(user):
 
     try:
         usuario = find_user_by_username(user['username'])
-        verify_password(usuario.password, user['passwd'])
+        verify_password(user['passwd'], usuario.password)
+        if not verify_password(user['passwd'], usuario.password):
+            raise InvalidPassword('invalid password')
         respuesta = {}
         respuesta['result'] = 0
 

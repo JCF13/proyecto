@@ -52,10 +52,11 @@ def generate_user(user: User):
     except IntegrityError as expt:
         desglosado = str(expt.orig).split(' ')
         fail = desglosado[0]
+        print(fail)
         if fail == 'UNIQUE':
             obj_attr = desglosado[3].split('.')
-            attr = obj_attr
-
+            attr = obj_attr[1]
+            print(attr)
             if attr == 'username':
                 raise UsernameUsed(statement=attr, params=fail, orig=SQLAlchemyError)
             elif attr == 'email':
