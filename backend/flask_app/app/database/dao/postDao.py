@@ -12,6 +12,7 @@ def generate_post(post: Post):
     db.session.add(post)
     db.session.flush()
     db.session.commit()
+    
     return post.post_id
 
 
