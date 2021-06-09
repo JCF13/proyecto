@@ -514,3 +514,45 @@
 
     INFO :: 2021-06-07 18:21:21,840  _ post : request: Login | username: jcfjcf1324 | 
                     
+
+    INFO :: 2021-06-07 21:36:41,143  _ handler_invalid_username_login : request:  _  | error_type: 26 | error_desc: Credenciales Autorización incorrectas | 
+                    
+
+    INFO :: 2021-06-07 21:37:10,466  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 21:40:16,755  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-07 21:40:53,204  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-07 21:50:58,590  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-08 16:05:44,949  _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>' | 
+                    
+
+    INFO :: 2021-06-08 16:05:54,918  _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-08 16:06:11,802  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-08 16:51:59,604  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-08 16:52:22,465  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-08 19:24:10,004  _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-09 16:08:53,597  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-09 16:11:19,488  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-09 16:15:39,791  _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    

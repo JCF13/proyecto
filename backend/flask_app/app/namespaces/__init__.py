@@ -4,8 +4,8 @@ from backend.flask_app.app.namespaces.auth.authorization import authorization
 from backend.flask_app.app.namespaces.private.posts import post
 from backend.flask_app.app.namespaces.private.user_interaction import myNS
 from backend.flask_app.app.namespaces.private.chats import chat
+from backend.flask_app.app.namespaces.admin.admin import admin
 
-# from flask_app.app.namespaces.public.main import main
 
 api_version = '0.01'
 
@@ -17,4 +17,4 @@ api.add_namespace(authorization)
 api.add_namespace(post)
 api.add_namespace(myNS)
 api.add_namespace(chat)
-# api.add_namespace(main)
+api.add_namespace(admin)

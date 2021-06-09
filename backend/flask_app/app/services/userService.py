@@ -2,15 +2,15 @@
 from datetime import datetime
 from flask_mail import Message
 
-from flask_security.utils import hash_password
+from flask_security.utils import hash_password, verify_password
 from backend.flask_app.app.exceptions import EmailUsed, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
 from flask_security.registerable import generate_confirmation_link
 from sqlalchemy.exc import IntegrityError
 from backend.flask_app.app.database.schemas import UserRegisterSchema
 from backend.flask_app.app.database.models import User, Followers, user_datastore
 from backend.flask_app.app.database.dao.userDao import (
-    find_users_by, generate_user, find_user_by_username, find_user_by_id, follows_to,
-    find_user_by_email, get_follow, set_password, set_profile_pic, set_username, unfollows_to
+    delete, find_users_by, generate_user, find_user_by_username, find_user_by_id, follows_to,
+    find_user_by_email, get_follow, set_password, set_profile_pic, set_username, unfollows_to, find_all
 )
 from backend.flask_app.app.database import db
 from backend.flask_app.app import mail
@@ -77,14 +77,19 @@ def create_user(user):
         creado.username = user['username']
         creado.name = user['name']
         creado.surname = user['surname']
-        # creado.email = None
         creado.email = user['email']
         creado.picture = user['picture']
+        if not user_datastore.find_role('client'):
+            client_role = user_datastore.create_role(name='client')
+        user_datastore.add_role_to_user(user=creado, role='client')
+        user_datastore.activate_user(creado)
+        user_datastore.set_uniquifier(creado)
         user_datastore.activate_user(creado)
         user_datastore.set_uniquifier(creado)
         print(creado.name)
         generate_user(creado)
         send_confirm_mail(creado)
+        user_datastore.commit()
         return {
             'type': 'positive',
             'message': 'Usuario registrado correctamente'
@@ -150,8 +155,10 @@ def update_username(user, username):
 
 
 def update_password(user, password, new_password):
-    if bcrypt.check_password_hash(user.password, password):
-        user.password = bcrypt.generate_password_hash(new_password)
+    print(user.password, password)
+    print(verify_password(user.password, password))
+    if verify_password(user.password, password):
+        user.password = hash_password(new_password)
         set_password(user)
 
         return {
@@ -163,3 +170,17 @@ def update_password(user, password, new_password):
             'type': 'negative',
             'message': 'La contraseña no es correcta'
         }
+
+
+def get_all_users():
+    return find_all()
+
+
+def delete_user(id):
+    user = find_user_by_id(id)
+    delete(user)
+
+    return {
+        'type': 'positive',
+        'message': 'Usuario eliminado'
+    }
