@@ -16,9 +16,6 @@
                         <q-btn label="VER PERFIL" color="black" style="width:100%;"/>
                     </router-link>
                 </q-item-section>
-                <q-item-section>
-                    <q-btn label="ELIMINAR SEGUIDOR" color="black" @click="deleteFollower(follower.user_id)" />
-                </q-item-section>
             </q-item>
         </q-list>
         <div v-else style="padding-left: 5%; padding-bottom: 1%;">
@@ -64,11 +61,6 @@ export default {
 
         this.followers = followers;
     },
-    methods: {
-        async deleteFollower(follower_id) {
-
-        }
-    }
 }
 </script>
 

@@ -113,3 +113,12 @@ def set_username(user: User):
 def set_password(user: User):
     db.session.add(user)
     db.session.commit()
+
+
+def find_all():
+    return User.query.all()
+
+
+def delete(user: User):
+    db.session.delete(user)
+    db.session.commit()

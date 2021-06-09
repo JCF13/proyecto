@@ -17,7 +17,7 @@ class Config():
 
 
     # SECURITY_BLUEPRINT_NAME = 'manage'
-    SECURITY_POST_LOGIN_VIEW = '/logged'
+    SECURITY_POST_LOGIN_VIEW = 'https://localhost:8080/#/login'
     SECURITY_UNAUTHORIZED_VIEW = '/unauth'
     SECURITY_CONFIRMABLE = True
     SECURITY_REGISTERABLE = True

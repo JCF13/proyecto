@@ -71,7 +71,7 @@ module.exports = function (/* ctx */) {
     devServer: {
       https: true,
       port: 8080,
-      open: true // opens browser window automatically
+      open: false // opens browser window automatically
     },
 
     // https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -114,6 +114,7 @@ module.exports = function (/* ctx */) {
       manifest: {
         name: `Red Social`,
         short_name: `Red Social`,
+        start_url: '/',
         description: `Proyecto final red social`,
         display: 'standalone',
         orientation: 'portrait',
