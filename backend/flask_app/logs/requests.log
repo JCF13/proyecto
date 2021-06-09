@@ -505,3 +505,75 @@
 
     INFO :: 2021-06-07 19:11:04,948 _ authorization _ 9450 _ post : request: Login | username: ToniJSB | 
                     
+
+    INFO :: 2021-06-08 15:34:45,578 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-08 17:43:13,732 _ authorization _ post : username: ToniJSB | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-08 17:43:14,206 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-08 17:47:43,576 _ authorization _ post : username: ToniJSB | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-08 17:47:44,537 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-08 17:49:03,548 _ authorization _ post : username: ToniJSB | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-08 17:49:04,347 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-08 17:49:36,989 _ authorization _ post : username: ToniJSB | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-08 17:49:37,848 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO user (email, password, active, fs_uniquifier, confirmed_at, last_login_at, current_login_at, last_login_ip, current_login_ip, login_count, tf_primary_method, tf_totp_secret, tf_phone_number, username, us_totp_secrets, us_phone_number, name, surname, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-08 17:50:17,640 _ authorization _ post : username: ToniJSB | email: toponipi1@gmail.com | 
+                    
+
+    INFO :: 2021-06-08 17:50:18,604 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El username no es valido | 
+                    
+
+    INFO :: 2021-06-08 17:50:59,619 _ authorization _ post : username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-08 17:51:00,628 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El username no es valido | 
+                    
+
+    INFO :: 2021-06-08 17:52:23,314 _ authorization _ post : username: sdfsdf | 
+                    
+
+    INFO :: 2021-06-08 17:57:10,731 _ authorization _ post : username: qwsfwa | 
+                    
+
+    INFO :: 2021-06-08 17:57:10,731 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email es requerido para el registro, Condinción | 
+                    
+
+    INFO :: 2021-06-08 18:00:27,781 _ authorization _ post : username: asdfsd | 
+                    
+
+    INFO :: 2021-06-08 18:00:27,782 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El email es requerido para el registro, Condinción | 
+                    
+
+    INFO :: 2021-06-08 18:03:02,228 _ authorization _ post : username: ergerg | email: ergerger | 
+                    
+
+    INFO :: 2021-06-08 18:03:02,228 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El nombre es requerido para el registro, Condinción | 
+                    
+
+    INFO :: 2021-06-08 18:05:46,406 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-08 18:39:17,406 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-08 18:40:55,867 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-08 19:47:01,996 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    

@@ -22,8 +22,8 @@ class User(db.Model, fsqla.FsUserMixin):
     picture = db.Column(db.String, nullable=True)
 
     posts = db.relationship('Post', back_populates='created_by', viewonly=True)
-    followers = db.relationship('Followers',primaryjoin='User.id==Followers.follower_id', viewonly=True)
-    following = db.relationship('Followers',primaryjoin='User.id==Followers.followed_id', viewonly=True)
+    followers = db.relationship('Followers',primaryjoin='User.id==Followers.followed_id', viewonly=True)
+    following = db.relationship('Followers',primaryjoin='User.id==Followers.follower_id', viewonly=True)
     chats = db.relationship('Chat', primaryjoin='User.id==Chat.created_by_fk', viewonly=True)
 
 

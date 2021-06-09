@@ -52,10 +52,11 @@ def generate_user(user: User):
     except IntegrityError as expt:
         desglosado = str(expt.orig).split(' ')
         fail = desglosado[0]
+        print(fail)
         if fail == 'UNIQUE':
             obj_attr = desglosado[3].split('.')
-            attr = obj_attr
-
+            attr = obj_attr[1]
+            print(attr)
             if attr == 'username':
                 raise UsernameUsed(statement=attr, params=fail, orig=SQLAlchemyError)
             elif attr == 'email':
@@ -102,7 +103,7 @@ def set_profile_pic(user: User):
 
 
 def find_users_by(search: str, user_id: int):
-    return User.query.filter(User.username.like('%'+search+'%'), User.user_id!=user_id).limit(10)
+    return User.query.filter(User.username.like('%'+search+'%'), User.id!=user_id).limit(10)
 
 
 def set_username(user: User):

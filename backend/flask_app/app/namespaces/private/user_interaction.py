@@ -74,7 +74,7 @@ class SearchUsers(Resource):
         search_by = request.get_json()
         user = get_user_by_id(get_jwt_identity())
 
-        users = search_users(search_by['search'], user.user_id)
+        users = search_users(search_by['search'], user.id)
         users_json = []
 
         for user in users:
@@ -145,17 +145,26 @@ class GetUser(Resource):
 
 @myNS.route('/getProfile')
 class GetProfile(Resource):
+
+    @myNS.expect(parser)
     @jwt_required()
     def get(self):
         user = get_user_by_id(get_jwt_identity())
         sqlPost = PostSchema()
-
-        strPosts = sqlPost.dumps(user.posts, many=True)
-
-        resp = marshal(user, creator, skip_none=True)
-        resp['posts'] = json.loads(strPosts)
+        posts = []
+        strPosts = json.loads(sqlPost.dumps(user.posts, many=True))
+        for post in strPosts:
+            post['picture'] = get_picture(post['picture'])
+        # postsMarshalled = marshal(strPosts,p)
+        resp = {}
+        resp['user_id'] = user.id
+        resp['username'] = user.username
+        resp['picture'] = get_picture(user.picture)
+        
+        resp['posts'] = strPosts
         resp['followers'] = len(user.followers)
         resp['following'] = len(user.following)
+        resp = marshal(resp, userProfile, skip_none=True)
 
         return resp
 

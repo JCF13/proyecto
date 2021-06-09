@@ -63,10 +63,8 @@ postModel = Model('Post',{
     # 'id': fields.Integer(attribute='post_id'),
     'user_id': fields.Integer(attribute='created_by_fk'),
     'caption': fields.String(attribute='caption'),
-    'path': fields.String(attribute='picture_path'),
-    'fname': fields.String(attribute='picture_fname'),
-    'likes': fields.Nested(likeListModel),
-    'comments': fields.List(fields.Nested(commentModel)),
+    'picture': fields.String(),
+    
 })
 
 commentUser = Model('commentUser', {
@@ -105,13 +103,14 @@ errorSchema = Model('error', {
 
 makePostResp = Model('makePostResp',{
     'post_id': fields.Integer(),
+    'done': fields.Boolean(),
 })
 
 wildcardResp = Model('response', {
         'date_time': fields.DateTime(default=datetime.now()),
         'request': fields.String(),
         'result': fields.Integer(),
-        'response': fields.Nested([postModel, followModel], description='''
+        'response': fields.Nested([postModel, followModel, makePostResp], description='''
         Las respuesta de todo
         '''),
         'error': fields.Nested(errorSchema, required=False)

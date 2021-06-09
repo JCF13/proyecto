@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask_app.app.database.schemas import (PostCommentSchema,
                                             PostSchema,
                                             UserRegisterSchema
@@ -11,7 +12,8 @@ from flask_app.app.namespaces.private.schemas import (commentModel,
                                                       simpleUser,
                                                       userModel,
                                                       wildcardResp,
-                                                      makePostResp
+                                                      makePostResp,
+                                                      errorSchema
                                                       )
 from flask_app.app.services.commentService import (create_comment,
                                                    get_post_comments
@@ -48,6 +50,7 @@ postNS.models[posts.name] = posts
 postNS.models[commentUser.name] = commentUser
 postNS.models[makePostResp.name] = makePostResp
 postNS.models[wildcardResp.name] = wildcardResp
+postNS.models[errorSchema.name] = errorSchema
 
 parser = postNS.parser()
 parser.add_argument('Authorization', location='headers', required=True)
@@ -61,22 +64,27 @@ class Make_post(Resource):
     @jwt_required()
     def post(self):
         newPost = request.get_json()
-
         marshaledPost = marshal(newPost, createPostModel, skip_none=True)
         post_created = create_post(get_jwt_identity(), marshaledPost)
 
         respuesta = {}
         errorRep = {}
-        contenido = marshal({'post_id': post_created['post_id']}, makePostResp)
 
+        print(post_created)
+        respuesta['datetime'] = datetime.now().strftime('%d/%m/%Y, %H:%M:%S')
         respuesta['request'] = 'make post'
         if post_created['error_type'] == 'positive':
             respuesta['result'] = 1
             errorRep['error_type'] = None
             errorRep['error_desc'] = None
-
-        respuesta['response'] = contenido
-        
+            elobjresp = {
+                'post_id': post_created['post_id'],
+                'done': True
+            }
+            contenido = marshal(elobjresp, makePostResp)
+            respuesta['response'] = contenido
+            respuesta['error'] = marshal(errorRep, errorSchema)
+        print(respuesta)
         elReturn = marshal(respuesta, wildcardResp)
         elLog = gen_log(elReturn, _LEVELLOG_)
         postNS.logger.log(_LEVELLOG_, elLog)

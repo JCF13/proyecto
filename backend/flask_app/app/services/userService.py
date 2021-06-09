@@ -2,15 +2,15 @@
 from datetime import datetime
 from flask_mail import Message
 
-from flask_security.utils import hash_password
-from flask_app.app.exceptions import EmailUsed, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
+from flask_security.utils import hash_password, verify_password
+from flask_app.app.exceptions import EmailUsed, InvalidPassword, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
 from flask_security.registerable import generate_confirmation_link
 from sqlalchemy.exc import IntegrityError
 from flask_app.app.database.schemas import UserRegisterSchema
 from flask_app.app.database.models import User, Followers, user_datastore
 from flask_app.app.database.dao.userDao import (
     generate_user, find_user_by_username, find_user_by_id, follows_to,
-    find_user_by_email, set_profile_pic
+    find_user_by_email, set_password, set_profile_pic, find_users_by, set_username, get_follow,
 )
 from flask_app.app.database import db
 from flask_app.app import mail
@@ -69,6 +69,17 @@ def send_confirm_mail(user):
 
 
 def create_user(user):
+    if user['username'] == '':
+        raise RequiredUsername(params='Username: None', orig=IntegrityError, statement='El username es requerido para el registro, Condinción')
+        
+    elif user['name'] == '':
+        raise RequiredName(params='Name: None', orig=IntegrityError, statement='El nombre es requerido para el registro, Condinción')
+
+    elif user['password'] == '':
+        raise RequiredPassword(params='Password: None', orig=IntegrityError, statement='La password es requerida para el registro, Condinción')
+        
+    elif user['email'] == '':
+        raise RequiredEmail(params='Email: None', orig=IntegrityError, statement='El email es requerido para el registro, Condinción')
     creado = User()
     try:
         passwordHash = hash_password(user['password'])
@@ -96,23 +107,23 @@ def create_user(user):
         print('_____________')
         if expt.params == 'UNIQUE':
             if expt.statement == 'username':
-                raise UsernameUsed(params=user['username'], orig=IntegrityError, statement='El email no es valido')
+                raise UsernameUsed(params=user['username'], orig=IntegrityError, statement='El username no es valido')
                 
             elif expt.statement == 'email':
                 raise EmailUsed(params=user['email'], orig=IntegrityError, statement='El email no es valido')
         elif expt.params == 'NOT NULL':
 
             if expt.statement == 'username':
-                raise RequiredUsername(params='param: None', orig=IntegrityError, statement='El username es requerido para el registro')
+                raise RequiredUsername(params='Username: None', orig=IntegrityError, statement='El username es requerido para el registro')
                 
             elif expt.statement == 'name':
-                raise RequiredName(params='param: None', orig=IntegrityError, statement='El nombre es requerido para el registro')
+                raise RequiredName(params='Name: None', orig=IntegrityError, statement='El nombre es requerido para el registro')
 
             elif expt.statement == 'password':
-                raise RequiredPassword(params='param: None', orig=IntegrityError, statement='La password es requerida para el registro')
+                raise RequiredPassword(params='Password: None', orig=IntegrityError, statement='La password es requerida para el registro')
                 
             elif expt.statement == 'email':
-                raise RequiredEmail(params='param: None', orig=IntegrityError, statement='El email es requerido para el registro')
+                raise RequiredEmail(params='Email: None', orig=IntegrityError, statement='El email es requerido para el registro')
 
 
 
@@ -150,16 +161,12 @@ def update_username(user, username):
 
 
 def update_password(user, password, new_password):
-    if bcrypt.check_password_hash(user.password, password):
-        user.password = bcrypt.generate_password_hash(new_password)
-        set_password(user)
-
+    if not verify_password(password['password'], user.password):
+        raise InvalidPassword('invalid password')
+    else:
+        user.password = hash_password(new_password)
+        set_password()
         return {
             'error_type': 'positive',
             'error_desc': 'Contraseña actualizada correctamente'
-        }
-    else:
-        return {
-            'error_type': 'error',
-            'error_desc': 'La contraseña no es correcta'
         }
