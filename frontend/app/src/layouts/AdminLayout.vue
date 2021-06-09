@@ -1,10 +1,5 @@
 <template>
     <q-layout view="hHh lpR fFf" id="admin-layout">
-        <q-breadcrumbs>
-            <q-breadcrumbs-el icon="home" to="/admin" />
-            <q-breadcrumbs-el label="Usuario" icon="person" to="/start/pick-quasar-flavour" />
-            <q-breadcrumbs-el label="Post" icon="photo_camera" to="/vue-components/breadcrumbs" />
-        </q-breadcrumbs>
         <q-page-container id="user-list">
             <router-view />
         </q-page-container>

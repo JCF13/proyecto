@@ -4,7 +4,7 @@
             <q-card-section horizontal>
                 <div id="card-left">
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
-                    <q-icon v-if="post.creator.user_id === user.user_id" id="delete" color='red' name='delete' size='30px' @click="deletePost" />
+                    <q-icon v-if="post.creator.id === user.id" id="delete" color='red' name='delete' size='30px' @click="deletePost" />
 
                     <img id="image" :src="post.picture" alt="">
 
@@ -75,7 +75,7 @@ export default {
                 picture: '',
                 caption: '',
                 creator: {
-                    user_id: 0,
+                    id: 0,
                     username: '',
                     picture: ''
                 },
@@ -83,7 +83,7 @@ export default {
                     {
                         id: 0,
                         user: {
-                            user_id: 0,
+                            id: 0,
                             username: '',
                             picture: ''
                         }
@@ -93,7 +93,7 @@ export default {
                     {
                         id: 0,
                         user: {
-                            user_id: 0,
+                            id: 0,
                             username: '',
                             picture: ''
                         },
@@ -118,58 +118,30 @@ export default {
         this.user = user;
         
         const postId = this.$route.params.id;
-        const postFetch = await fetch(`https://localhost:5000/post/gpost/${postId}`, {
+        
+        const postFetch = await fetch(`https://localhost:5000/post/gpost?id=${postId}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
             }
         });
+        
         const post = await postFetch.json();
-
-        const imgFetch = await fetch('https://localhost:5000/my/image', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(post.picture)
-        })
-        const img = await imgFetch.json()
 
         post.created_on = post.created_on.split('.')[0].replace('T', ' ')
 
-        img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-        img.picture = img.picture.replace("'", '');
-        post.picture = img.picture;
+        post.picture = post.picture.replace("b'", 'data:image/png;base64,');
+        post.picture = post.picture.replace("'", '');
 
         if (post.creator.picture !== '1' && post.creator.picture !== '') {
-            const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(post.creator.picture)
-            })
-
-            const profilePic = await profilePicFetch.json();
-            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-            profilePic.picture = profilePic.picture.replace("'", '');
-            post.creator.picture = profilePic.picture;
+            post.creator.picture = post.creator.picture.replace("b'", 'data:image/png;base64,');
+            post.creator.picture = post.creator.picture.replace("'", '');
         }
 
-        post.comments.forEach(async a => {
-              if (a.user.picture !== '1' && a.user.picture !== '') {
-                  const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(a.user.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                a.user.picture = profilePic.picture;
-              }
+        post.comments.forEach(a => {
+            if (a.user.picture !== '1' && a.user.picture !== '') {
+                a.user.picture = a.user.picture.replace("b'", 'data:image/png;base64,');
+                a.user.picture = a.user.picture.replace("'", '');
+            }
         })
 
         this.post = post;
@@ -196,11 +168,22 @@ export default {
 
             const comment = await commentFetch.json()
 
-            if (comment.type === 'positive') {
+            if (comment.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: comment.message,
+                    message: comment.error_desc,
                     position: 'top-right'
+                });
+
+                this.comments.push({
+                    id: 0,
+                    user: {
+                        id: 0,
+                        username: '',
+                        picture: this.user.picture
+                    },
+                    creationDate: '',
+                    message: comment.message
                 })
             }
         },
@@ -215,10 +198,10 @@ export default {
 
             const resp = await deleteFetch.json();
 
-            if (resp.type === 'positive') {
+            if (resp.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: resp.message,
+                    message: resp.error_desc,
                     position: 'top-right'
                 });
 

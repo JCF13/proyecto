@@ -4,11 +4,11 @@ import os
 
 from flask.globals import current_app
 from sqlalchemy.sql.expression import false, true
-from flask_app.app.database.schemas import PostSchema
-from flask_app.app.database.models import Post, PostLikes
-from flask_app.app.namespaces.private.schemas import postModel
-import flask_app.app.database.dao.postDao as dao
-from flask_app.app.services.imageService import save_picture
+from backend.flask_app.app.database.schemas import PostSchema
+from backend.flask_app.app.database.models import Post, PostLikes
+from backend.flask_app.app.namespaces.private.schemas import postModel
+import backend.flask_app.app.database.dao.postDao as dao
+from backend.flask_app.app.services.imageService import save_picture
 
 def get_by_offset(page, users):
     return dao.find_by_offset(page, users)
@@ -21,9 +21,10 @@ def get_post_by_id(id):
 def create_post(creator, bodyPost):
     try:
         post = Post()
-        post.caption = bodyPost.get('caption')
-        post.picture = save_picture(bodyPost.get('picture'), str(creator)+str(datetime.now()).replace(' ', '-').replace('.', '').replace(':', ''))
+        post.caption = bodyPost['caption']
+        post.picture = save_picture(bodyPost['picture'], str(creator)+str(datetime.now()).replace(' ', '-').replace('.', '').replace(':', ''))
         post.created_by_fk = creator
+
         
         return {
             'post_id': dao.generate_post(post),
@@ -66,8 +67,8 @@ def dislike(user_id, post_id):
     dao.delete_like(like)
     
     return {
-        'type': 'positive',
-        'message': 'Has indicado que ya no te gusta esta publicación'
+        'error_type': 'positive',
+        'error_desc': 'Has indicado que ya no te gusta esta publicación'
     }
 
 

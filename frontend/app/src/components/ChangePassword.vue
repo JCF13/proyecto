@@ -51,20 +51,20 @@ export default {
 
                 const resp = await passwordFetch.json();
 
-                if (resp.type === 'positive') {
+                if (resp.error_type === 'positive') {
                     this.$q.notify({
                         type: 'positive',
-                        message: resp.message,
+                        message: resp.error_desc,
                         position: 'top-right'
                     });
 
                     this.$router.push('/inside/profile')
                 }
 
-                if (resp.type === 'negative') {
+                if (resp.error.error_type === 26) {
                     this.$q.notify({
                         type: 'negative',
-                        message: resp.message,
+                        message: resp.error.error_desc,
                         position: 'top-right'
                     })
                 }

@@ -1,15 +1,16 @@
-from flask_app.app.services.userService import get_user_by_id
+from backend.flask_app.app.services.imageService import get_picture
+from backend.flask_app.app.services.userService import get_user_by_id
 from flask import json
-from flask_app.app.database.schemas import ChatMessageSchema, ChatSchema
+from backend.flask_app.app.database.schemas import ChatMessageSchema, ChatSchema
 from flask.globals import request
-from flask_app.app.namespaces.private.schemas import createChat
-from flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.namespaces.private.schemas import createChat
+from backend.flask_app.app.services.logs import complex_file_handler
 from flask_jwt_extended import (get_jwt_identity, jwt_required,
                                 verify_jwt_in_request)
 from flask_restx import Namespace, Resource, marshal
-from flask_app.app.services.chatService import create_chat, get_chats_by_user, get_chat_by_users, send_message, delete_chat
-from flask_app.app.namespaces.private.schemas import chatModel
-from flask_app.app.namespaces.auth.schemas import creator
+from backend.flask_app.app.services.chatService import create_chat, get_chats_by_user, get_chat_by_users, send_message, delete_chat
+from backend.flask_app.app.namespaces.private.schemas import chatModel
+from backend.flask_app.app.namespaces.auth.schemas import creator
 
 chat = Namespace('chat', 'Rutas para chats')
 
@@ -47,12 +48,17 @@ class GetChats(Resource):
         for chat in jsonChats:
             if user_id == chat['partner']:
                 chat['partner'] = marshal(get_user_by_id(chat['created_by']), creator, skip_none=True)
+                chat['partner']['picture'] = str(get_picture(chat['partner']['picture']))
                 chat['created_by'] = marshal(get_user_by_id(user_id), creator, skip_none=True)
+                chat['created_by']['picture'] = str(get_picture(chat['created_by']['picture']))
             else:
                 chat['created_by'] = marshal(get_user_by_id(user_id), creator, skip_none=True)
+                chat['created_by']['picture'] = str(get_picture(chat['created_by']['picture']))
                 chat['partner'] = marshal(get_user_by_id(chat['partner']), creator, skip_none=True)
+                chat['partner']['picture'] = str(get_picture(chat['partner']['picture']))
 
         return jsonChats
+
 
 @chat.route('/getChat/<int:partner>')
 class GetChat(Resource):

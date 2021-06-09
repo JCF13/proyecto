@@ -129,16 +129,16 @@ export default {
             
                 const register = await registerFecth.json()
                 
-                if (register.type == 'error') {
+                if (register.error_type == 'error') {
                     this.$q.notify({
                         type: 'negative',
-                        message: register.message,
+                        message: register.error_desc,
                         position: 'top-right'
                     })
                 } else {
                     this.$q.notify({
                         type: 'positive',
-                        message: register.message,
+                        message: register.error_desc,
                         position: 'top-right'
                     })
                     

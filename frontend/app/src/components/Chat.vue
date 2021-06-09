@@ -92,10 +92,10 @@ export default {
 
             const message = await messageFetch.json();
 
-            if (message.type === 'positive') {
+            if (message.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: message.message,
+                    message: message.error_desc,
                     position: 'top-right'
                 })
 

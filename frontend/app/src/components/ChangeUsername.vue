@@ -13,7 +13,7 @@
                 v-model="newUsername"
             />
 
-            <q-btn label="GUARDAR" type="submit" color="black" @click="updateUsername"/>
+            <q-btn label="GUARDAR" type="button" color="black" @click="updateUsername"/>
         </q-form>
     </div>
 </template>
@@ -55,10 +55,10 @@ export default {
 
             const resp = await usernameFetch.json();
 
-            if (resp.type === 'positive') {
+            if (resp.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: resp.message,
+                    message: resp.error_desc,
                     position: 'top-right'
                 });
 

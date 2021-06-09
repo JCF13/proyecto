@@ -10,7 +10,9 @@ def generate_commentPost(comment: PostComment):
                     saved at the data base
     """
     db.session.add(comment)
+    db.session.flush()
     db.session.commit()
+    return comment.message
 
 
 def find_all_posts():
@@ -26,7 +28,4 @@ def find_comments_by_post_id(id):
 
     :param id: int
     """
-    for key in PostComment.query.filter(PostComment.post_id == id):
-        print(key.message)
-        print('_____________')
     return PostComment.query.filter(PostComment.post_id == id).all()

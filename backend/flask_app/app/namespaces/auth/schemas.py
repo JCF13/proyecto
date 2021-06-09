@@ -52,7 +52,7 @@ loginReq = Model('loginRequest',{
 userProfile = Model('userProfile', {
     'id': fields.Integer(),
     'username': fields.String(),
-    'profile_pic': fields.String(),
+    'picture': fields.String(),
     'posts': fields.Nested(postModel, as_list=True),
     'followers': fields.Integer(),
     'following': fields.Integer()

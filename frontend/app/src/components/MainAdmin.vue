@@ -1,12 +1,17 @@
 <template>
     <q-list>
-        <q-item v-for="user in users">
+        <q-item v-for="user in users" :key="user.id">
             <q-item-section avatar>
                 <q-avatar v-if="user.picture === '1' || user.picture === ''">
                     <q-icon name='person' />
                 </q-avatar>
                 <q-avatar v-else>
-                    <img :src="user.picture" />
+                    <q-img
+                        :src="user.picture" class="bg-white"
+                        style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
+                            border-radius:50%; border: 1px solid grey; margin: 5%;"
+                        contain
+                    />
                 </q-avatar>
             </q-item-section>
             <q-item-section>{{user.username}}</q-item-section>
@@ -35,18 +40,8 @@ export default {
 
         users.forEach(async a => {
             if (a.picture !== '' && a.picture !== '1') {
-                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(a.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                a.picture = profilePic.picture;
+                a.picture = a.picture.replace("b'", 'data:image/png;base64,');
+                a.picture = a.picture.replace("'", '');
             }
         });
 

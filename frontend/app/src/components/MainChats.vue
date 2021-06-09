@@ -80,18 +80,8 @@ export default {
 
         chats.forEach(async a => {
             if (a.partner.picture !== '1' && a.partner.picture !== '') {
-                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(a.partner.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                a.partner.picture = profilePic.picture;
+                a.partner.picture = a.partner.picture.replace("b'", 'data:image/png;base64,');
+                a.partner.picture = a.partner.picture.replace("'", '');
             }
         });
 
@@ -112,10 +102,10 @@ export default {
 
             const deleteResp = await deleteFetch.json();
 
-            if (deleteResp.type === 'positive') {
+            if (deleteResp.error_type === 'positive') {
                 this.$q.notify({
                     type: 'warning',
-                    message: deleteResp.message,
+                    message: deleteResp.error_desc,
                     position: 'top-right'
                 })
 

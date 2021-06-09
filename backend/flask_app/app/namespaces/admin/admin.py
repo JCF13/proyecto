@@ -1,3 +1,4 @@
+from backend.flask_app.app.services.imageService import get_picture
 from flask.globals import request
 from flask_restx import Namespace, Resource, marshal
 from backend.flask_app.app.services.logs import complex_file_handler
@@ -22,7 +23,11 @@ class GetAllUsers(Resource):
         usersJson = []
 
         for user in users:
-            usersJson.append(marshal(user, creator, skip_none=True))
+            if user.picture is None:
+                user.picture = ''
+            user_resp = marshal(user, creator, skip_none=True)
+            user_resp['picture'] = str(get_picture(user_resp['picture']))
+            usersJson.append(user_resp)
 
         return usersJson
 

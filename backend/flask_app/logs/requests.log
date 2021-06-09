@@ -556,3 +556,99 @@
 
     INFO :: 2021-06-09 16:15:39,791  _ post : username: jerocf | email: jerocf13@gmail.com | 
                     
+
+    INFO :: 2021-06-09 17:23:47,209 _ authorization _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-09 17:25:09,556 _ authorization _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-09 17:27:54,741 _ authorization _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-09 17:28:36,770 _ authorization _ post : username: jerocf | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-09 17:28:49,151 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-09 17:28:58,972 _ authorization _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-09 17:57:13,756 _ posts _ post : request: make post | 
+                    
+
+    INFO :: 2021-06-09 18:01:28,730 _ posts _ post : request: make post | 
+                    
+
+    INFO :: 2021-06-09 18:01:47,954 _ posts _ post : request: make post | 
+                    
+
+    INFO :: 2021-06-09 18:02:06,762 _ posts _ post : request: make post | 
+                    
+
+    INFO :: 2021-06-09 18:02:31,844 _ posts _ post : request: make post | 
+                    
+
+    INFO :: 2021-06-09 18:02:55,598 _ posts _ post : request: make post | 
+                    
+
+    INFO :: 2021-06-09 18:09:09,267 _ posts _ post : request: make post | post_id: 10 | 
+                    
+
+    INFO :: 2021-06-09 18:12:06,166 _ posts _ post : request: make post | post_id: 11 | 
+                    
+
+    INFO :: 2021-06-09 19:08:55,790 _ authorization _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-09 19:22:27,008 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-09 19:33:53,652 _ authorization _ post : username: jcfjcf | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-09 19:34:15,341 _ authorization _ post : request: Login | username: jcfjcf | 
+                    
+
+    INFO :: 2021-06-09 19:51:33,584 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-09 19:52:26,497 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-09 20:00:23,255 _ posts _ post : request: make post | post_id: 2 | 
+                    
+
+    INFO :: 2021-06-09 21:28:45,887 _ posts _ post : request: make post | post_id: 2 | 
+                    
+
+    INFO :: 2021-06-09 21:29:13,386 _ posts _ post : request: make post | post_id: 2 | 
+                    
+
+    INFO :: 2021-06-09 21:34:22,225 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-09 21:34:29,816 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-09 21:34:40,150 _ authorization _ post : request: Login | username: jcfjcf | 
+                    
+
+    INFO :: 2021-06-09 21:34:56,227 _ posts _ post : request: make post | post_id: 3 | 
+                    
+
+    INFO :: 2021-06-09 21:36:03,907 _ posts _ post : request: make post | post_id: 4 | 
+                    
+
+    INFO :: 2021-06-09 21:40:02,906 _ authorization _ post : request: Login | username: jerocf | 
+                    
+
+    INFO :: 2021-06-09 22:02:29,519 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-09 22:03:00,575 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-09 22:03:51,911 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    

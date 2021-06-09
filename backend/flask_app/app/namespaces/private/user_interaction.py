@@ -6,7 +6,7 @@ from backend.flask_app.app.namespaces.private.schemas import (followModel,
                                                               profilePicModel,
                                                               profilePicture,
                                                               simpleUser)
-from backend.flask_app.app.services.commentService import generate_comment
+from backend.flask_app.app.services.commentService import create_comment
 from backend.flask_app.app.services.imageService import get_picture
 #from backend.flask_app.app.services.imageService import create_image
 from backend.flask_app.app.services.logs import complex_file_handler
@@ -78,7 +78,9 @@ class SearchUsers(Resource):
         users_json = []
 
         for user in users:
-            users_json.append(marshal(user, creator, skip_none=True))
+            result = marshal(user, creator, skip_none=True)
+            result['picture'] = str(get_picture(result['picture']))
+            users_json.append(result)
 
         return users_json
 
@@ -92,7 +94,9 @@ class GetFollowers(Resource):
         followers = []
 
         for user in myself.followers:
-            followers.append(marshal(get_user_by_id(user.follower_id), creator, skip_none=True))
+            follow = marshal(get_user_by_id(user.follower_id), creator, skip_none=True)
+            follow['picture'] = str(get_picture(follow['picture']))
+            followers.append(follow)
 
         return followers
 
@@ -106,7 +110,9 @@ class GetFollowing(Resource):
         following = []
 
         for user in myself.following:
-            following.append(marshal(get_user_by_id(user.followed_id), creator, skip_none=True))
+            follow = marshal(get_user_by_id(user.followed_id), creator, skip_none=True)
+            follow['picture'] = str(get_picture(follow['picture']))
+            following.append(follow)
 
         return following
 
@@ -131,10 +137,14 @@ class GetUser(Resource):
             if get_user_by_id(foll.follower_id).username == username:
                 follow_you = True
 
-        strPosts = sqlPost.dumps(user_profile.posts, many=True)
+        strPosts = json.loads(sqlPost.dumps(user_profile.posts, many=True))
+
+        for post in strPosts:
+            post['picture'] = str(get_picture(post['picture']))
 
         resp = marshal(user_profile, creator, skip_none=True)
-        resp['posts'] = json.loads(strPosts)
+        resp['picture'] = str(get_picture(resp['picture']))
+        resp['posts'] = strPosts
         resp['followers'] = len(user_profile.followers)
         resp['following'] = len(user_profile.following)
         resp['followed'] = following
@@ -155,9 +165,8 @@ class GetProfile(Resource):
         strPosts = json.loads(sqlPost.dumps(user.posts, many=True))
         for post in strPosts:
             post['picture'] = get_picture(post['picture'])
-        # postsMarshalled = marshal(strPosts,p)
         resp = {}
-        resp['user_id'] = user.id
+        resp['id'] = user.id
         resp['username'] = user.username
         resp['picture'] = get_picture(user.picture)
         

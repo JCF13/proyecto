@@ -61,6 +61,7 @@ createPostModel = Model('PostCreate', {
 
 postModel = Model('Post',{
     # 'id': fields.Integer(attribute='post_id'),
+    'post_id': fields.Integer(),
     'user_id': fields.Integer(attribute='created_by_fk'),
     'caption': fields.String(attribute='caption'),
     'picture': fields.String(),
@@ -110,7 +111,7 @@ wildcardResp = Model('response', {
         'date_time': fields.DateTime(default=datetime.now()),
         'request': fields.String(),
         'result': fields.Integer(),
-        'response': fields.Nested([postModel, followModel, makePostResp], description='''
+        'response': fields.Nested(postModel, followModel, makePostResp, description='''
         Las respuesta de todo
         '''),
         'error': fields.Nested(errorSchema, required=False)

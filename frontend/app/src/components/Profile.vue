@@ -94,38 +94,16 @@ export default {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
             })
-            const profile = await profileFetch.json();
             
-            profile.posts.forEach(async post => {
-                const imgFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.picture)
-                })
-                
-                const img = await imgFetch.json()
+            const profile = await profileFetch.json();
 
-                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-                img.picture = img.picture.replace("'", '');
-                post.picture = img.picture;
-            })
-
-            if (profile.picture !== '1' && profile.picture !== '') {
-                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(profile.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                profile.picture = profilePic.picture;
-            }
+            profile.posts.forEach(a => {
+                a.picture = a.picture.replace("b'", 'data:image/png;base64,');
+                a.picture = a.picture.replace("'", '');
+            });
+            
+            profile.picture = profile.picture.replace("b'", 'data:image/png;base64,')
+            profile.picture = profile.picture.replace("'", '');
 
             this.isUser = false;
             this.user = profile;
@@ -136,39 +114,14 @@ export default {
                 }
             })
             const profile = await profileFetch.json();
-            
-            profile.posts.forEach(async post => {
-                const imgFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.picture)
-                });
-                
-                const img = await imgFetch.json();
 
-                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-                img.picture = img.picture.replace("'", '');
-                post.picture = img.picture;
+            profile.posts.forEach(a => {
+                a.picture = a.picture.replace("b'", 'data:image/png;base64,');
+                a.picture = a.picture.replace("'", '');
             });
-
-            if (profile.picture !== '1' && profile.picture !== '') {
-                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(profile.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                profile.picture = profilePic.picture;
-            }
-
             
+            profile.picture = profile.picture.replace("b'", 'data:image/png;base64,')
+            profile.picture = profile.picture.replace("'", '');
             
             this.user = profile;
         }
@@ -177,6 +130,7 @@ export default {
         openPost(id) {
             this.$router.push(`/inside/profile/post/${id}`)
         },
+
         async unfollow() {
             const unfollowFetch = await fetch('https://localhost:5000/my/unfoll', {
                 method: 'PATCH',
@@ -191,10 +145,10 @@ export default {
 
             const unfollow = await unfollowFetch.json();
 
-            if (unfollow.type === 'positive') {
+            if (unfollow.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: unfollow.message,
+                    message: unfollow.error_desc,
                     position: 'top-right'
                 })
 
@@ -202,6 +156,7 @@ export default {
                 this.user.followed = false;
             }
         },
+
         async follow() {
             const followFetch = await fetch('https://localhost:5000/my/foll', {
                 method: 'PATCH',
@@ -216,18 +171,18 @@ export default {
 
             const follow = await followFetch.json()
 
-            if (follow.type === 'negative') {
+            if (follow.error_type === 'negative') {
                 this.$q.notify({
                     type: 'negative',
-                    message: follow.message,
+                    message: follow.error_desc,
                     position: 'top-right'
                 });
             }
 
-            if (follow.type === 'positive') {
+            if (follow.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: follow.message,
+                    message: follow.error_desc,
                     position: 'top-right'
                 });
                 this.user.followers++;
@@ -248,17 +203,17 @@ export default {
 
             const chat = await chatFetch.json();
 
-            if (chat.type === 'positive') {
+            if (chat.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: chat.message,
+                    message: chat.error_desc,
                     position: 'top-right'
                 });
 
                 this.$router.push(`/inside/chats/${chat.partner_id}`)
             }
 
-            if (chat.type === 'warning') {
+            if (chat.error_type === 'warning') {
                 this.$router.push(`/inside/chats/${chat.partner_id}`)
             }
         }

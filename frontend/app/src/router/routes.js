@@ -37,7 +37,6 @@ const routes = [
                     {   path: 'following', component: () => import('src/components/Following.vue')  }
                 ]
             },
-            {   path: 'new-post', component: () => import('src/components/NewPost.vue')   },
             {   path: 'notifications', component: () => import('src/components/Notifications.vue')    },
             {
                 path: 'chats', 

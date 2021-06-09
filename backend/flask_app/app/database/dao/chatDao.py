@@ -1,5 +1,5 @@
-from flask_app.app.database.models import Chat, ChatMessages
-from flask_app.app.database import db
+from backend.flask_app.app.database.models import Chat, ChatMessages
+from backend.flask_app.app.database import db
 from sqlalchemy import or_
 
 def generate_chat(chat: Chat):

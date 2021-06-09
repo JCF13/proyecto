@@ -1,9 +1,9 @@
 from datetime import datetime
-from flask_app.app.database.schemas import (PostCommentSchema,
+from backend.flask_app.app.database.schemas import (PostCommentSchema, PostLikeSchema,
                                             PostSchema,
                                             UserRegisterSchema
                                             )
-from flask_app.app.namespaces.private.schemas import (commentModel,
+from backend.flask_app.app.namespaces.private.schemas import (commentModel,
                                                       commentUser,
                                                       createPostModel,
                                                       likeListModel,
@@ -15,11 +15,11 @@ from flask_app.app.namespaces.private.schemas import (commentModel,
                                                       makePostResp,
                                                       errorSchema
                                                       )
-from flask_app.app.services.commentService import (create_comment,
+from backend.flask_app.app.services.commentService import (create_comment,
                                                    get_post_comments
                                                    )
-from flask_app.app.services.logs import complex_file_handler
-from flask_app.app.services.postService import (create_post,
+from backend.flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.postService import (create_post,
                                                 get_by_offset,
                                                 get_post_by_id,
                                                 delete_post_by_id
@@ -29,11 +29,11 @@ from flask_jwt_extended import (get_jwt_identity, jwt_required,
                                 verify_jwt_in_request
                                 )
 from flask_restx import Namespace, Resource, marshal
-from flask_app.app import _LEVELLOG_
-from flask_app.app.services.userService import get_user_by_id
-from flask_app.app.namespaces.auth.schemas import userProfile, creator
-from flask_app.app.services.imageService import get_picture
-from flask_app.app.services.logs.refactor_dict import gen_log
+from backend.flask_app.app import _LEVELLOG_
+from backend.flask_app.app.services.userService import get_user_by_id
+from backend.flask_app.app.namespaces.auth.schemas import userProfile, creator
+from backend.flask_app.app.services.imageService import get_picture
+from backend.flask_app.app.services.logs.refactor_dict import gen_log
 
 postNS = Namespace('post', 'todas las rutas de Posts irán a aquí')
 
@@ -70,7 +70,6 @@ class Make_post(Resource):
         respuesta = {}
         errorRep = {}
 
-        print(post_created)
         respuesta['datetime'] = datetime.now().strftime('%d/%m/%Y, %H:%M:%S')
         respuesta['request'] = 'make post'
         if post_created['error_type'] == 'positive':
@@ -84,11 +83,10 @@ class Make_post(Resource):
             contenido = marshal(elobjresp, makePostResp)
             respuesta['response'] = contenido
             respuesta['error'] = marshal(errorRep, errorSchema)
-        print(respuesta)
-        elReturn = marshal(respuesta, wildcardResp)
-        elLog = gen_log(elReturn, _LEVELLOG_)
+        elLog = gen_log(respuesta, _LEVELLOG_)
         postNS.logger.log(_LEVELLOG_, elLog)
-        return elReturn
+        return respuesta
+
 
 @postNS.route('/gposts')
 class Get_posts(Resource):
@@ -123,6 +121,7 @@ class Get_posts(Resource):
             strPost = sqlPost.dumps(post)
             jsonPost = json.loads(strPost)
             jsonPost['likes'] = jsonLikes
+            jsonPost['picture'] = str(get_picture(jsonPost['picture']))
 
             for like in jsonPost['likes']:
                 jsonPost['liked'] = False
@@ -132,37 +131,41 @@ class Get_posts(Resource):
             user = get_user_by_id(jsonPost['created_by_fk'])
             user_resp = marshal(user, creator, skip_none=True)
             jsonPost['creator'] = user_resp
+            jsonPost['creator']['picture'] = str(get_picture(jsonPost['creator']['picture']))
             jsonPosts.append(jsonPost)
 
         return jsonPosts
 
 
-@post.route('/gpost/<int:id>')
+@postNS.route('/gpost')
 class get_post(Resource):
     pistIdParser = postNS.parser()
     parser.add_argument('id', location='args', required=True)
 
     @postNS.expect(parser, pistIdParser)
     @jwt_required()
-    def get(self, id):
+    def get(self):
         elpost = get_post_by_id(request.args.get('id'))
         sqlPost = PostSchema()
         sqlComment = PostCommentSchema()
 
         strPosts = sqlPost.dumps(elpost)
         jsonPost = json.loads(strPosts)
+        jsonPost['picture'] = str(get_picture(jsonPost['picture']))
 
         strComments = sqlComment.dumps(elpost.comments, many=True)
         jsonComments = json.loads(strComments)
 
         for comment in jsonComments:
             comment['user'] = marshal(get_user_by_id(comment['created_by']), creator, skip_none=True)
+            comment['user']['picture'] = str(get_picture(comment['user']['picture']))
         
         jsonPost['comments'] = jsonComments
 
         user = get_user_by_id(jsonPost['created_by_fk'])
         creator_post = marshal(user, creator, skip_none=True)
         jsonPost['creator'] = creator_post
+        jsonPost['creator']['picture'] = str(get_picture(jsonPost['creator']['picture']))
 
         return jsonPost
 

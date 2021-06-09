@@ -1,5 +1,5 @@
 from flask_security.utils import verify_password
-from flask_app.app.exceptions import InvalidPassword, InvalidUsername
+from backend.flask_app.app.exceptions import InvalidPassword, InvalidUsername
 from functools import wraps
 from flask import request
 from flask_restx.marshalling import marshal

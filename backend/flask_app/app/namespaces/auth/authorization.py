@@ -1,12 +1,12 @@
 from flask_jwt_extended.utils import get_jwt_identity
 from flask_jwt_extended.view_decorators import verify_jwt_in_request
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from backend.flask_app.app.exceptions import EmailUsed, InvalidUsername
+from backend.flask_app.app.exceptions import EmailUsed, InvalidUsername, InvalidPassword
 from backend.flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
 from flask.globals import request
 from flask_restx import Namespace, Resource
 from flask_restx.marshalling import marshal
-
+from backend.flask_app.app import _LEVELLOG_
 from flask_jwt_extended import jwt_required
 from jwt.exceptions import DecodeError, ExpiredSignatureError
 from flask_jwt_extended.exceptions import (
@@ -57,7 +57,6 @@ def handler_non_auth(error):
 def handler_invalid_username_login(error):
 
     load_user = request.get_json()
-    print(load_user)
     resultado = {}
     resultado['result'] = -1
     resultado['request'] = ' _ '
@@ -78,7 +77,6 @@ def handler_invalid_username_login(error):
 def handler_invalid_password(error):
 
     load_user = request.get_json()
-    print(load_user)
     resultado = {}
     resultado['result'] = -1
     resultado['request'] = 'login / register'
@@ -100,7 +98,6 @@ def handler_invalid_password(error):
 def handler_email_used_login(error):
 
     load_user = request.get_json()
-    print(load_user)
     resultado = {}
     resultado['result'] = -1
     resultado['request'] = ' _ '

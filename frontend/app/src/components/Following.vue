@@ -50,7 +50,7 @@ export default {
 
         following.forEach(async a => {
             if (a.picture !== '1' && a.picture !== '') {
-                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
+                /*const profilePicFetch = await fetch('https://localhost:5000/my/image', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -58,10 +58,9 @@ export default {
                     body: JSON.stringify(a.picture)
                 })
 
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                a.picture = profilePic.picture;
+                const profilePic = await profilePicFetch.json();*/
+                a.picture = a.picture.replace("b'", 'data:image/png;base64,');
+                a.picture = a.picture.replace("'", '');
             }
         })
 

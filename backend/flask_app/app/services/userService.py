@@ -6,6 +6,7 @@ from flask_security.utils import hash_password, verify_password
 from backend.flask_app.app.exceptions import EmailUsed, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
 from flask_security.registerable import generate_confirmation_link
 from sqlalchemy.exc import IntegrityError
+from backend.flask_app.app.exceptions import InvalidPassword
 from backend.flask_app.app.database.schemas import UserRegisterSchema
 from backend.flask_app.app.database.models import User, Followers, user_datastore
 from backend.flask_app.app.database.dao.userDao import (
@@ -83,7 +84,6 @@ def create_user(user):
     creado = User()
     try:
         passwordHash = hash_password(user['password'])
-        print(user)
         creado.password = passwordHash
         creado.username = user['username']
         creado.name = user['name']
@@ -95,9 +95,6 @@ def create_user(user):
         user_datastore.add_role_to_user(user=creado, role='client')
         user_datastore.activate_user(creado)
         user_datastore.set_uniquifier(creado)
-        user_datastore.activate_user(creado)
-        user_datastore.set_uniquifier(creado)
-        print(creado.name)
         generate_user(creado)
         send_confirm_mail(creado)
         user_datastore.commit()
@@ -107,9 +104,6 @@ def create_user(user):
         }
     except (EmailUsed, UsernameUsed, RequiredUsername,
             RequiredName, RequiredPassword, RequiredEmail) as expt:
-        print('_____________')
-        print(expt.args)
-        print('_____________')
         if expt.params == 'UNIQUE':
             if expt.statement == 'username':
                 raise UsernameUsed(params=user['username'], orig=IntegrityError, statement='El username no es valido')
@@ -166,11 +160,11 @@ def update_username(user, username):
 
 
 def update_password(user, password, new_password):
-    if not verify_password(password['password'], user.password):
+    if not verify_password(password, user.password):
         raise InvalidPassword('invalid password')
     else:
         user.password = hash_password(new_password)
-        set_password()
+        set_password(user)
         return {
             'error_type': 'positive',
             'error_desc': 'Contraseña actualizada correctamente'

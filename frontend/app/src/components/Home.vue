@@ -94,42 +94,22 @@ export default {
         }
     },
     async created() {
-        const postsFetch = await fetch(`https://localhost:5000/post/gposts/${this.page}`, {
+        const postsFetch = await fetch(`https://localhost:5000/post/gposts?page=${this.page}`, {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                'page': this.page
             }
         });
         const posts = await postsFetch.json();
 
-        posts.forEach(async post => {
-            const imgFetch = await fetch('https://localhost:5000/my/image', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(post.picture)
-            })
-
-            const img = await imgFetch.json()
-
-            img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-            img.picture = img.picture.replace("'", '');
-            post.picture = img.picture;
+        posts.forEach(post => {
+            post.picture = post.picture.replace("b'", 'data:image/png;base64,');
+            post.picture = post.picture.replace("'", '');
 
             if (post.creator.picture !== '1' && post.creator.picture !== '') {
-                const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.creator.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                post.creator.picture = profilePic.picture;
+                post.creator.picture = post.creator.picture.replace("b'", 'data:image/png;base64,');
+                post.creator.picture = post.creator.picture.replace("'", '');
             }
         })
 
@@ -156,25 +136,23 @@ export default {
 
                     const like = await likeFetch.json()
 
-                    if (like.type === 'positive') {
+                    if (like.error_type === 'positive') {
                         this.$q.notify({
                             type: 'positive',
-                            message: like.message,
+                            message: like.error_desc,
                             position: 'top-right'
                         });
-                        post.likes++;
+                        post.likes.push({});
                         post.liked = true;
                     }
 
-                    if (like.type === 'warning') {
+                    if (like.error_type === 'warning') {
                         this.$q.notify({
                             type: 'warning',
-                            message: like.message,
+                            message: like.error_desc,
                             position: 'top-right'
                         })
-                        post.liked = true;
                     }
-
                 }
             })
         },
@@ -195,13 +173,13 @@ export default {
 
                     const dislike = await likeFetch.json()
 
-                    if (dislike.type === 'positive') {
+                    if (dislike.error_type === 'positive') {
                         this.$q.notify({
                             type: 'positive',
-                            message: dislike.message,
+                            message: dislike.error_desc,
                             position: 'top-right'
                         });
-                        post.likes--;
+                        post.likes.pop();
                         post.liked = false;
                     }
                 }
@@ -220,32 +198,12 @@ export default {
             const posts = await postsFetch.json();
 
             posts.forEach(async post => {
-                const imgFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.picture)
-                })
-                const img = await imgFetch.json()
-
-                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-                img.picture = img.picture.replace("'", '');
-                post.picture = img.picture;
+                post.picture = post.picture.replace("b'", 'data:image/png;base64,');
+                post.picture = post.picture.replace("'", '');
 
                 if (post.creator.picture !== '1' && post.creator.picture !== '') {
-                    const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify(post.creator.picture)
-                    })
-
-                    const profilePic = await profilePicFetch.json();
-                    profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                    profilePic.picture = profilePic.picture.replace("'", '');
-                    post.creator.picture = profilePic.picture;
+                    post.creator.picture = post.creator.picture.replace("b'", 'data:image/png;base64,');
+                    post.creator.picture = post.creator.picture.replace("'", '');
                 }
                 
                 this.posts.push(post);
