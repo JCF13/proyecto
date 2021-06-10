@@ -26,7 +26,6 @@ const routes = [
                     {   path: 'change-username', component: () => import('src/components/ChangeUsername.vue')   },
                     {   path: 'change-password', component: () => import('src/components/ChangePassword.vue')   },
                     {   path: 'change-profilepic', component: () => import('src/components/ChangeProfilePic.vue')   },
-                    {   path: 'account-information', component: () => import('src/components/AccountInformation.vue')   }
                 ]
             },
             {   path: 'camera', component: () => import('src/components/Camera.vue')    },
@@ -38,7 +37,6 @@ const routes = [
                     {   path: 'following', component: () => import('src/components/Following.vue')  }
                 ]
             },
-            {   path: 'new-post', component: () => import('src/components/NewPost.vue')   },
             {   path: 'notifications', component: () => import('src/components/Notifications.vue')    },
             {
                 path: 'chats', 

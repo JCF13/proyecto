@@ -4,7 +4,7 @@
             <q-card class="my-card" v-for="post in posts" :key="post.id">
                 <q-item class="card-top">
                     <q-item-section avatar>
-                        <q-avatar v-if="post.creator.picture == 1">
+                        <q-avatar v-if="post.creator.picture === '1' || post.creator.picture === ''">
                             <q-icon name='person' />
                         </q-avatar>
                         <q-avatar v-else>
@@ -22,23 +22,27 @@
                             {{post.comments.length}} <q-icon name="comment" />
                         </q-item-label>
                         <q-item-label>
-                            {{post.likes.length}} <q-icon name="favorite" color="red" @click="sendLike(post.id)" />
+                            {{post.likes.length}} <q-icon name="favorite" color="red" />
                         </q-item-label>
                     </q-item-section>
                 </q-item>
 
-                <q-icon class="liked" :data-post='post.post_id' @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; right: 0; font-size: 40px;" />
+                <q-icon v-if="!post.liked" @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; left: 0; bottom: 0; font-size: 40px;" />
+                <q-icon v-else name='favorite' @click="deleteLike(post.post_id)" color='red' style="position: absolute; left: 0; bottom: 0; font-size: 40px;" />
 
                 <img @click="openPost(post.post_id)" :src="post.picture" alt="">
             </q-card>
+            <div v-if="posts.length === 0" style="display: flex; flex-direction: column;">
+                <h5>Todavía no hay publicaciones para ver</h5>
+                <router-link to="/inside/search">
+                    <q-btn style="width: 100%;" label='Buscar otros usuarios' color='black' />
+                </router-link>
+            </div>
             
-            <div id="more">
+            <div id="more" v-else>
                 <q-icon name="add_circle_outline" size="30px" @click="loadMore" />
             </div>
         </div>
-        <q-page-sticky position="bottom-right" :offset="[18, 18]">
-            <q-btn fab icon="arrow_upward" color="blue" />
-        </q-page-sticky>
         <router-view/>
     </q-page>
 </template>
@@ -63,7 +67,8 @@ export default {
                             id: 0,
                             user: {
                                 id: 0,
-                                username: ''
+                                username: '',
+                                picture: ''
                             },
                             message: '',
                             creationDate: ''
@@ -75,9 +80,10 @@ export default {
                             id: 0,
                             user: {
                                 id: 0,
-                                username: ''
+                                username: '',
+                                picture: ''
                             }
-                        },
+                        }
                     ]
                 },
             ],
@@ -88,42 +94,22 @@ export default {
         }
     },
     async created() {
-        const postsFetch = await fetch(`http://localhost:5000/post/gposts/${this.page}`, {
+        const postsFetch = await fetch(`https://localhost:5000/post/gposts?page=${this.page}`, {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                'page': this.page
             }
         });
         const posts = await postsFetch.json();
 
-        posts.forEach(async post => {
-            const imgFetch = await fetch('http://localhost:5000/my/image', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(post.picture)
-            })
+        posts.forEach(post => {
+            post.picture = post.picture.replace("b'", 'data:image/png;base64,');
+            post.picture = post.picture.replace("'", '');
 
-            const img = await imgFetch.json()
-
-            img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-            img.picture = img.picture.replace("'", '');
-            post.picture = img.picture;
-
-            if (post.creator.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.creator.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                post.creator.picture = profilePic.picture;
+            if (post.creator.picture !== '1' && post.creator.picture !== '') {
+                post.creator.picture = post.creator.picture.replace("b'", 'data:image/png;base64,');
+                post.creator.picture = post.creator.picture.replace("'", '');
             }
         })
 
@@ -133,11 +119,69 @@ export default {
         openPost(id) {
             this.$router.push(`/inside/home/post/${id}`)
         },
-
+        
         async sendLike(id) {
-            this.posts.filter(post => {
+            this.posts.filter(async post => {
                 if (post.post_id === id) {
-                    document.querySelector(`i[data-post='${id}']`).innerHTML = 'favorite'
+                    const likeFetch = await fetch('https://localhost:5000/my/like', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                        },
+                        body: JSON.stringify({
+                            post_id: id
+                        })
+                    });
+
+                    const like = await likeFetch.json()
+
+                    if (like.error_type === 'positive') {
+                        this.$q.notify({
+                            type: 'positive',
+                            message: like.error_desc,
+                            position: 'top-right'
+                        });
+                        post.likes.push({});
+                        post.liked = true;
+                    }
+
+                    if (like.error_type === 'warning') {
+                        this.$q.notify({
+                            type: 'warning',
+                            message: like.error_desc,
+                            position: 'top-right'
+                        })
+                    }
+                }
+            })
+        },
+
+        async deleteLike(id) {
+            this.posts.filter(async post => {
+                if (post.post_id === id) {
+                    const likeFetch = await fetch('https://localhost:5000/my/dislike', {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                        },
+                        body: JSON.stringify({
+                            post_id: id
+                        })
+                    });
+
+                    const dislike = await likeFetch.json()
+
+                    if (dislike.error_type === 'positive') {
+                        this.$q.notify({
+                            type: 'positive',
+                            message: dislike.error_desc,
+                            position: 'top-right'
+                        });
+                        post.likes.pop();
+                        post.liked = false;
+                    }
                 }
             })
         },
@@ -145,7 +189,7 @@ export default {
         async loadMore() {
             this.page += 1;
 
-            const postsFetch = await fetch(`http://localhost:5000/post/gposts/${this.page}`, {
+            const postsFetch = await fetch(`https://localhost:5000/post/gposts/${this.page}`, {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -154,32 +198,12 @@ export default {
             const posts = await postsFetch.json();
 
             posts.forEach(async post => {
-                const imgFetch = await fetch('http://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.picture)
-                })
-                const img = await imgFetch.json()
+                post.picture = post.picture.replace("b'", 'data:image/png;base64,');
+                post.picture = post.picture.replace("'", '');
 
-                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-                img.picture = img.picture.replace("'", '');
-                post.picture = img.picture;
-
-                if (post.creator.picture !== '1') {
-                    const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify(post.creator.picture)
-                    })
-
-                    const profilePic = await profilePicFetch.json();
-                    profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                    profilePic.picture = profilePic.picture.replace("'", '');
-                    post.creator.picture = profilePic.picture;
+                if (post.creator.picture !== '1' && post.creator.picture !== '') {
+                    post.creator.picture = post.creator.picture.replace("b'", 'data:image/png;base64,');
+                    post.creator.picture = post.creator.picture.replace("'", '');
                 }
                 
                 this.posts.push(post);

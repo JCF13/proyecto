@@ -77,7 +77,7 @@ export default {
             this.captionDialog = true;
         },
         async createPost() {
-            const postFetch = await fetch('http://localhost:5000/post/cpost', {
+            const postFetch = await fetch('https://localhost:5000/post/cpost', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
@@ -90,16 +90,16 @@ export default {
             })
             const response = await postFetch.json()
 
-            if (response.type === 'positive') {
+            if (!response.error_type) {
                 this.$q.notify({
                     type: 'positive',
-                    message: response.message,
+                    message: 'Publicación creada correctamente',
                     position: 'top-right'
                 })
-                this.$router.push(`/inside/home/post/${response.post_id}`)
+                this.$router.push(`/inside/home/post/${response.response.post_id}`)
             } else this.$q.notify({
                 type: 'error',
-                message: response.message,
+                message: response.error_desc,
                 position: 'top-right'
             })
         }

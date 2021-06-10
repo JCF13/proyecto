@@ -112,7 +112,7 @@ export default {
         },
         async register() {
             if (this.user.password == this.user.confirmPassword) {
-                const registerFecth = await fetch('http://localhost:5000/auth/logon', {
+                const registerFecth = await fetch('https://localhost:5000/auth/logon', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
@@ -129,16 +129,16 @@ export default {
             
                 const register = await registerFecth.json()
                 
-                if (register.type == 'error') {
+                if (register.error_type == 'error') {
                     this.$q.notify({
                         type: 'negative',
-                        message: register.message,
+                        message: register.error_desc,
                         position: 'top-right'
                     })
                 } else {
                     this.$q.notify({
                         type: 'positive',
-                        message: register.message,
+                        message: register.error_desc,
                         position: 'top-right'
                     })
                     

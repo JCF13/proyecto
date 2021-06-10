@@ -3,20 +3,24 @@
         <div id="main">
             <div id="left">
                 <q-list id="chat-list">
-                    <router-link v-for="(chat,count) in chats" :to="'/inside/chats/'+chat.partner.id" :key="chat.id" >
-                        <q-item class="chat-item" clickable v-ripple @click="selectChat(count)" :active="chat.active" 
-                            active-class="bg-grey text-white">
-                            <q-img
-                                :src="chat.partner.profilePic" class="bg-white"
-                                style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
-                                    border-radius:50%; border: 1px solid black; margin: 5%;"
-                                contain
-                            />
+                    <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.id" :key="chat.chat_id">
+                        <q-item class="chat-item" clickable v-ripple>
+                            <q-item-section avatar v-if="chat.partner.picture == 1" style="padding-left: 5%;">
+                                <q-icon name='person' />
+                            </q-item-section>
+                            <q-item-section avatar v-else style="padding-left: 2%;">
+                                <q-img
+                                    :src="chat.partner.picture" class="bg-white"
+                                    style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
+                                        border-radius:50%; border: 1px solid black; margin: 5%;"
+                                    contain
+                                />
+                            </q-item-section>
 
                             <q-item-section>{{chat.partner.username}}</q-item-section>
 
                             <q-item-section side>
-                                <q-icon @click="deleteChat(chat.id)" name="delete" style="font-size:30px; color:red; display:none"/>
+                                <q-icon @click="deleteChat(chat.chat_id)" name="delete" style="font-size:30px; color:red; display:none"/>
                             </q-item-section>
                         </q-item>
                         <q-separator/>
@@ -24,7 +28,13 @@
                 </q-list>
             </div>
             <div id="right">
-                <router-view/>
+                <div style="padding-top: 5%; display: flex; justify-content: space-between;" v-if="chats.length == 0">
+                    <h5>Todavía no hay chats creados</h5>
+                    <router-link to="/inside/search">
+                        <q-btn color='black' push label="BUSCAR USUARIOS"/>
+                    </router-link>
+                </div>
+                <router-view v-else />
             </div>
         </div>
     </q-page>
@@ -36,45 +46,71 @@ export default {
         return {
             chats: [
                 {
-                    id: 1,
+                    id: 0,
                     partner: {
-                        id: 2,
-                        username: 'Nombre_usuario_2',
-                        profilePic: 'https://i.pinimg.com/originals/c2/88/c7/c288c7ff9eae9c9f7397115b140fb2b5.jpg'
+                        id: 0,
+                        username: '',
+                        picture: ''
                     },
                     active: false
                 },
-                {
-                    id: 2,
-                    partner: {
-                        id: 3,
-                        username: 'Nombre_usuario_3',
-                        profilePic: 'https://www.hola.com/imagenes/viajes/20180530124901/naturaleza-destinos-mundo-a-todo-color/0-571-947/colores-m.jpg'
-                    },
-                    active: false
-                },
-                {
-                    id: 3,
-                    partner: {
-                        id: 4,
-                        username: 'Nombre_usuario_4',
-                        profilePic: 'https://ugc.kn3.net/i/760x/http://wackymania.com/image/2011/6/vertical-panoramic-photography/vertical-panoramic-photography-06.jpg'
-                    },
-                    active: false
-                },
-            ]
+            ],
+            user: 0
         }
     },
+    async created() {
+        const userFetch = await fetch('https://localhost:5000/my/getProfile', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const user = await userFetch.json();
+
+        this.user = user.user_id;
+        
+        const chatsFetch = await fetch('https://localhost:5000/chat/getChats', {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const chats = await chatsFetch.json()
+
+        chats.forEach(async a => {
+            if (a.partner.picture !== '1' && a.partner.picture !== '') {
+                a.partner.picture = a.partner.picture.replace("b'", 'data:image/png;base64,');
+                a.partner.picture = a.partner.picture.replace("'", '');
+            }
+        });
+
+        this.chats = chats;
+    },
     methods: {
-        selectChat(index) {
-            this.chats.forEach((a, i) => {
-                if (i == index) {
-                    a.active = true
-                } else a.active = false
-            })
-        },
-        deleteChat(id) {
-            console.log(id)
+        async deleteChat(id) {
+            const deleteFetch = await fetch('https://localhost:5000/chat/deleteChat', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    chat_id: id
+                })
+            });
+
+            const deleteResp = await deleteFetch.json();
+
+            if (deleteResp.error_type === 'positive') {
+                this.$q.notify({
+                    type: 'warning',
+                    message: deleteResp.error_desc,
+                    position: 'top-right'
+                })
+
+                this.$router.push('/inside')
+            }
         }
     }
 }

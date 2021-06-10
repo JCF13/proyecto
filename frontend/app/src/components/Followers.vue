@@ -1,41 +1,56 @@
 <template>
     <div>
-        <q-list>
-            <q-item>
+        <q-list v-if="followers.length > 0">
+            <q-item v-for="follower in followers" :key="follower.user_id">
                 <q-item-section avatar>
-                    <q-avatar>
-                        <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                    <q-avatar v-if="follower.picture === '1' || follower.picture === ''">
+                        <q-icon name='person' />
+                    </q-avatar>
+                    <q-avatar v-else size="30px" class="avatar">
+                        <img :src="follower.picture" alt="">
                     </q-avatar>
                 </q-item-section>
-                <q-item-section>Seguidor1</q-item-section>
+                <q-item-section>{{follower.username}}</q-item-section>
                 <q-item-section>
-                    <q-btn label="VER PERFIL" color="black"/>
-                </q-item-section>
-                <q-item-section>
-                    <q-btn label="ELIMINAR SEGUIDOR" color="black" />
-                </q-item-section>
-            </q-item>
-            <q-item>
-                <q-item-section avatar>
-                    <q-avatar>
-                        <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-                    </q-avatar>
-                </q-item-section>
-                <q-item-section>Seguidor2</q-item-section>
-                <q-item-section>
-                    <q-btn label="VER PERFIL" color="black"/>
-                </q-item-section>
-                <q-item-section>
-                    <q-btn label="ELIMINAR SEGUIDOR" color="black" />
+                    <router-link :to="'/inside/user/'+follower.username" style="text-decoration: none;">
+                        <q-btn label="VER PERFIL" color="black" style="width:100%;"/>
+                    </router-link>
                 </q-item-section>
             </q-item>
         </q-list>
+        <div v-else style="padding-left: 5%; padding-bottom: 1%;">
+            <h6>Todavía no hay ningún seguidor</h6>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    
+    data() {
+        return {
+            followers: null
+        }
+    },
+    async created() {
+        const id = this.$route.params.id;
+
+        const followersFetch = await fetch(`https://localhost:5000/my/getFollowers`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const followers = await followersFetch.json();
+
+        followers.forEach(async a => {
+            if (a.picture !== '1' && a.picture !== '') {
+                a.picture = a.picture.replace("b'", 'data:image/png;base64,');
+                a.picture = a.picture.replace("'", '');
+            }
+        })
+
+        this.followers = followers;
+    },
 }
 </script>
 

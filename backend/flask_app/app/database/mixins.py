@@ -21,13 +21,13 @@ class CreatedMixin(object):
     @declared_attr
     def created_by_fk(self):
         return Column(
-            Integer, ForeignKey("user.user_id"), default=self.get_user_id, nullable=False
+            Integer, ForeignKey("user.id"), default=self.get_user_id, nullable=False
         )
     @declared_attr
     def created_by(self):
         return relationship(
             "User",
-            primaryjoin="%s.created_by_fk == User.user_id" % self.__name__,
+            primaryjoin="%s.created_by_fk == User.id" % self.__name__,
             
             enable_typechecks=False,
         )
@@ -35,6 +35,6 @@ class CreatedMixin(object):
     @classmethod
     def get_user_id(self):
         try:
-            return current_user.user_id
+            return current_user.id
         except Exception:
             return None

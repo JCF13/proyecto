@@ -11,6 +11,7 @@ userModel = Model('User', {
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
+
 simpleUser = Model('simpleUser', {
     'id': fields.Integer(),
     'username': fields.String(),
@@ -24,6 +25,7 @@ userProfile = Model('UserProfile', {
     # 'posts' : fields.List(fields.Wildcard()),
     # 'chats' : fields.List(fields.Wildcard())
 })
+
 picture = Model('picture', {
     'kind': fields.String(description='CHOICES: profile, chat, post'),
     'blurb': fields.String(),
@@ -59,15 +61,12 @@ createPostModel = Model('PostCreate', {
 
 postModel = Model('Post',{
     # 'id': fields.Integer(attribute='post_id'),
+    'post_id': fields.Integer(),
     'user_id': fields.Integer(attribute='created_by_fk'),
     'caption': fields.String(attribute='caption'),
-    'path': fields.String(attribute='picture_path'),
-    'fname': fields.String(attribute='picture_fname'),
-    'likes': fields.Nested(likeListModel),
-    'comments': fields.List(fields.Nested(commentModel)),
+    'picture': fields.String(),
+    
 })
-
-
 
 commentUser = Model('commentUser', {
     # 'id': fields.Integer(),
@@ -90,11 +89,41 @@ posts = Model('allPosts', {
 })
 
 followModel = Model('followModel', {
-    'user': fields.Nested(simpleUser),
-    'follows': fields.Boolean(default=False),  
+    'user': fields.Integer(),
 })
 
 profilePicModel = Model('profilePicModel', {
     'user': fields.Integer(),
     'picture': fields.String()
+})
+
+errorSchema = Model('error', {
+    'error_type': fields.Integer(description='Código identificador del error'),
+    'error_desc': fields.String(description='Descripción del error'),
+})
+
+makePostResp = Model('makePostResp',{
+    'post_id': fields.Integer(),
+    'done': fields.Boolean(),
+})
+
+wildcardResp = Model('response', {
+        'date_time': fields.DateTime(default=datetime.now()),
+        'request': fields.String(),
+        'result': fields.Integer(),
+        'response': fields.Nested(postModel, followModel, makePostResp, description='''
+        Las respuesta de todo
+        '''),
+        'error': fields.Nested(errorSchema, required=False)
+})
+
+createChat = Model('createChat', {
+    'user': fields.Integer(),
+    'partner': fields.Integer()
+})
+
+chatModel = Model('chatModel', {
+    'chat_id': fields.Integer(),
+    'user': fields.Nested(simpleUser, attribute='created_by_fk'),
+    'partner': fields.Nested(simpleUser),
 })

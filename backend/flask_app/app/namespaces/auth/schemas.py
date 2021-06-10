@@ -1,8 +1,8 @@
 import datetime
 from flask_restx import Model, fields
-from flask_app.app.namespaces.private.schemas import postModel, posts
+from backend.flask_app.app.namespaces.private.schemas import postModel, posts
 
-userModel = Model('User',{ 
+userModel = Model('User',{     
     'user_id': fields.Integer(),
     'username': fields.String(),
     'name': fields.String(),
@@ -10,8 +10,6 @@ userModel = Model('User',{
     'surname': fields.String(),
     'email': fields.String(),
     'picture': fields.String(),
-    # 'posts' : fields.List(fields.Wildcard()),
-    # 'chats' : fields.List(fields.Wildcard())
 })
 
 userRegister = Model('userRegister', {
@@ -54,12 +52,15 @@ loginReq = Model('loginRequest',{
 userProfile = Model('userProfile', {
     'id': fields.Integer(),
     'username': fields.String(),
-    'profile_pic': fields.String(),
-    'posts': fields.Nested(postModel)
+    'picture': fields.String(),
+    'posts': fields.Nested(postModel, as_list=True),
+    'followers': fields.Integer(),
+    'following': fields.Integer()
 })
 
 creator = Model('creator', {
-    'user_id': fields.Integer(),
+    'id': fields.Integer(),
+    #'user_id': fields.Integer(),
     'username': fields.String(),
     'picture': fields.String(),
 })

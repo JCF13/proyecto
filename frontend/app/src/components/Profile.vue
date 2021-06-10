@@ -3,7 +3,7 @@
         <div id="main">
             <div id="top">
                 <div id="left-top">
-                    <q-img v-if="user.picture !== '1'"
+                    <q-img v-if="user.picture !== '1' && user.picture !== ''"
                         :src="user.picture"
                         style="width:100%; max-width: 200px; height:100%; max-height: 175px; border-radius:50%; border: 2px solid black;"
                         contain
@@ -18,24 +18,29 @@
                                 <h5><strong>{{user.username}}</strong></h5>
 
                                 <q-card-actions horizontal class="q-px-md">
-                                    <q-btn flat color="black" icon="chat_bubble_outline" />
+                                    <q-btn v-if="!isUser" flat color="black" icon="chat_bubble_outline" @click="createChat" />
+                                    
                                     <router-link to="/inside/settings">
                                         <q-btn flat round color="black" icon="settings" />
                                     </router-link>
                                 </q-card-actions>
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal>
-                                <router-link to="/inside/social/followers">
+                                <router-link v-if="isUser" to="/inside/social/followers">
                                     <q-btn class="bg-white" push :label="user.followers+' SEGUIDORES'" />
                                 </router-link>
-                                <router-link to="/inside/social/following">
+                                <q-btn v-else class="bg-white" push :label="user.followers+' SEGUIDORES'" />
+                                <router-link v-if="isUser" to="/inside/social/following">
                                     <q-btn class="bg-white" push :label="user.following+' SEGUIDOS'" />
                                 </router-link>
+                                <q-btn v-else class="bg-white" push :label="user.following+' SEGUIDOS'" />
                             </q-card-section>
                             <q-card-section class="d-flex justify-between" horizontal style="margin-top:5%">
-                                <q-btn v-if="!isUser" class="bg-white" push label="SEGUIR" @click="follow" />
-                                <q-btn class="bg-white" push label="DEJAR DE SEGUIR" style="display:none" />
-                                <q-btn v-if="!isUser" class="bg-white" push label="TE SIGUE" />
+                                <q-btn v-if="!isUser && !user.followed" class="bg-positive text-white" push label="SEGUIR" @click="follow" />
+                                <q-btn v-if="!isUser && user.followed" class="bg-positive text-white" push label="SEGUIDO"/>
+                                
+                                <q-btn v-if="!isUser && user.followed" class="bg-negative text-white" push label="DEJAR DE SEGUIR" @click="unfollow" />
+                                <q-btn v-if="!isUser && user.followYou" class="bg-positive text-white" push label="TE SIGUE" />
                             </q-card-section>
                         </q-card-section>
                     </q-card>
@@ -64,7 +69,7 @@ export default {
     data() {
         return {
             user: {
-                user_id: 0,
+                id: 0,
                 username: '',
                 picture: '',
                 followers: 0,
@@ -76,88 +81,47 @@ export default {
                         caption: '',
                     },
                 ],
+                followed: false,
+                followYou: false
             },
-            isUser: true      
+            isUser: true,
         }
     },
     async created() {
         if (this.$route.params.username) {
-            const profileFetch = await fetch(`http://localhost:5000/my/getUser/${this.$route.params.username}`)
-            const profile = await profileFetch.json();
-            
-            profile.posts.forEach(async post => {
-                const imgFetch = await fetch('http://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.picture)
-                })
-                
-                const img = await imgFetch.json()
-
-                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-                img.picture = img.picture.replace("'", '');
-                post.picture = img.picture;
+            const profileFetch = await fetch(`https://localhost:5000/my/getUser/${this.$route.params.username}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
             })
+            
+            const profile = await profileFetch.json();
 
-            if (profile.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(profile.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                profile.picture = profilePic.picture;
-            }
+            profile.posts.forEach(a => {
+                a.picture = a.picture.replace("b'", 'data:image/png;base64,');
+                a.picture = a.picture.replace("'", '');
+            });
+            
+            profile.picture = profile.picture.replace("b'", 'data:image/png;base64,')
+            profile.picture = profile.picture.replace("'", '');
 
             this.isUser = false;
             this.user = profile;
         } else {
-            const profileFetch = await fetch(`http://localhost:5000/my/getProfile`, {
+            const profileFetch = await fetch(`https://localhost:5000/my/getProfile`, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
             })
             const profile = await profileFetch.json();
-            
-            profile.posts.forEach(async post => {
-                const imgFetch = await fetch('http://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(post.picture)
-                });
-                
-                const img = await imgFetch.json();
 
-                img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-                img.picture = img.picture.replace("'", '');
-                post.picture = img.picture;
+            profile.posts.forEach(a => {
+                a.picture = a.picture.replace("b'", 'data:image/png;base64,');
+                a.picture = a.picture.replace("'", '');
             });
-
-            if (profile.picture !== '1') {
-                const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(profile.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();
-                profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-                profilePic.picture = profilePic.picture.replace("'", '');
-                profile.picture = profilePic.picture;
-            }
-
             
+            profile.picture = profile.picture.replace("b'", 'data:image/png;base64,')
+            profile.picture = profile.picture.replace("'", '');
             
             this.user = profile;
         }
@@ -166,22 +130,92 @@ export default {
         openPost(id) {
             this.$router.push(`/inside/profile/post/${id}`)
         },
-        async follow() {
-            const follow = await fetch('http://localhost:5000/my/foll', {
+
+        async unfollow() {
+            const unfollowFetch = await fetch('https://localhost:5000/my/unfoll', {
                 method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user: {
-                        id: 2,
-                        username: 'prueba1',
-                        profilePic: ''
-                    },
-                    follows: false
+                    user: this.user.id
+                })
+            });
+
+            const unfollow = await unfollowFetch.json();
+
+            if (unfollow.error_type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: unfollow.error_desc,
+                    position: 'top-right'
+                })
+
+                this.user.followers--;
+                this.user.followed = false;
+            }
+        },
+
+        async follow() {
+            const followFetch = await fetch('https://localhost:5000/my/foll', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user: this.user.id
                 })
             })
+
+            const follow = await followFetch.json()
+
+            if (follow.error_type === 'negative') {
+                this.$q.notify({
+                    type: 'negative',
+                    message: follow.error_desc,
+                    position: 'top-right'
+                });
+            }
+
+            if (follow.error_type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: follow.error_desc,
+                    position: 'top-right'
+                });
+                this.user.followers++;
+                this.user.followed = true
+            }
+        },
+        async createChat() {
+            const chatFetch = await fetch('https://localhost:5000/chat/create', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    partner_id: this.user.id
+                })
+            });
+
+            const chat = await chatFetch.json();
+
+            if (chat.error_type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: chat.error_desc,
+                    position: 'top-right'
+                });
+
+                this.$router.push(`/inside/chats/${chat.partner_id}`)
+            }
+
+            if (chat.error_type === 'warning') {
+                this.$router.push(`/inside/chats/${chat.partner_id}`)
+            }
         }
     }
 }

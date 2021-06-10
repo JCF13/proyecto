@@ -1,24 +1,28 @@
-from flask_app.app.exceptions import InvalidUsername
-from flask_app.app.namespaces.auth.jwt_auth import make_header
+from flask_jwt_extended.utils import get_jwt_identity
+from flask_jwt_extended.view_decorators import verify_jwt_in_request
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from backend.flask_app.app.exceptions import EmailUsed, InvalidUsername, InvalidPassword
+from backend.flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
 from flask.globals import request
 from flask_restx import Namespace, Resource
 from flask_restx.marshalling import marshal
+from backend.flask_app.app import _LEVELLOG_
+from flask_jwt_extended import jwt_required
 from jwt.exceptions import DecodeError, ExpiredSignatureError
 from flask_jwt_extended.exceptions import (
     NoAuthorizationError, InvalidHeaderError, WrongTokenError
 )
-from flask_app.app.namespaces.auth.schemas import (
+from backend.flask_app.app.namespaces.auth.schemas import (
     userModel, auth_token, errorSchema,
     loginReq, loginResp, userRegister
 )
-from flask_app.app.database import db 
-from flask_app.app.services.userService import create_user
-from flask_app.app.database.schemas import UserRegisterSchema
-from flask_app.app.services.logs import complex_file_handler
-from flask_app.app.services.logs.refactor_dict import gen_log
+from backend.flask_app.app.database import db 
+from backend.flask_app.app.services.userService import create_user, get_user_by_id
+from backend.flask_app.app.database.schemas import UserRegisterSchema
+from backend.flask_app.app.services.logs import complex_file_handler
+from backend.flask_app.app.services.logs.refactor_dict import gen_log
 
 authorization = Namespace('auth')
-_LEVELLOG_ = 20
  
 authorization.logger.addHandler(complex_file_handler)
 
@@ -42,9 +46,10 @@ def handler_non_auth(error):
     resultado['error'] = errorDoc
 
     respuesta = marshal(resultado, loginResp)
+    
     elLog = gen_log(respuesta, _LEVELLOG_)
     authorization.logger.log(_LEVELLOG_, elLog)
-
+    
     return respuesta
 
 
@@ -52,7 +57,6 @@ def handler_non_auth(error):
 def handler_invalid_username_login(error):
 
     load_user = request.get_json()
-    print(load_user)
     resultado = {}
     resultado['result'] = -1
     resultado['request'] = ' _ '
@@ -60,6 +64,47 @@ def handler_invalid_username_login(error):
     fallo = {}
     fallo['error_type'] = 26
     fallo['error_desc'] = error
+    errorDoc = marshal(fallo, errorSchema)
+    resultado['error'] = errorDoc
+    
+    respuesta = marshal(resultado, loginResp)
+
+    elLog = gen_log(respuesta, _LEVELLOG_)
+    authorization.logger.log(_LEVELLOG_, elLog)
+    return respuesta
+
+@authorization.errorhandler(InvalidPassword)
+def handler_invalid_password(error):
+
+    load_user = request.get_json()
+    resultado = {}
+    resultado['result'] = -1
+    resultado['request'] = 'login / register'
+
+    fallo = {}
+    fallo['error_type'] = 26
+    fallo['error_desc'] = error
+    errorDoc = marshal(fallo, errorSchema)
+    resultado['error'] = errorDoc
+    
+    respuesta = marshal(resultado, loginResp)
+
+    elLog = gen_log(respuesta, _LEVELLOG_)
+    authorization.logger.log(_LEVELLOG_, elLog)
+    return respuesta
+
+
+@authorization.errorhandler(SQLAlchemyError)
+def handler_email_used_login(error):
+
+    load_user = request.get_json()
+    resultado = {}
+    resultado['result'] = -1
+    resultado['request'] = ' _ '
+
+    fallo = {}
+    fallo['error_type'] = 26
+    fallo['error_desc'] = error.statement
     errorDoc = marshal(fallo, errorSchema)
     resultado['error'] = errorDoc
     
@@ -134,7 +179,7 @@ def handler_wrong_token(error):
     errorDoc = marshal(fallo, errorSchema)
     resultado['error'] = errorDoc
     respuesta = marshal(resultado, loginResp)
-    
+
     elLog = gen_log(respuesta, _LEVELLOG_)
     authorization.logger.log(_LEVELLOG_, elLog)
 
@@ -145,15 +190,13 @@ def handler_wrong_token(error):
 @authorization.route('/logon')
 class Register(Resource):
 
-    def get(self):
-
-        pass
-
     @authorization.expect(userRegister)
     def post(self):
         to_register = request.get_json()
         marshalled = marshal(to_register, userRegister, skip_none=True)
-        
+
+        elLog = gen_log(marshalled, _LEVELLOG_)
+        authorization.logger.log(_LEVELLOG_, elLog)
         return create_user(marshalled)
 
 
@@ -161,6 +204,10 @@ class LogOut(Resource):
 
     def post(self):
         pass
+
+
+parser = authorization.parser()
+parser.add_argument('Authorization', location='headers', required=True)
 
 
 @authorization.route('/login')
@@ -171,7 +218,6 @@ class Login(Resource):
     def post(self):
 
         load_user = request.get_json()
-        # request.get_data()
 
         user_dict = marshal(load_user, loginReq)
 
@@ -179,4 +225,15 @@ class Login(Resource):
         elLog = gen_log(header, _LEVELLOG_)
         authorization.logger.log(_LEVELLOG_, elLog)
 
+        return header
+
+
+    @authorization.expect(parser)
+    @jwt_required(refresh=True)
+    def get(self):
+        verify_jwt_in_request(refresh=True)
+        user_identity = get_jwt_identity()
+        header = make_header_from_identity(user_identity)
+        header['request'] = request.environ['PATH_INFO']
+        authorization.logger.log(_LEVELLOG_, gen_log(header, _LEVELLOG_))
         return header

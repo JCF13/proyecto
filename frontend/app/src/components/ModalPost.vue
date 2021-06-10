@@ -4,6 +4,7 @@
             <q-card-section horizontal>
                 <div id="card-left">
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
+                    <q-icon v-if="post.creator.id === user.id" id="delete" color='red' name='delete' size='30px' @click="deletePost" />
 
                     <img id="image" :src="post.picture" alt="">
 
@@ -14,7 +15,7 @@
 
                 <q-card-actions vertical id="card-right">
                     <div id="modal-user">
-                        <q-avatar v-if="post.creator.picture === '1'">
+                        <q-avatar v-if="post.creator.picture === '1' || post.creator.picture === ''">
                             <q-icon name='person' />
                         </q-avatar>
                         <q-avatar v-else size="30px" class="avatar">
@@ -36,19 +37,19 @@
                         <p>{{post.created_on}}</p>
                     </div>
                     <div id="comments">
-                        <div v-for="comment in post.comments" :key="comment.id">
-                            <!--<q-avatar v-if="comment.user.picture == 1">
-                                <q-icon name='person' />
-                            </q-avatar>
-                            <q-avatar v-else>
-                                <img :src="comment.user.picture" />
-                            </q-avatar>
-                            <p>
-                                <span>{{comment.user.username}}.</span>
-                                {{comment.message}}
-                            </p>-->
-                        </div>
-                        <q-icon v-if="post.comments.length>5" name="add_circle_outline" size="25px" />
+                        <q-list id="comments-post">
+                            <q-item v-for="comment in post.comments" :key="comment.id">
+                                <q-item-section avatar>
+                                <q-avatar v-if="comment.user.picture === '1' || comment.user.picture === ''">
+                                    <q-icon name='person' />
+                                </q-avatar>
+                                <q-avatar v-else>
+                                    <img :src="comment.user.picture" />
+                                </q-avatar>
+                                </q-item-section>
+                                <q-item-section>{{comment.message}}</q-item-section>
+                            </q-item>
+                        </q-list>
                     </div>
                     <div id="new-comment">
                         <q-input label="Escribe un comentario" color="black" v-model="message">
@@ -74,7 +75,7 @@ export default {
                 picture: '',
                 caption: '',
                 creator: {
-                    user_id: 0,
+                    id: 0,
                     username: '',
                     picture: ''
                 },
@@ -82,7 +83,7 @@ export default {
                     {
                         id: 0,
                         user: {
-                            user_id: 0,
+                            id: 0,
                             username: '',
                             picture: ''
                         }
@@ -92,7 +93,7 @@ export default {
                     {
                         id: 0,
                         user: {
-                            user_id: 0,
+                            id: 0,
                             username: '',
                             picture: ''
                         },
@@ -101,46 +102,47 @@ export default {
                     }
                 ]
             },
-            user: {
-                id: null,
-            },
+            user: null,
             message: null
         }
     },
     async created() {
+        const userFetch = await fetch('https://localhost:5000/my/getProfile', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        });
+
+        const user = await userFetch.json();
+
+        this.user = user;
+        
         const postId = this.$route.params.id;
-        const postFetch = await fetch(`http://localhost:5000/post/gpost/${postId}`);
+        
+        const postFetch = await fetch(`https://localhost:5000/post/gpost?id=${postId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            }
+        });
+        
         const post = await postFetch.json();
 
-        const imgFetch = await fetch('http://localhost:5000/my/image', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(post.picture)
-        })
-        const img = await imgFetch.json()
+        post.created_on = post.created_on.split('.')[0].replace('T', ' ')
 
-        img.picture = img.picture.replace("b'", 'data:image/png;base64,');
-        img.picture = img.picture.replace("'", '');
-        post.picture = img.picture;
+        post.picture = post.picture.replace("b'", 'data:image/png;base64,');
+        post.picture = post.picture.replace("'", '');
 
-        if (post.creator.picture !== '1') {
-            const profilePicFetch = await fetch('http://localhost:5000/my/image', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(post.creator.picture)
-            })
-
-            const profilePic = await profilePicFetch.json();
-            profilePic.picture = profilePic.picture.replace("b'", 'data:image/png;base64,');
-            profilePic.picture = profilePic.picture.replace("'", '');
-            post.creator.picture = profilePic.picture;
+        if (post.creator.picture !== '1' && post.creator.picture !== '') {
+            post.creator.picture = post.creator.picture.replace("b'", 'data:image/png;base64,');
+            post.creator.picture = post.creator.picture.replace("'", '');
         }
-        
-        
+
+        post.comments.forEach(a => {
+            if (a.user.picture !== '1' && a.user.picture !== '') {
+                a.user.picture = a.user.picture.replace("b'", 'data:image/png;base64,');
+                a.user.picture = a.user.picture.replace("'", '');
+            }
+        })
 
         this.post = post;
     },
@@ -149,27 +151,62 @@ export default {
             this.$router.go(-1)
         },
 
-        // Cargar post
-        async getPost(id) {
-            const postFetch = await fetch(`http://localhost:5000/private/post/${id}`)
-            const post = postFetch.json();
-
-            this.post = post;
-        },
-
-        // Enviar comentario y nueva notificación
         async newComment() {
             const postId = this.$route.params.id;
             
-            const comment = await fetch('http://localhost:5000/private/post/comment', {
-                method: 'POST',
+            const commentFetch = await fetch('https://localhost:5000/my/comment', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    'Content-type': 'application/json'
+                },
                 body: JSON.stringify({
-                    post: postId,
-                    creator: this.post.creator.user_id,
-                    user: this.user.id,
+                    post_id: postId,
                     message: this.message
                 })
             });
+
+            const comment = await commentFetch.json()
+
+            if (comment.error_type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: comment.error_desc,
+                    position: 'top-right'
+                });
+
+                this.comments.push({
+                    id: 0,
+                    user: {
+                        id: 0,
+                        username: '',
+                        picture: this.user.picture
+                    },
+                    creationDate: '',
+                    message: comment.message
+                })
+            }
+        },
+
+        async deletePost() {
+            const deleteFetch = await fetch(`https://localhost:5000/post/deletepost/${this.post.post_id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            });
+
+            const resp = await deleteFetch.json();
+
+            if (resp.error_type === 'positive') {
+                this.$q.notify({
+                    type: 'positive',
+                    message: resp.error_desc,
+                    position: 'top-right'
+                });
+
+                this.$router.push('/inside/')
+            }
         }
     }
 }
@@ -262,19 +299,15 @@ export default {
         cursor: pointer;
     }
 
+    #delete {
+        cursor: pointer;
+        position: absolute;
+        right: 50%;
+        margin: 1%;
+    }
+
     #comments {
         grid-area: comments;
-        display: grid;
-    }
-
-    #comments div {
-        display: grid;
-        grid-template-columns: 10% 90%;
-        margin-bottom: 5%;
-    }
-
-    #comments i:last-child {
-        justify-self: center;
     }
 
     #pie-de-foto {
@@ -284,6 +317,18 @@ export default {
         text-align: left;
         padding: 1%;
         height: 7%;
+    }
+
+    #comments-post {
+        grid-area: comments;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 80%;
+        max-width: 100%;
+    }
+
+    #comments-post::-webkit-scrollbar {
+        display: none;
     }
 
     #new-comment {

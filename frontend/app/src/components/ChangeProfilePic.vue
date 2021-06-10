@@ -55,7 +55,7 @@ export default {
                 var reader = new FileReader();
                 reader.onload = async (e) => {
                     document.querySelector('#picture-new').value = btoa(e.target.result);
-                    const profileFetch = await fetch('http://localhost:5000/my/profilepic', {
+                    const profileFetch = await fetch('https://localhost:5000/my/profilepic', {
                         method: 'POST',
                         headers: {
                             'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
