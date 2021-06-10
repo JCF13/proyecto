@@ -46,18 +46,18 @@ export default {
     methods: {
         async search() {
             if (this.searchBy.length >= 3) {
-                const searchFetch = await fetch('https://localhost:5000/my/searchUsers', {
-                    method: 'POST',
+                const searchFetch = await this.$axios.post('https://localhost:5000/my/searchUsers',
+                {
+                    search: this.searchBy
+                },
+                {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        search: this.searchBy
-                    })
+                        'Content-type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    }
                 });
 
-                const search = await searchFetch.json();
+                const search = searchFetch.data;
 
                 if (search.length > 0) {
                     search.forEach(async a => {
@@ -65,7 +65,7 @@ export default {
                             a.picture = a.picture.replace("b'", 'data:image/png;base64,');
                             a.picture = a.picture.replace("'", '');
                         }
-                    })
+                    });
 
                     this.results = search;
                 } else {
@@ -73,7 +73,7 @@ export default {
                         type: 'warning',
                         message: 'No se han encontrado resultados',
                         position: 'top'
-                    })
+                    });
                 }
 
             }

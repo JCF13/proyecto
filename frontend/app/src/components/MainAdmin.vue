@@ -30,13 +30,14 @@ export default {
         }
     },
     async created() {
-        const usersFetch = await fetch('https://localhost:5000/admin/getAll', {
+        const usersFetch = await this.$axios.get('https://localhost:5000/admin/getAll',
+        {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
 
-        const users = await usersFetch.json();
+        const users = usersFetch.data;
 
         users.forEach(async a => {
             if (a.picture !== '' && a.picture !== '1') {
@@ -49,23 +50,23 @@ export default {
     },
     methods: {
         async deleteUser(id) {
-            const deleteFetch = await fetch('https://localhost:5000/admin/delete', {
-                method: 'POST',
+            const deleteFetch = await this.$axios.post('https://localhost:5000/admin/delete',
+            {
+                user_id: id
+            },
+            {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                },
-                body: JSON.stringify({
-                    user_id: id
-                })
+                }
             });
 
-            const resp = await deleteFetch.json();
+            const resp = deleteFetch.data;
 
-            if (resp.type === 'positive') {
+            if (resp.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: resp.message,
+                    message: resp.error_desc,
                     position: 'top-right'
                 });
             }

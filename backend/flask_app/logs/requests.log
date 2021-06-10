@@ -706,3 +706,99 @@
 
     INFO :: 2021-06-10 17:33:32,260 _ posts _ post : request: make post | post_id: 1 | 
                     
+
+    INFO :: 2021-06-10 21:11:33,881 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-10 21:11:42,530 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-10 21:12:04,718 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-10 21:12:18,507 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-10 21:12:54,727 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-10 21:13:04,077 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-10 21:13:06,641 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 21:26:32,781 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 21:26:35,186 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 21:26:57,724 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-10 21:27:02,634 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-10 21:37:41,336 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-10 21:37:52,230 _ authorization _ post : request: Login | username: jcfjcf | 
+                    
+
+    INFO :: 2021-06-10 21:43:07,725 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-10 21:47:31,121 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-10 21:47:38,132 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-10 21:48:06,875 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 21:58:58,744 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 21:59:52,819 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:00:29,471 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:02:04,145 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-10 22:02:07,947 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:02:58,405 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:02:58,920 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:03:15,689 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:07:15,437 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:08:02,946 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:14:59,977 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:15:03,792 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 22:33:24,014 _ authorization _ post : username: jcfjcf | email: jcfjcf1324@gmail.com | 
+                    
+
+    INFO :: 2021-06-10 22:37:11,591 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-10 22:37:16,538 _ authorization _ post : request: Login | username: jero | 
+                    

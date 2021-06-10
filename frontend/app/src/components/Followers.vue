@@ -32,15 +32,14 @@ export default {
         }
     },
     async created() {
-        const id = this.$route.params.id;
-
-        const followersFetch = await fetch(`https://localhost:5000/my/getFollowers`, {
+        const followersFetch = await this.$axios.get('https://localhost:5000/my/getFollowers', 
+        {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
 
-        const followers = await followersFetch.json();
+        const followers = followersFetch.data;
 
         followers.forEach(async a => {
             if (a.picture !== '1' && a.picture !== '') {

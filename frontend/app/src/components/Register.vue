@@ -110,46 +110,47 @@ export default {
             const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
             return pattern.test(this.user.email);
         },
+        
         async register() {
             if (this.user.password == this.user.confirmPassword) {
-                const registerFecth = await fetch('https://localhost:5000/auth/logon', {
-                    method: 'POST',
+                const registerFecth = await this.$axios.post('https://localhost:5000/auth/logon',
+                {
+                    username: this.user.username,
+                    name: this.user.name,
+                    surname: this.user.surnames,
+                    password: this.user.password,
+                    email: this.user.email,
+                    picture: ''
+                },
+                {
                     headers: {
                         'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: this.user.username,
-                        name: this.user.name,
-                        surname: this.user.surnames,
-                        password: this.user.password,
-                        email: this.user.email,
-                        picture: ''
-                    })
+                    }
                 });
-            
-                const register = await registerFecth.json()
+
+                const register = registerFecth.data;
                 
                 if (register.error_type == 'error') {
                     this.$q.notify({
                         type: 'negative',
                         message: register.error_desc,
                         position: 'top-right'
-                    })
+                    });
                 } else {
                     this.$q.notify({
                         type: 'positive',
                         message: register.error_desc,
                         position: 'top-right'
-                    })
+                    });
                     
-                    this.$router.push('/login')
+                    this.$router.push('/login');
                 }
             } else {
                 this.$q.notify({
                     type: 'warning',
                     message: 'La contraseña no coincide',
                     position: 'top-right'
-                })
+                });
             }
         }
     }

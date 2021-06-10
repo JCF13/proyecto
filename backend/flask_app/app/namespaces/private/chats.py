@@ -79,7 +79,9 @@ class GetChat(Resource):
         
         jsonChat['messages'] = jsonMessages
         jsonChat['creator'] = marshal(get_user_by_id(jsonChat['created_by']), creator, skip_none=True)
+        jsonChat['creator']['picture'] = str(get_picture(jsonChat['creator']['picture']))
         jsonChat['partner'] = marshal(get_user_by_id(jsonChat['partner']), creator, skip_none=True)
+        jsonChat['partner']['picture'] = str(get_picture(jsonChat['partner']['picture']))
 
         return jsonChat
 

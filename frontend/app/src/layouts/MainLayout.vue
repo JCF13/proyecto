@@ -36,7 +36,7 @@ export default {
     },
     created() {
         if (!localStorage.getItem('access_token')) {
-            this.$router.push('/')
+            this.$router.push('/');
         } 
     },
     methods: {

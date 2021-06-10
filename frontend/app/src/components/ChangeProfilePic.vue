@@ -55,22 +55,23 @@ export default {
                 var reader = new FileReader();
                 reader.onload = async (e) => {
                     document.querySelector('#picture-new').value = btoa(e.target.result);
-                    const profileFetch = await fetch('https://localhost:5000/my/profilepic', {
-                        method: 'POST',
+                    const profileFetch = await this.$axios.post('https://localhost:5000/my/profilepic',
+                    {
+                        picture: btoa(e.target.result)
+                    },
+                    {
                         headers: {
                             'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                             'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            'picture': btoa(e.target.result)
-                        })
+                        }
                     });
-                    const resp = await profileFetch.json();
 
-                    if (resp.type === 'positive') {
+                    const resp = profileFetch.data;
+
+                    if (resp.error_type === 'positive') {
                         this.$q.notify({
                             type: 'positive',
-                            message: resp.message,
+                            message: resp.error_desc,
                             position: 'top-right'
                         })
                     }

@@ -31,29 +31,30 @@ export default {
         }
     },
     async created() {
-        const profileFetch = await fetch('https://localhost:5000/my/getProfile', {
+        const profileFetch = await this.$axios.get('https://localhost:5000/my/getProfile', 
+        {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
-        })
-
-        const profile = await profileFetch.json();
+        });
+        
+        const profile = profileFetch.data;
         this.user = profile;
     },
     methods: {
         async updateUsername() {
-            const usernameFetch = await fetch('https://localhost:5000/my/changeUsername', {
-                method: 'POST',
+            const usernameFetch = await this.$axios.post('https://localhost:5000/my/changeUsername', 
+            {
+                username: this.newUsername
+            }, 
+            {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                },
-                body: JSON.stringify({
-                    username: this.newUsername
-                })
+                }
             });
 
-            const resp = await usernameFetch.json();
+            const resp = usernameFetch.data;
 
             if (resp.error_type === 'positive') {
                 this.$q.notify({

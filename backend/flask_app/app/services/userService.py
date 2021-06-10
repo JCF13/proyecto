@@ -179,6 +179,6 @@ def delete_user(id):
     delete(user)
 
     return {
-        'type': 'positive',
-        'message': 'Usuario eliminado'
+        'error_type': 'positive',
+        'error_desc': 'Usuario eliminado'
     }

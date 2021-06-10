@@ -94,14 +94,15 @@ export default {
         }
     },
     async created() {
-        const postsFetch = await fetch(`https://localhost:5000/post/gposts?page=${this.page}`, {
+        const postsFetch = await this.$axios.get(`https://localhost:5000/post/gposts?page=${this.page}`,
+        {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                'page': this.page
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
-        const posts = await postsFetch.json();
+
+        const posts = postsFetch.data;
 
         posts.forEach(post => {
             post.picture = post.picture.replace("b'", 'data:image/png;base64,');
@@ -123,18 +124,18 @@ export default {
         async sendLike(id) {
             this.posts.filter(async post => {
                 if (post.post_id === id) {
-                    const likeFetch = await fetch('https://localhost:5000/my/like', {
-                        method: 'PATCH',
+                    const likeFetch = await this.$axios.patch('https://localhost:5000/my/like',
+                    {
+                        post_id: id
+                    },
+                    {
                         headers: {
                             'Content-type': 'application/json',
                             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                        },
-                        body: JSON.stringify({
-                            post_id: id
-                        })
+                        }
                     });
 
-                    const like = await likeFetch.json()
+                    const like = likeFetch.data;
 
                     if (like.error_type === 'positive') {
                         this.$q.notify({
@@ -160,18 +161,18 @@ export default {
         async deleteLike(id) {
             this.posts.filter(async post => {
                 if (post.post_id === id) {
-                    const likeFetch = await fetch('https://localhost:5000/my/dislike', {
-                        method: 'POST',
+                    const likeFetch = await this.$axios.post('https://localhost:5000/my/dislike',
+                    {
+                        post_id: id
+                    },
+                    {
                         headers: {
                             'Content-type': 'application/json',
                             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                        },
-                        body: JSON.stringify({
-                            post_id: id
-                        })
+                        }
                     });
 
-                    const dislike = await likeFetch.json()
+                    const dislike = likeFetch.data;
 
                     if (dislike.error_type === 'positive') {
                         this.$q.notify({
@@ -189,13 +190,15 @@ export default {
         async loadMore() {
             this.page += 1;
 
-            const postsFetch = await fetch(`https://localhost:5000/post/gposts/${this.page}`, {
+            const postsFetch = await this.$axios.get(`https://localhost:5000/post/gposts?page=${this.page}`,
+            {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
             });
-            const posts = await postsFetch.json();
+
+            const posts = postsFetch.data;
 
             posts.forEach(async post => {
                 post.picture = post.picture.replace("b'", 'data:image/png;base64,');

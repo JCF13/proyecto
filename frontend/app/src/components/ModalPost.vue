@@ -107,25 +107,27 @@ export default {
         }
     },
     async created() {
-        const userFetch = await fetch('https://localhost:5000/my/getProfile', {
+        const userFetch = await this.$axios.get('https://localhost:5000/my/getProfile',
+        {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
 
-        const user = await userFetch.json();
+        const user = userFetch.data;
 
         this.user = user;
         
         const postId = this.$route.params.id;
         
-        const postFetch = await fetch(`https://localhost:5000/post/gpost?id=${postId}`, {
+        const postFetch = await this.$axios.get(`https://localhost:5000/post/gpost?id=${postId}`,
+        {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
-        
-        const post = await postFetch.json();
+
+        const post = postFetch.data;
 
         post.created_on = post.created_on.split('.')[0].replace('T', ' ')
 
@@ -154,19 +156,19 @@ export default {
         async newComment() {
             const postId = this.$route.params.id;
             
-            const commentFetch = await fetch('https://localhost:5000/my/comment', {
-                method: 'PATCH',
+            const commentFetch = await this.$axios.patch('https://localhost:5000/my/comment',
+            {
+                post_id: postId,
+                message: this.message
+            },
+            {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    post_id: postId,
-                    message: this.message
-                })
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
             });
 
-            const comment = await commentFetch.json()
+            const comment = commentFetch.data;
 
             if (comment.error_type === 'positive') {
                 this.$q.notify({
@@ -189,14 +191,15 @@ export default {
         },
 
         async deletePost() {
-            const deleteFetch = await fetch(`https://localhost:5000/post/deletepost/${this.post.post_id}`, {
-                method: 'POST',
+            const deleteFetch = await this.$axios.post(`https://localhost:5000/post/deletepost/${this.post.post_id}`,
+            {},
+            {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
             });
 
-            const resp = await deleteFetch.json();
+            const resp = deleteFetch.data;
 
             if (resp.error_type === 'positive') {
                 this.$q.notify({
