@@ -67,6 +67,7 @@ export default {
         logout() {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
+            localStorage.removeItem('role');
             this.$router.push('/');
         }
     }

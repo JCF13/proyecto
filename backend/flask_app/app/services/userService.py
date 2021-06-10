@@ -125,7 +125,6 @@ def create_user(user):
                 raise RequiredEmail(params='Email: None', orig=IntegrityError, statement='El email es requerido para el registro')
 
 
-
 def get_user_by_username(username):
     return find_user_by_username(username)
 

@@ -24,8 +24,8 @@ userRegister = Model('userRegister', {
 auth_token = Model('auth_token', {
     'username': fields.String(),
     'access_token': fields.String(),
-    'refresh_token': fields.String()
-
+    'refresh_token': fields.String(),
+    'role': fields.String()
 })
 
 errorSchema = Model('error', {

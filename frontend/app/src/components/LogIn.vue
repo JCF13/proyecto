@@ -61,24 +61,27 @@ export default {
     },
     methods: {
         async logIn() {
-            const logInFetch = await fetch('https://localhost:5000/auth/login', {
-                method: 'POST',
+            const logInFetch = await this.$axios.post('https://localhost:5000/auth/login', 
+            {
+                username: this.user.username,
+                passwd: this.user.password
+            }, 
+            {
                 headers: {
                     'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: this.user.username,
-                    passwd: this.user.password
-                })
-            });
-
-            const login = await logInFetch.json();
+                }
+            })
+            
+            const login = logInFetch.data;
 
             if (!login.error.error_type) {
                 localStorage.setItem('access_token', login.your_auth.access_token);
                 localStorage.setItem('refresh_token', login.your_auth.refresh_token);
 
-                this.$router.push('/inside')
+                if (login.your_auth.role === 'admin') {
+                    localStorage.setItem('role', 'admin');
+                    this.$router.push('/admin');
+                } else this.$router.push('/inside')
             } else {
                 this.$q.notify({
                     type: 'negative',
