@@ -21,6 +21,7 @@ from backend.flask_app.app.services.userService import create_user, get_user_by_
 from backend.flask_app.app.database.schemas import UserRegisterSchema
 from backend.flask_app.app.services.logs import complex_file_handler
 from backend.flask_app.app.services.logs.refactor_dict import gen_log
+from backend.flask_app.app.database.models import user_datastore
 
 authorization = Namespace('auth')
  
@@ -66,12 +67,13 @@ def handler_invalid_username_login(error):
     fallo['error_desc'] = error
     errorDoc = marshal(fallo, errorSchema)
     resultado['error'] = errorDoc
-    
+
     respuesta = marshal(resultado, loginResp)
 
     elLog = gen_log(respuesta, _LEVELLOG_)
     authorization.logger.log(_LEVELLOG_, elLog)
     return respuesta
+
 
 @authorization.errorhandler(InvalidPassword)
 def handler_invalid_password(error):

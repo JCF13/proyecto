@@ -12,6 +12,13 @@ export default {
         return {
 
         }
+    },
+    created() {
+        if (localStorage.getItem('role')) {
+            if (JSON.stringify(localStorage.getItem('role')) !== 'admin') {
+                this.$router.push('/inside');
+            }
+        } else this.$router.push('/inside');
     }
 }
 </script>

@@ -37,19 +37,19 @@ export default {
     methods: {
         async updatePassword() {
             if (this.newPassword === this.repeatPassword) {
-                const passwordFetch = await fetch('https://localhost:5000/my/changePassword', {
-                    method: 'POST',
+                const passwordFetch = await this.$axios.post('https://localhost:5000/my/changePassword', 
+                {
+                    password: this.password,
+                    new_password: this.newPassword
+                },
+                {
                     headers: {
                         'Content-type': 'application/json',
                         'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                    },
-                    body: JSON.stringify({
-                        password: this.password,
-                        new_password: this.newPassword
-                    })
+                    }
                 });
 
-                const resp = await passwordFetch.json();
+                const resp = passwordFetch.data;
 
                 if (resp.error_type === 'positive') {
                     this.$q.notify({
@@ -66,7 +66,7 @@ export default {
                         type: 'negative',
                         message: resp.error.error_desc,
                         position: 'top-right'
-                    })
+                    });
                 }
 
             } else {
@@ -74,7 +74,7 @@ export default {
                     type: 'warning',
                     message: 'La contraseña no coincide',
                     position: 'top'
-                })
+                });
             }
         }
     }

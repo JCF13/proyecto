@@ -652,3 +652,57 @@
 
     INFO :: 2021-06-09 22:03:51,911 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
                     
+
+    INFO :: 2021-06-10 15:31:01,712 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 15:31:38,220 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 15:32:26,998 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 15:32:46,358 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 15:33:32,043 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 15:33:56,011 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 15:36:24,045 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 15:49:46,788 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 16:07:27,504 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-10 16:08:16,198 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-10 16:09:39,690 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-10 16:10:14,259 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-10 16:28:36,587 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 17:11:56,117 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 17:12:59,413 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 17:13:21,879 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-10 17:32:23,228 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-10 17:33:32,260 _ posts _ post : request: make post | post_id: 1 | 
+                    

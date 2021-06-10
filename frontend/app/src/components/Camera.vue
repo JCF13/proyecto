@@ -77,18 +77,19 @@ export default {
             this.captionDialog = true;
         },
         async createPost() {
-            const postFetch = await fetch('https://localhost:5000/post/cpost', {
-                method: 'POST',
+            const postFetch = await this.$axios.post('https://localhost:5000/post/cpost',
+            {
+                caption: this.caption,
+                picture: document.querySelector('#picture').value
+            },
+            {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                     'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    caption: this.caption,
-                    picture: document.querySelector('#picture').value
-                })
-            })
-            const response = await postFetch.json()
+                }
+            });
+
+            const response = postFetch.data;
 
             if (!response.error_type) {
                 this.$q.notify({

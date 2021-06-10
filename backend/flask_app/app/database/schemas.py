@@ -50,21 +50,6 @@ class ChatMessageSchema(SQLAlchemyAutoSchema):
         model = models.ChatMessages
         include_relationships = True
 
-# class NotificationCSchema(SQLAlchemyAutoSchema):
-#     class Meta:
-#         model = models.NotificationComment
-#         include_relationships = True
-#         include_fk = True
-
-# class NotificationLSchema(SQLAlchemyAutoSchema):
-#     class Meta:
-#         model = models.NotificationLike
-#         include_relationships = True
-#         include_fk = True
-
-# class NotificationFSchema(SQLAlchemyAutoSchema):
-#     class Meta:
-#         model = models.NotificationFollow
-#         include_relationships = True
-#         include_fk = True
-
+class RoleSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = models.Role
