@@ -802,3 +802,537 @@
 
     INFO :: 2021-06-10 22:37:16,538 _ authorization _ post : request: Login | username: jero | 
                     
+
+    INFO :: 2021-06-11 15:57:11,868 _ authorization _ handler_invalid_password : request: login / register | error_type: 26 | error_desc: invalid password | 
+                    
+
+    INFO :: 2021-06-11 15:57:28,580 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:25:39,544 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:26:41,041 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:26:58,065 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:27:17,935 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:27:23,170 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:27:30,078 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:27:47,998 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:27:51,328 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:28:22,410 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:28:30,152 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:28:37,795 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:28:53,154 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:28:58,725 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:29:30,578 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:29:31,215 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>' | 
+                    
+
+    INFO :: 2021-06-11 16:29:49,476 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:29:50,114 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:30:15,003 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:30:15,648 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:30:22,784 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:30:23,426 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:30:41,168 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:30:41,811 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:31:48,097 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:31:48,741 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:32:04,410 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:32:05,054 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:32:11,046 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:32:11,688 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:32:18,956 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:32:19,624 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:32:57,469 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:32:58,108 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:35:44,109 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:35:44,752 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:36:13,349 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:36:13,999 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:36:28,696 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:36:29,339 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:39:14,427 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:39:15,066 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:39:19,777 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:39:20,417 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:39:21,971 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:39:22,613 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:40:55,465 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:40:55,981 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:40:56,110 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:40:56,620 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:41:36,182 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:41:36,761 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:41:36,830 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:41:37,404 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:42:20,668 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:42:21,315 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:46:32,806 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-11 16:46:33,167 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-11 16:47:06,733 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-11 16:47:31,181 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-11 16:47:41,135 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:48:42,860 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:48:43,508 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:49:47,967 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:49:48,609 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:52:45,793 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:52:46,435 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:53:47,858 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:53:48,499 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:55:20,596 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:55:21,243 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:56:30,942 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:56:31,584 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:56:52,884 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:56:53,524 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:57:28,053 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:57:28,692 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:57:29,041 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:57:29,562 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:57:33,082 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:57:33,724 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:57:41,320 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:57:41,965 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:58:07,041 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:58:07,682 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:12,625 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:13,265 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:31,348 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:31,989 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:38,321 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:40,214 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:40,854 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:50,388 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:50,861 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:51,047 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:51,679 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:52,119 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:52,616 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:52,745 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:53,257 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:53,878 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:54,002 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:54,520 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:55,140 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:55,265 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:55,778 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:56,413 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:56,504 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:57,053 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:57,688 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:57,772 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:58,331 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 16:59:58,970 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:59,034 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 16:59:59,618 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:00,237 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:00,308 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:00,884 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:01,522 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:01,570 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:02,159 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:02,794 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:02,858 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:03,435 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:04,064 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:04,128 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:04,704 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:05,339 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:05,389 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:06,004 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:06,634 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:06,650 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:07,273 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:07,913 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:07,930 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:08,553 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:09,186 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:09,197 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:09,848 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:10,104 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:10,745 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:11,109 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:57,949 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:58,428 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:00:58,604 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:00:59,555 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:01:24,871 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:01:25,343 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:01:25,521 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:01:26,486 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:02:02,277 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:02:02,743 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:02:02,916 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:02:03,884 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:02:30,100 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:02:30,587 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:02:30,745 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:02:31,697 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:02:56,868 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:02:57,336 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:02:57,513 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:02:58,474 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:03:12,944 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:03:13,023 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:03:13,666 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:03:14,208 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:03:32,821 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:03:33,461 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:03:55,667 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:03:56,326 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:03:57,328 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-11 17:04:20,233 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:04:20,883 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:04:32,710 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:04:33,351 _ authorization _ get : request: /auth/login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:05:08,331 _ authorization _ handler_signature_expired : request:  _  | error_type: 28 | error_desc: Signature has expired | 
+                    
+
+    INFO :: 2021-06-11 17:05:08,995 _ authorization _ get : request: /auth/login | username: jero | 
+                    
