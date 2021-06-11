@@ -89,13 +89,14 @@ export default {
     },
     async created() {
         if (this.$route.params.username) {
-            const profileFetch = await fetch(`https://localhost:5000/my/getUser/${this.$route.params.username}`, {
+            const profileFetch = await this.$axios.get(`https://localhost:5000/my/getUser/${this.$route.params.username}`,
+            {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
-            })
-            
-            const profile = await profileFetch.json();
+            });
+
+            const profile = profileFetch.data;
 
             profile.posts.forEach(a => {
                 a.picture = a.picture.replace("b'", 'data:image/png;base64,');
@@ -108,12 +109,14 @@ export default {
             this.isUser = false;
             this.user = profile;
         } else {
-            const profileFetch = await fetch(`https://localhost:5000/my/getProfile`, {
+            const profileFetch = await this.$axios.get('https://localhost:5000/my/getProfile',
+            {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
-            })
-            const profile = await profileFetch.json();
+            });
+
+            const profile = profileFetch.data;
 
             profile.posts.forEach(a => {
                 a.picture = a.picture.replace("b'", 'data:image/png;base64,');
@@ -132,18 +135,18 @@ export default {
         },
 
         async unfollow() {
-            const unfollowFetch = await fetch('https://localhost:5000/my/unfoll', {
-                method: 'PATCH',
+            const unfollowFetch = await this.$axios.patch('https://localhost:5000/my/unfoll',
+            {
+                user: this.user.id
+            },
+            {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user: this.user.id
-                })
-            });
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            })
 
-            const unfollow = await unfollowFetch.json();
+            const unfollow = unfollowFetch.data;
 
             if (unfollow.error_type === 'positive') {
                 this.$q.notify({
@@ -158,18 +161,18 @@ export default {
         },
 
         async follow() {
-            const followFetch = await fetch('https://localhost:5000/my/foll', {
-                method: 'PATCH',
+            const followFetch = await this.$axios.patch('https://localhost:5000/my/foll',
+            {
+                user: this.user.id
+            },
+            {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user: this.user.id
-                })
-            })
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
+            });
 
-            const follow = await followFetch.json()
+            const follow = followFetch.data;
 
             if (follow.error_type === 'negative') {
                 this.$q.notify({
@@ -189,19 +192,20 @@ export default {
                 this.user.followed = true
             }
         },
+
         async createChat() {
-            const chatFetch = await fetch('https://localhost:5000/chat/create', {
-                method: 'POST',
+            const chatFetch = await this.$axios.post('https://localhost:5000/chat/create',
+            {
+                partner_id: this.user.id
+            },
+            {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                },
-                body: JSON.stringify({
-                    partner_id: this.user.id
-                })
+                }
             });
 
-            const chat = await chatFetch.json();
+            const chat = chatFetch.data;
 
             if (chat.error_type === 'positive') {
                 this.$q.notify({

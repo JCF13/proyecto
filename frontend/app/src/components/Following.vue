@@ -38,27 +38,17 @@ export default {
         }
     },
     async created() {
-        const id = this.$route.params.id;
-
-        const followingFetch = await fetch(`https://localhost:5000/my/getFollowing`, {
+        const followingFetch = await this.$axios.get('https://localhost:5000/my/getFollowing',
+        {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
 
-        const following = await followingFetch.json();
+        const following = followingFetch.data;
 
         following.forEach(async a => {
             if (a.picture !== '1' && a.picture !== '') {
-                /*const profilePicFetch = await fetch('https://localhost:5000/my/image', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(a.picture)
-                })
-
-                const profilePic = await profilePicFetch.json();*/
                 a.picture = a.picture.replace("b'", 'data:image/png;base64,');
                 a.picture = a.picture.replace("'", '');
             }
@@ -68,30 +58,28 @@ export default {
     },
     methods: {
         async unfollow(id) {
-            const unfollowFetch = await fetch('https://localhost:5000/my/unfoll', {
-                method: 'PATCH',
+            const unfollowFetch = await this.$axios.patch('https://localhost:5000/my/unfoll',
+            {
+                user: id
+            },
+            {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user: id
-                })
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                }
             });
 
-            const unfollow = await unfollowFetch.json();
+            const unfollow = unfollowFetch.data;
 
-            if (unfollow.type === 'positive') {
+            if (unfollow.error_type === 'positive') {
                 this.$q.notify({
                     type: 'positive',
-                    message: unfollow.message,
+                    message: unfollow.error_desc,
                     position: 'top-right'
                 });
 
                 this.following = this.following.filter(a => a.id != id)
             }
-
-
         },
     }
 }

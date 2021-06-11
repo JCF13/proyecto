@@ -7,9 +7,7 @@
                 label="Nombre"
                 color="black"
                 v-model="user.name"
-                :rules="[
-                    val => val.length > 2
-                ]"
+                :rules="[ val => val.length > 2 ]"
                 lazy-rules
             >
                 <template v-slot:prepend>
@@ -50,7 +48,7 @@
                 label="Nombre de usuario"
                 color="black"
                 v-model="user.username"
-                :rules="[val => val.length >= 4]"
+                :rules="[ validUsername ]"
                 lazy-rules
             >
                 <template v-slot:prepend>
@@ -65,6 +63,8 @@
                 type="password"
                 color="black"
                 v-model="user.password"
+                :rules="[ validPassword ]"
+                lazy-rules
             >
                 <template v-slot:prepend>
                     <q-icon color="black" name="vpn_key"/>
@@ -78,7 +78,7 @@
                 type="password"
                 color="black"
                 v-model="user.confirmPassword"
-                :rules="[val => val == this.user.password]"
+                :rules="[ val => val == this.user.password ]"
                 lazy-rules
             >
                 <template v-slot:prepend>
@@ -110,47 +110,62 @@ export default {
             const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
             return pattern.test(this.user.email);
         },
+
+        validPassword() {
+            const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+            return pattern.test(this.user.password);
+        },
+
+        validUsername() {
+            const pattern = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,50}$/;
+            return pattern.test(this.user.username);
+        },
+        
         async register() {
             if (this.user.password == this.user.confirmPassword) {
-                const registerFecth = await fetch('https://localhost:5000/auth/logon', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
+                if (this.user.username && this.user.name && this.user.password && this.user.email) {
+                    const registerFecth = await this.$axios.post('https://localhost:5000/auth/logon',
+                    {
                         username: this.user.username,
                         name: this.user.name,
                         surname: this.user.surnames,
                         password: this.user.password,
                         email: this.user.email,
                         picture: ''
-                    })
-                });
-            
-                const register = await registerFecth.json()
-                
-                if (register.error_type == 'error') {
-                    this.$q.notify({
-                        type: 'negative',
-                        message: register.error_desc,
-                        position: 'top-right'
-                    })
-                } else {
-                    this.$q.notify({
-                        type: 'positive',
-                        message: register.error_desc,
-                        position: 'top-right'
-                    })
+                    },
+                    {
+                        headers: {
+                            'Content-type': 'application/json'
+                        }
+                    });
+
+                    const register = registerFecth.data;
                     
-                    this.$router.push('/login')
-                }
-            } else {
-                this.$q.notify({
+                    if (register.error_type !== 'positive') {
+                        this.$q.notify({
+                            type: 'negative',
+                            message: register.error_desc,
+                            position: 'top-right'
+                        });
+                    } else {
+                        this.$q.notify({
+                            type: 'positive',
+                            message: register.error_desc,
+                            position: 'top-right'
+                        });
+                        
+                        this.$router.push('/login');
+                    }
+                } else this.$q.notify({
                     type: 'warning',
-                    message: 'La contraseña no coincide',
+                    message: 'Faltan campos por rellenar',
                     position: 'top-right'
                 })
-            }
+            } else this.$q.notify({
+                type: 'warning',
+                message: 'La contraseña no coincide',
+                position: 'top-right'
+            });
         }
     }
 }

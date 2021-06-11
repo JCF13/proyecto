@@ -5,7 +5,7 @@ from flask_security.confirmable import generate_confirmation_link
 
 from flask import Flask, json
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, get_jwt_identity
 from flask_oauthlib.provider import OAuth2Provider
 from flask_security.utils import hash_password
 from flask_app.app.config import Config
@@ -33,6 +33,7 @@ def _request_loader(request):
 
     if hasattr(request, 'oauth'):
         user = request.oauth.user
+
     else:
         # Need this try stmt in case oauthlib sometimes throws:
         # AttributeError: dict object has no attribute startswith
@@ -53,21 +54,20 @@ def _get_login_manager(app, anonymous_user):
     login_manager = LoginManager()
 
     login_manager.anonymous_user = anonymous_user or AnonymousUser
-    login_manager.login_view = '{0}.login'.format(
-        security_config_value('BLUEPRINT_NAME', app=app))
+    # login_manager.login_view = '{0}.login'.format(
+    #     security_config_value('BLUEPRINT_NAME', app=app))
     login_manager.user_loader(_flask_security_user_loader)
     login_manager.request_loader(_request_loader)
-
-    if security_config_value('FLASH_MESSAGES', app=app):
-        (login_manager.login_message,
-         login_manager.login_message_category) = (
-            security_config_value('MSG_LOGIN', app=app))
-        (login_manager.needs_refresh_message,
-         login_manager.needs_refresh_message_category) = (
-            security_config_value('MSG_REFRESH', app=app))
-    else:
-        login_manager.login_message = None
-        login_manager.needs_refresh_message = None
+    # if security_config_value('FLASH_MESSAGES', app=app):
+    #     (login_manager.login_message,
+    #      login_manager.login_message_category) = (
+    #         security_config_value('MSG_LOGIN', app=app))
+    #     (login_manager.needs_refresh_message,
+    #      login_manager.needs_refresh_message_category) = (
+    #         security_config_value('MSG_REFRESH', app=app))
+    # else:
+    # login_manager.login_message = None
+    # login_manager.needs_refresh_message = None
 
     login_manager.init_app(app)
     return login_manager

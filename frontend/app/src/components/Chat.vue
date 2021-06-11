@@ -62,35 +62,36 @@ export default {
         const partner = this.$route.params.id;
         this.partner = partner;
 
-        const chatFetch = await fetch(`https://localhost:5000/chat/getChat/${partner}`, {
+        const chatFetch = await this.$axios.get(`https://localhost:5000/chat/getChat/${partner}`, 
+        {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-            }
-        })
+            }    
+        });
 
-        const chat = await chatFetch.json();
+        const chat = chatFetch.data;
 
         chat.messages.forEach(a => {
             a.created_on = a.created_on.split('.')[0].replace('T', ' ')
-        })
+        });
 
         this.chat = chat;
     },
     methods: {
         async sendMessage() {
-            const messageFetch = await fetch('https://localhost:5000/chat/newMessage', {
-                method: 'POST',
+            const messageFetch = await this.$axios.post('https://localhost:5000/chat/newMessage', 
+            {
+                chat_id: this.chat.chat_id,
+                message: this.message
+            },
+            {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                },
-                body: JSON.stringify({
-                    chat_id: this.chat.chat_id,
-                    message: this.message
-                })
+                }
             });
 
-            const message = await messageFetch.json();
+            const message = messageFetch.data;
 
             if (message.error_type === 'positive') {
                 this.$q.notify({

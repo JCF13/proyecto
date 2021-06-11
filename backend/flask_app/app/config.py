@@ -17,6 +17,8 @@ class Config():
 
 
     # SECURITY_BLUEPRINT_NAME = 'manage'
+    SECURITY_TOKEN_AUTHENTICATION_KEY = 'Bearer'
+    SECURITY_TOKEN_AUTHENTICATION_HEADER = 'Authorization'
     SECURITY_POST_LOGIN_VIEW = 'https://localhost:8080/#/login'
     SECURITY_UNAUTHORIZED_VIEW = '/unauth'
     SECURITY_CONFIRMABLE = True

@@ -5,7 +5,7 @@
                 <q-list id="chat-list">
                     <router-link v-for="chat in chats" :to="'/inside/chats/'+chat.partner.id" :key="chat.chat_id">
                         <q-item class="chat-item" clickable v-ripple>
-                            <q-item-section avatar v-if="chat.partner.picture == 1" style="padding-left: 5%;">
+                            <q-item-section avatar v-if="chat.partner.picture === '1' || chat.partner.picture === ''" style="padding-left: 5%;">
                                 <q-icon name='person' />
                             </q-item-section>
                             <q-item-section avatar v-else style="padding-left: 2%;">
@@ -59,24 +59,26 @@ export default {
         }
     },
     async created() {
-        const userFetch = await fetch('https://localhost:5000/my/getProfile', {
+        const userFetch = await this.$axios.get('https://localhost:5000/my/getProfile',
+        {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
 
-        const user = await userFetch.json();
+        const user = userFetch.data;
 
         this.user = user.user_id;
         
-        const chatsFetch = await fetch('https://localhost:5000/chat/getChats', {
+        const chatsFetch = await this.$axios.get('https://localhost:5000/chat/getChats',
+        {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
             }
         });
 
-        const chats = await chatsFetch.json()
+        const chats = chatsFetch.data;
 
         chats.forEach(async a => {
             if (a.partner.picture !== '1' && a.partner.picture !== '') {
@@ -89,18 +91,18 @@ export default {
     },
     methods: {
         async deleteChat(id) {
-            const deleteFetch = await fetch('https://localhost:5000/chat/deleteChat', {
-                method: 'POST',
+            const deleteFetch = await this.$axios.post('https://localhost:5000/chat/deleteChat',
+            {
+                chat_id: id
+            }, 
+            {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                },
-                body: JSON.stringify({
-                    chat_id: id
-                })
+                }
             });
 
-            const deleteResp = await deleteFetch.json();
+            const deleteResp = deleteFetch.data;
 
             if (deleteResp.error_type === 'positive') {
                 this.$q.notify({

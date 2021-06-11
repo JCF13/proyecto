@@ -14,11 +14,14 @@ export default {
         }
     },
     created() {
-        if (localStorage.getItem('role')) {
-            if (JSON.stringify(localStorage.getItem('role')) !== 'admin') {
-                this.$router.push('/inside');
-            }
-        } else this.$router.push('/inside');
+        if (localStorage.getItem('access_token')) {
+            if (localStorage.getItem('role')) {
+                if (localStorage.getItem('role') !== 'admin') {
+                    this.$router.push('/inside');
+                }
+            } else this.$router.push('/inside');
+        } else this.$router.push('/');
+        
     }
 }
 </script>

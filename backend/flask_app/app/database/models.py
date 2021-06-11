@@ -29,10 +29,14 @@ class User(db.Model, fsqla.FsUserMixin):
 
 
 class Client(db.Model,oauth.FsOauth2ClientMixin):
-
+    __tablename__ = 'oauth2_client'
     # public or confidential
     is_confidential = db.Column(db.Boolean)
 
+
+class Token(db.Model,oauth.FsTokenMixin):
+
+    pass
 
 
 class Role(db.Model, fsqla.FsRoleMixin):
@@ -70,8 +74,8 @@ class PostLikes(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id', ondelete='CASCADE'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
 
 
 class PostComment(db.Model, CreatedMixin):
