@@ -1363,3 +1363,27 @@
 
     INFO :: 2021-06-11 17:25:07,999 _ authorization _ post : request: Login | username: ToniJSB | 
                     
+
+    INFO :: 2021-06-11 17:27:49,936 _ authorization _ post : 
+                    
+
+    INFO :: 2021-06-11 17:27:49,938 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El username es requerido para el registro, Condinción | 
+                    
+
+    INFO :: 2021-06-11 17:29:04,999 _ authorization _ post : 
+                    
+
+    INFO :: 2021-06-11 17:29:04,999 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El username es requerido para el registro, Condinción | 
+                    
+
+    INFO :: 2021-06-11 17:34:56,312 _ authorization _ post : 
+                    
+
+    INFO :: 2021-06-11 17:34:56,313 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: El username es requerido para el registro, Condinción | 
+                    
+
+    INFO :: 2021-06-11 17:44:23,449 _ authorization _ post : username: <script>alert('Hola')</script> | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-11 17:44:57,360 _ authorization _ post : request: Login | username: <script>alert('Hola')</script> | 
+                    
