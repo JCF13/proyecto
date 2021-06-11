@@ -75,9 +75,15 @@ def dislike(user_id, post_id):
 def delete_post_by_id(post_id):
     post = dao.find_post_by_id(post_id)
 
+    
+
     if not post is None:
-        dao.delete_post(post)
+        post_picture = post.picture
         
+        dao.delete_post(post)
+
+        os.remove(post_picture)
+
         return {
             'error_type': 'positive',
             'error_desc': 'Post eliminado correctamente'

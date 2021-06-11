@@ -1,6 +1,7 @@
 
 from datetime import datetime
 from flask_mail import Message
+import os
 
 from flask_security.utils import hash_password, verify_password
 from backend.flask_app.app.exceptions import EmailUsed, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
@@ -176,8 +177,13 @@ def get_all_users():
 
 def delete_user(id):
     user = find_user_by_id(id)
-    delete(user)
+    posts = user.posts
 
+    delete(user)
+    
+    for post in posts:
+        os.remove(post.picture)
+    
     return {
         'error_type': 'positive',
         'error_desc': 'Usuario eliminado'

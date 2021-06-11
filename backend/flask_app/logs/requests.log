@@ -1336,3 +1336,30 @@
 
     INFO :: 2021-06-11 17:05:08,995 _ authorization _ get : request: /auth/login | username: jero | 
                     
+
+    INFO :: 2021-06-11 17:13:37,403 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-11 17:15:51,849 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-11 17:16:13,884 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-11 17:22:59,522 _ authorization _ post : username: jero | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-11 17:23:25,792 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 17:23:36,968 _ posts _ post : request: make post | post_id: 2 | 
+                    
+
+    INFO :: 2021-06-11 17:24:31,044 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-11 17:24:53,719 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-11 17:25:07,999 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
