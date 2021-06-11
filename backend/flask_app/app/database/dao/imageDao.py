@@ -1,4 +1,4 @@
-from backend.flask_app.app.database import db
+from flask_app.app.database import db
 
 
 def generate_image(image):

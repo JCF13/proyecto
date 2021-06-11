@@ -1,16 +1,16 @@
-from backend.flask_app.app.services.imageService import get_picture
-from backend.flask_app.app.services.userService import get_user_by_id
+from flask_app.app.services.imageService import get_picture
+from flask_app.app.services.userService import get_user_by_id
 from flask import json
-from backend.flask_app.app.database.schemas import ChatMessageSchema, ChatSchema
+from flask_app.app.database.schemas import ChatMessageSchema, ChatSchema
 from flask.globals import request
-from backend.flask_app.app.namespaces.private.schemas import createChat
-from backend.flask_app.app.services.logs import complex_file_handler
+from flask_app.app.namespaces.private.schemas import createChat
+from flask_app.app.services.logs import complex_file_handler
 from flask_jwt_extended import (get_jwt_identity, jwt_required,
                                 verify_jwt_in_request)
 from flask_restx import Namespace, Resource, marshal
-from backend.flask_app.app.services.chatService import create_chat, get_chats_by_user, get_chat_by_users, send_message, delete_chat
-from backend.flask_app.app.namespaces.private.schemas import chatModel
-from backend.flask_app.app.namespaces.auth.schemas import creator
+from flask_app.app.services.chatService import create_chat, get_chats_by_user, get_chat_by_users, send_message, delete_chat
+from flask_app.app.namespaces.private.schemas import chatModel
+from flask_app.app.namespaces.auth.schemas import creator
 
 chat = Namespace('chat', 'Rutas para chats')
 

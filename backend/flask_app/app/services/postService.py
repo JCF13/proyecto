@@ -4,11 +4,11 @@ import os
 
 from flask.globals import current_app
 from sqlalchemy.sql.expression import false, true
-from backend.flask_app.app.database.schemas import PostSchema
-from backend.flask_app.app.database.models import Post, PostLikes
-from backend.flask_app.app.namespaces.private.schemas import postModel
-import backend.flask_app.app.database.dao.postDao as dao
-from backend.flask_app.app.services.imageService import save_picture
+from flask_app.app.database.schemas import PostSchema
+from flask_app.app.database.models import Post, PostLikes
+from flask_app.app.namespaces.private.schemas import postModel
+import flask_app.app.database.dao.postDao as dao
+from flask_app.app.services.imageService import save_picture
 
 def get_by_offset(page, users):
     return dao.find_by_offset(page, users)

@@ -3,19 +3,19 @@ from datetime import datetime
 from flask_mail import Message
 
 from flask_security.utils import hash_password, verify_password
-from backend.flask_app.app.exceptions import EmailUsed, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
+from flask_app.app.exceptions import EmailUsed, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
 from flask_security.registerable import generate_confirmation_link
 from sqlalchemy.exc import IntegrityError
-from backend.flask_app.app.exceptions import InvalidPassword
-from backend.flask_app.app.database.schemas import UserRegisterSchema
-from backend.flask_app.app.database.models import User, Followers, user_datastore
-from backend.flask_app.app.database.dao.userDao import (
+from flask_app.app.exceptions import InvalidPassword
+from flask_app.app.database.schemas import UserRegisterSchema
+from flask_app.app.database.models import User, Followers, user_datastore
+from flask_app.app.database.dao.userDao import (
     delete, find_users_by, generate_user, find_user_by_username, find_user_by_id, follows_to,
     find_user_by_email, get_follow, set_password, set_profile_pic, set_username, unfollows_to, find_all
 )
-from backend.flask_app.app.database import db
-from backend.flask_app.app import mail
-from backend.flask_app.app.services.imageService import save_picture
+from flask_app.app.database import db
+from flask_app.app import mail
+from flask_app.app.services.imageService import save_picture
 
 
 def user_follows_to(follower, followed):

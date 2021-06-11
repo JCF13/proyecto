@@ -1,8 +1,8 @@
 from flask import json
-from backend.flask_app.app.database.schemas import ChatMessageSchema
+from flask_app.app.database.schemas import ChatMessageSchema
 from datetime import datetime
-from backend.flask_app.app.database.dao.chatDao import generate_chat, find_by_user_id, find_by_users, new_message, delete, find_by_id
-from backend.flask_app.app.database.models import Chat, ChatMessages
+from flask_app.app.database.dao.chatDao import generate_chat, find_by_user_id, find_by_users, new_message, delete, find_by_id
+from flask_app.app.database.models import Chat, ChatMessages
 
 def create_chat(user_id, partner_id):
     if user_id != partner_id:
