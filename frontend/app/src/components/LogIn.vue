@@ -54,8 +54,13 @@ export default {
             auth2.attachClickHandler(document.querySelector('#google'), {}, async (googleUser) => {
                 console.log(googleUser);
                 const id_token = googleUser.qc.id_token;
+                const access_token = googleUser.qc.access_token;
 
-                console.log(id_token);
+                const googleFetch = await this.$axios.post('https://localhost:5000/auth/login/google',
+                {
+                    access_token: access_token,
+                    id_token: id_token
+                });
             });
         });
     },
