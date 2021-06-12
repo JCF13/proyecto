@@ -1,8 +1,8 @@
-from flask_app.app.database import db
+from backend.flask_app.app.database import db
 from flask_restx.resource import Resource
-import flask_app.app.database.schemas as schema
-import flask_app.app.database.models as model 
-from flask_app.app.namespaces import api
+import backend.flask_app.app.database.schemas as schema
+import backend.flask_app.app.database.models as model 
+from backend.flask_app.app.namespaces import api
 from flask_restx import Namespace
 
 main = Namespace('public')

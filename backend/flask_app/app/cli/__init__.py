@@ -1,6 +1,6 @@
 from flask import Blueprint
 from backend.flask_app.app.cli.generate import create_admin, create_db
-# from flask_app.app.cli.babel import extract,init,update,compile
+# from backend.flask_app.app.cli.babel import extract,init,update,compile
 gen = Blueprint('gen',__name__,cli_group='generate')
 gen.cli.add_command(create_db)
 gen.cli.add_command(create_admin)
