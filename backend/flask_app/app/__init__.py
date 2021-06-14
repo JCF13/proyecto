@@ -126,7 +126,7 @@ def create_app():
     @app.before_first_request
     def create_first_user():
         if not user_datastore.find_user(email="tjimenezsblanca@gmail.com"):
-            firstuser = user_datastore.create_user(email="tjimenezsblanca@gmail.com", username='ToniJSB', name='ToniJSB', password=hash_password("ToniJSB"))
+            firstuser = user_datastore.create_user(email="tjimenezsblanca@gmail.com", username='ToniJSB', name='ToniJSB', password=hash_password("ToniJSB"), picture='')
             adminrole = user_datastore.create_role(name='Admin', permissions='can_create_users, can_delete_users')
             user_datastore.add_role_to_user(firstuser, adminrole)
             user_datastore.commit()
