@@ -1487,3 +1487,30 @@
 
     INFO :: 2021-06-14 22:20:11,598 _ posts _ post : request: make post | post_id: 1 | 
                     
+
+    INFO :: 2021-06-14 22:33:09,839 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-14 22:33:18,988 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-14 22:36:01,943 _ authorization _ handler_email_used_login : request:  _  | error_type: 26 | error_desc: INSERT INTO role (name, description, permissions) VALUES (?, ?, ?) | 
+                    
+
+    INFO :: 2021-06-14 22:37:16,500 _ authorization _ post : username: jero | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-14 22:37:36,875 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-14 22:37:59,881 _ posts _ post : request: make post | post_id: 2 | 
+                    
+
+    INFO :: 2021-06-14 22:39:52,961 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-14 22:40:50,133 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
+
+    INFO :: 2021-06-14 22:41:13,762 _ authorization _ post : request: Login | username: jero | 
+                    
