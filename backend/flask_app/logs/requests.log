@@ -1388,6 +1388,7 @@
     INFO :: 2021-06-11 17:44:57,360 _ authorization _ post : request: Login | username: <script>alert('Hola')</script> | 
                     
 
+<<<<<<< HEAD
     INFO :: 2021-06-12 13:55:02,532 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
                     
 
@@ -1404,4 +1405,31 @@
                     
 
     INFO :: 2021-06-12 18:58:31,921 _ authorization _ post : request: Login | username: ToniJSB | 
+=======
+    INFO :: 2021-06-11 20:00:05,699 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 20:00:29,120 _ posts _ post : request: make post | post_id: 1 | 
+                    
+
+    INFO :: 2021-06-11 20:15:36,005 _ authorization _ post : request: Login | username: jcfjcf | 
+                    
+
+    INFO :: 2021-06-11 20:17:36,471 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-11 20:18:03,284 _ authorization _ post : request: Login | username: jcfjcf | 
+                    
+
+    INFO :: 2021-06-12 13:25:15,441 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-12 14:55:11,572 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-12 23:33:20,210 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-12 23:35:53,538 _ authorization _ post : request: Login | username: jero | 
+>>>>>>> pruebas2
                     

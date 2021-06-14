@@ -52,40 +52,7 @@ export default {
     data() {
         return {
             posts: [
-                {
-                    id: 0,
-                    picture: '',
-                    caption: '',
-                    creationDate: '',
-                    creator: {
-                        user_id: 0,
-                        username: '',
-                        picture: ''
-                    },
-                    comments: [
-                        {
-                            id: 0,
-                            user: {
-                                id: 0,
-                                username: '',
-                                picture: ''
-                            },
-                            message: '',
-                            creationDate: ''
-                        }
-                    ],
-                    liked: false,
-                    likes: [
-                        {
-                            id: 0,
-                            user: {
-                                id: 0,
-                                username: '',
-                                picture: ''
-                            }
-                        }
-                    ]
-                },
+                
             ],
             page: 0,
             user: {
