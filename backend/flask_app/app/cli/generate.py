@@ -4,8 +4,8 @@ from flask import current_app
 from flask.cli import with_appcontext
 from flask_security.utils import hash_password
 
-from backend.flask_app.app.database import db
-from backend.flask_app.app.database.models import User
+from flask_app.app.database import db
+from flask_app.app.database.models import User
 
 
 @click.command(name='database')

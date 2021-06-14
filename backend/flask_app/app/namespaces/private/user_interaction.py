@@ -1,17 +1,17 @@
-from backend.flask_app.app.database.schemas import FollowerSchema, PostSchema
-from backend.flask_app.app.namespaces.auth.schemas import (creator, picture,
+from flask_app.app.database.schemas import FollowerSchema, PostSchema
+from flask_app.app.namespaces.auth.schemas import (creator, picture,
                                                            userProfile)
-from backend.flask_app.app.namespaces.private.schemas import (followModel,
+from flask_app.app.namespaces.private.schemas import (followModel,
                                                               picture,
                                                               profilePicModel,
                                                               profilePicture,
                                                               simpleUser)
-from backend.flask_app.app.services.commentService import create_comment
-from backend.flask_app.app.services.imageService import get_picture
-#from backend.flask_app.app.services.imageService import create_image
-from backend.flask_app.app.services.logs import complex_file_handler
-from backend.flask_app.app.services.postService import dislike, new_like
-from backend.flask_app.app.services.userService import (get_user_by_id,
+from flask_app.app.services.commentService import create_comment
+from flask_app.app.services.imageService import get_picture
+#from flask_app.app.services.imageService import create_image
+from flask_app.app.services.logs import complex_file_handler
+from flask_app.app.services.postService import dislike, new_like
+from flask_app.app.services.userService import (get_user_by_id,
                                                         get_user_by_username,
                                                         search_users, update_password,
                                                         update_profile_pic,

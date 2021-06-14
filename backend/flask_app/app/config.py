@@ -15,8 +15,13 @@ class Config():
     DEBUG = True
     ENV = 'development'
 
-
+    GOOGLE_CONSUMER_KEY = 'AIzaSyBk_pc-H_aw7sATG3EESfYOEYdro94z0-U'
+    GOOGLE_CONSUMER_SECRET = 'Nc1qttpkcbSbkfXldLMl3MyA'
+    CORS_SUPPORTS_CREDENTIALS = True
+    OAUTH2_PROVIDER_TOKEN_EXPIRES_IN = datetime.timedelta(days=1, hours=2)
     # SECURITY_BLUEPRINT_NAME = 'manage'
+    SECURITY_TOKEN_AUTHENTICATION_KEY = 'Bearer'
+    SECURITY_TOKEN_AUTHENTICATION_HEADER = 'Authorization'
     SECURITY_POST_LOGIN_VIEW = 'https://localhost:8080/#/login'
     SECURITY_UNAUTHORIZED_VIEW = '/unauth'
     SECURITY_CONFIRMABLE = True

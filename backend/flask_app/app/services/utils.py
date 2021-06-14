@@ -1,7 +1,7 @@
 import os
 import base64
 from flask import current_app
-import backend.flask_app.app.database.dao.imageDao as dao
+import flask_app.app.database.dao.imageDao as dao
 
 
 def save_file(file_data, f_name, f_ext):
@@ -22,3 +22,4 @@ def save_file(file_data, f_name, f_ext):
 
 
     return file_path, file_fn
+

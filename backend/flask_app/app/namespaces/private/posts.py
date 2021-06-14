@@ -1,9 +1,9 @@
 from datetime import datetime
-from backend.flask_app.app.database.schemas import (PostCommentSchema, PostLikeSchema,
+from flask_app.app.database.schemas import (PostCommentSchema, PostLikeSchema,
                                             PostSchema,
                                             UserRegisterSchema
                                             )
-from backend.flask_app.app.namespaces.private.schemas import (commentModel,
+from flask_app.app.namespaces.private.schemas import (commentModel,
                                                       commentUser,
                                                       createPostModel,
                                                       likeListModel,
@@ -15,11 +15,11 @@ from backend.flask_app.app.namespaces.private.schemas import (commentModel,
                                                       makePostResp,
                                                       errorSchema
                                                       )
-from backend.flask_app.app.services.commentService import (create_comment,
+from flask_app.app.services.commentService import (create_comment,
                                                    get_post_comments
                                                    )
-from backend.flask_app.app.services.logs import complex_file_handler
-from backend.flask_app.app.services.postService import (create_post,
+from flask_app.app.services.logs import complex_file_handler
+from flask_app.app.services.postService import (create_post,
                                                 get_by_offset,
                                                 get_post_by_id,
                                                 delete_post_by_id
@@ -29,11 +29,11 @@ from flask_jwt_extended import (get_jwt_identity, jwt_required,
                                 verify_jwt_in_request
                                 )
 from flask_restx import Namespace, Resource, marshal
-from backend.flask_app.app import _LEVELLOG_
-from backend.flask_app.app.services.userService import get_user_by_id
-from backend.flask_app.app.namespaces.auth.schemas import userProfile, creator
-from backend.flask_app.app.services.imageService import get_picture
-from backend.flask_app.app.services.logs.refactor_dict import gen_log
+from flask_app.app import _LEVELLOG_
+from flask_app.app.services.userService import get_user_by_id
+from flask_app.app.namespaces.auth.schemas import userProfile, creator
+from flask_app.app.services.imageService import get_picture
+from flask_app.app.services.logs.refactor_dict import gen_log
 
 postNS = Namespace('post', 'todas las rutas de Posts irán a aquí')
 

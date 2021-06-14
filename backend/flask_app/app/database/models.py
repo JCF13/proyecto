@@ -1,13 +1,13 @@
 import datetime
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.orm import backref
-from backend.flask_app.app.database import db
-from backend.flask_app.app.database.mixins import CreatedMixin
+from flask_app.app.database import db
+from flask_app.app.database.mixins import CreatedMixin
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy import Column, Integer, String
 from flask_security.models import fsqla_v2 as fsqla
+from flask_security.models import fsqla as oauth
 from flask_security.datastore import SQLAlchemySessionUserDatastore
-
 
 
 class User(db.Model, fsqla.FsUserMixin):
@@ -27,6 +27,17 @@ class User(db.Model, fsqla.FsUserMixin):
     chats = db.relationship('Chat', primaryjoin='User.id==Chat.created_by_fk', viewonly=True)
 
 
+class Client(db.Model,oauth.FsOauth2ClientMixin):
+    __tablename__ = 'oauth2_client'
+    # public or confidential
+    is_confidential = db.Column(db.Boolean)
+
+
+class Token(db.Model,oauth.FsTokenMixin):
+
+    pass
+
+
 class Role(db.Model, fsqla.FsRoleMixin):
     __tablename__ = 'role'
 
@@ -41,8 +52,8 @@ class Followers(db.Model):
 
     follow_id = db.Column(db.Integer, primary_key=True)
     
-    followed_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    followed_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"))
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"))
 
 
 class Post(db.Model, CreatedMixin):
@@ -62,8 +73,8 @@ class PostLikes(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id', ondelete='CASCADE'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
 
 
 class PostComment(db.Model, CreatedMixin):

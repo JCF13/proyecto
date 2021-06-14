@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from backend.flask_app.app.exceptions import EmailUsed, InvalidUsername, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
-from backend.flask_app.app.database.models import User, Followers
-from backend.flask_app.app.database import db
+from flask_app.app.exceptions import EmailUsed, InvalidUsername, RequiredEmail, RequiredName, RequiredPassword, RequiredUsername, UsernameUsed
+from flask_app.app.database.models import User, Followers
+from flask_app.app.database import db
 
 
 def find_user_by_username(username: str):

@@ -1,10 +1,10 @@
-from backend.flask_app.app.services.imageService import get_picture
+from flask_app.app.services.imageService import get_picture
 from flask.globals import request
 from flask_restx import Namespace, Resource, marshal
-from backend.flask_app.app.services.logs import complex_file_handler
+from flask_app.app.services.logs import complex_file_handler
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from backend.flask_app.app.services.userService import delete_user, get_all_users
-from backend.flask_app.app.namespaces.auth.schemas import creator
+from flask_app.app.services.userService import delete_user, get_all_users
+from flask_app.app.namespaces.auth.schemas import creator
 
 admin = Namespace('admin', 'Rutas para administrador')
 

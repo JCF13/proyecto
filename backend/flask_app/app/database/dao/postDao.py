@@ -1,5 +1,5 @@
-from backend.flask_app.app.database.models import Post, PostLikes
-from backend.flask_app.app.database import db
+from flask_app.app.database.models import Post, PostLikes
+from flask_app.app.database import db
 
 
 def generate_post(post: Post):
