@@ -1,26 +1,34 @@
-from flask_jwt_extended.utils import get_jwt_identity
-from flask_jwt_extended.view_decorators import verify_jwt_in_request
-from flask_oauthlib.provider import oauth2
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from flask_app.app.exceptions import EmailUsed, InvalidUsername, InvalidPassword
-from flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
-from flask.globals import request
+from flask import abort
+from flask.globals import current_app, request, session
 from flask_restx import Namespace, Resource
 from flask_restx.marshalling import marshal
-from flask_app.app import _LEVELLOG_
-from flask_jwt_extended import jwt_required
 from jwt.exceptions import DecodeError, ExpiredSignatureError
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended.utils import get_jwt_identity, get_jwt_request_location
+from flask_jwt_extended.view_decorators import verify_jwt_in_request
 from flask_jwt_extended.exceptions import (
     NoAuthorizationError, InvalidHeaderError, WrongTokenError
 )
+
+from flask_app.app import _LEVELLOG_, oauth2
+from flask_app.app.exceptions import EmailUsed, InvalidUsername, InvalidPassword
+from flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
+
 from flask_app.app.namespaces.auth.schemas import (
     userModel, auth_token, errorSchema,
     loginReq, loginResp, userRegister
 )
-from flask_app.app.database import db 
 from flask_app.app.services.userService import create_user, get_user_by_id
+
 from flask_app.app.services.logs import complex_file_handler
 from flask_app.app.services.logs.refactor_dict import gen_log
+from flask_app.app.services.oauthService import (
+    create_token, get_tokens, get_token_by_accs_tok, get_token_by_ref_tok,
+    generate_token, get_client_by_id
+    )
+
+
 
 
 authorization = Namespace('auth')
@@ -47,10 +55,10 @@ def handler_non_auth(error):
     resultado['error'] = errorDoc
 
     respuesta = marshal(resultado, loginResp)
-    
+
     elLog = gen_log(respuesta, _LEVELLOG_)
     authorization.logger.log(_LEVELLOG_, elLog)
-    
+
     return respuesta
 
 
@@ -237,8 +245,49 @@ class Login(Resource):
         return header
 
 
+
+
+@oauth2.clientgetter
+def load_client(client_id):
+    return get_client_by_id(client_id)
+
+
+@oauth2.tokengetter
+def load_token(access_token=None, refresh_token=None):
+    if access_token:
+        return get_token_by_accs_tok(access_token)
+    elif refresh_token:
+        return get_token_by_ref_tok(refresh_token)
+
+
+@oauth2.tokensetter
+def save_token(token, request, *args, **kwargs):
+    toks = get_tokens(request)
+    # make sure that every client has only one token connected to a user
+    for t in toks:
+        db.session.delete(t)
+
+    expires_in = token.get('expires_in')
+    expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=expires_in)
+
+    tok = create_token(token, expires, request)
+    return tok
+
+
 @authorization.route('/login/google')
 class LoginOauth(Resource):
     
-    def get(self):
+    @authorization.expect(parser)
+    @r
+    def post(self):
+        print(session.get('oauth'))
+        
+        print('______________')
+        print(request.cookies.__dict__)
+        print('______________')
+        print(request.args)
+        print('______________')
+        print(request.oauth)
+        print('______________')
+        
         pass

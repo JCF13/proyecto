@@ -10,7 +10,6 @@ from flask_security.models import fsqla as oauth
 from flask_security.datastore import SQLAlchemySessionUserDatastore
 
 
-
 class User(db.Model, fsqla.FsUserMixin):
     __tablename__ = 'user'
     

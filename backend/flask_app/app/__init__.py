@@ -1,12 +1,10 @@
 import datetime
 import decimal
 
-from flask_security.confirmable import generate_confirmation_link
-
 from flask import Flask, json
+from flask.globals import session
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, get_jwt_identity
-from flask_oauthlib.provider import OAuth2Provider
 from flask_security.utils import hash_password
 from flask_app.app.config import Config
 from flask_app.app.database import db, ma
@@ -21,8 +19,25 @@ from flask_security.core import (
     _user_loader as _flask_security_user_loader,
     _request_loader as _flask_security_request_loader)
 from flask_security.utils import config_value as security_config_value
+# from flask_oauthlib.client import OAuth 
+from flask_oauthlib.provider.oauth2 import OAuth2Provider
+from flask_oauthlib.contrib.apps import google
 
-oauth = OAuth2Provider()
+
+oauth2 = OAuth2Provider()
+
+
+
+# oauth = OAuth()
+
+# googleAuth = google.register_to(
+#                 oauth,
+#                 consumer_key= '969437755795-mas4cecbtrqrd38pa9hodgbjtkssoeqs.apps.googleusercontent.com',
+#                 consumer_secret= 'Nc1qttpkcbSbkfXldLMl3MyA',
+#                 name='google',
+#                 scope='opeind profile email',
+#                 app_key='AIzaSyBk_pc-H_aw7sATG3EESfYOEYdro94z0-U')
+
 
 def _request_loader(request):
     """
@@ -38,7 +53,7 @@ def _request_loader(request):
         # Need this try stmt in case oauthlib sometimes throws:
         # AttributeError: dict object has no attribute startswith
         try:
-            is_valid, oauth_request = oauth.verify_request(scopes=[])
+            is_valid, oauth_request = oauth2.verify_request(scopes=[])
             if is_valid:
                 user = oauth_request.user
         except AttributeError:
@@ -93,18 +108,16 @@ class JSONEncoder(json.JSONEncoder):
 def create_app():
     app = Flask(__name__.split('.')[1])
     app.config.from_object(Config)
-
     db.init_app(app)
     ma.init_app(app)
-
-
+    print(app.env)
     app.json_encoder = JSONEncoder
     jwt.init_app(app)
     cors.init_app(app)
     mail.init_app(app)
     security.init_app(
-                app, user_datastore,
-                login_manager=_get_login_manager(app, anonymous_user=None))
+                app, user_datastore)
+    oauth2.init_app(app)
     from flask_app.app.namespaces import managment
     import flask_app.app.cli as cli 
     app.register_blueprint(managment)
@@ -118,9 +131,9 @@ def create_app():
             user_datastore.add_role_to_user(firstuser, adminrole)
             user_datastore.commit()
 
-    @oauth.clientgetter
-    def load_client(client_id):
-        return Client.query.filter_by(Client.id == client_id).first()
+    # @oauth.clientgetter
+    # def load_client(client_id):
+    #     return Client.query.filter_by(Client.id == client_id).first()
 
     return app
 

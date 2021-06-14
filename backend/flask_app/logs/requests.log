@@ -1387,3 +1387,21 @@
 
     INFO :: 2021-06-11 17:44:57,360 _ authorization _ post : request: Login | username: <script>alert('Hola')</script> | 
                     
+
+    INFO :: 2021-06-12 13:55:02,532 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-12 13:55:44,229 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-12 13:56:31,991 _ authorization _ handler_non_auth : request:  _  | error_type: 25 | error_desc: Missing Authorization Header | 
+                    
+
+    INFO :: 2021-06-12 13:57:20,042 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-12 14:18:47,582 _ authorization _ handler_decode_token : request:  _  | error_type: 27 | error_desc: Not enough segments | 
+                    
+
+    INFO :: 2021-06-12 18:58:31,921 _ authorization _ post : request: Login | username: ToniJSB | 
+                    
