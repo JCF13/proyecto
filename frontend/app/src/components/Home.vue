@@ -8,7 +8,7 @@
                             <q-icon name='person' />
                         </q-avatar>
                         <q-avatar v-else>
-                            <img :src="post.creator.picture" />
+                            <img :src="post.creator.picture" alt="foto_de_perfil" />
                         </q-avatar>
                     </q-item-section>
 
@@ -30,7 +30,7 @@
                 <q-icon v-if="!post.liked" @click="sendLike(post.post_id)" name='favorite_outline' color='red' style="position: absolute; left: 0; bottom: 0; font-size: 40px;" />
                 <q-icon v-else name='favorite' @click="deleteLike(post.post_id)" color='red' style="position: absolute; left: 0; bottom: 0; font-size: 40px;" />
 
-                <img @click="openPost(post.post_id)" :src="post.picture" alt="">
+                <img @click="openPost(post.post_id)" :src="post.picture" alt="publicacion">
             </q-card>
             <div v-if="posts.length === 0" style="display: flex; flex-direction: column;">
                 <h5>Todavía no hay publicaciones para ver</h5>

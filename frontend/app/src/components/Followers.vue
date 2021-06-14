@@ -7,7 +7,12 @@
                         <q-icon name='person' />
                     </q-avatar>
                     <q-avatar v-else size="30px" class="avatar">
-                        <img :src="follower.picture" alt="">
+                        <q-img
+                            :src="follower.picture" class="bg-white" alt="foto_de_perfil"
+                            style="width:30px; max-width: 30px; height:30px; max-height: 30px; 
+                                border-radius:50%; border: 1px solid grey; margin: 5%;"
+                            contain
+                        />
                     </q-avatar>
                 </q-item-section>
                 <q-item-section>{{follower.username}}</q-item-section>
@@ -28,7 +33,7 @@
 export default {
     data() {
         return {
-            followers: null
+            followers: []
         }
     },
     async created() {

@@ -5,20 +5,20 @@
         </q-page-container>
         <q-footer elevated class="text-white" id="footer">
             <q-tabs v-model="tab" class="text-black col-md-12">
-                <router-link to="/inside/home" class="col-md-1">
-                    <q-tab name="home" icon="home"/>
+                <router-link to="/inside/home" class="col-md-1" role="tab" >
+                    <q-tab name="home" icon="home" aria-label="home" />
                 </router-link>
-                <router-link to="/inside/search" class="col-md-1">
-                    <q-tab name="search" icon="search" />
+                <router-link to="/inside/search" class="col-md-1" role="tab" >
+                    <q-tab name="search" icon="search" aria-label="search" />
                 </router-link>
-                <router-link to="/inside/camera" class="col-md-1">
-                    <q-tab name="new-post" icon="add_circle" />
+                <router-link to="/inside/camera" class="col-md-1" role="tab">
+                    <q-tab name="new-post" icon="add_circle" aria-label="new" />
                 </router-link>
-                <router-link to="/inside/chats" class="col-md-1">
-                    <q-tab name="chats" icon="chat_bubble_outline"></q-tab>
+                <router-link to="/inside/chats" class="col-md-1" role="tab">
+                    <q-tab name="chats" icon="chat_bubble_outline" aria-label="chats" />
                 </router-link>
-                <router-link to="/inside/profile" class="col-md-1">
-                    <q-tab name="profile" icon="person"/>
+                <router-link to="/inside/profile" class="col-md-1" role="tab">
+                    <q-tab name="profile" icon="person" aria-label="profile" />
                 </router-link>
             </q-tabs>
         </q-footer>

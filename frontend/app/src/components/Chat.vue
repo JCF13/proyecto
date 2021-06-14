@@ -5,7 +5,7 @@
                 <div v-if="(message.created_by == partner)" style="margin-bottom: 1%" :id="'message'+message.message_id">
                     <q-chat-message :id="message.message_id"
                         :text="[message.message]"
-                        :stamp="[message.created_on]"
+                        :stamp="message.created_on"
                         size="5"
                         bg-color="blue-grey-1"
                     />
@@ -13,7 +13,7 @@
                 <div v-else style="margin-bottom: 1%" :id="'message'+message.message_id">
                     <q-chat-message :id="'message'+message.message_id"
                         :text="[message.message]"
-                        :stamp="[message.created_on]"
+                        :stamp="message.created_on"
                         size="5"
                         sent
                         bg-color="grey-2"
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div>
-            <q-input color="black" v-model="message">
+            <q-input color="black" v-model="message" aria-label="mensaje">
                 <template v-slot:append>
                     <q-icon color="black" name="send" @click="sendMessage"/>
                 </template>
@@ -36,23 +36,7 @@ export default {
     data() {
         return {
             chat: {
-                chat_id: 0,
-                creator: {
-                    user_id: 0,
-                    username: '',
-                    picture: ''
-                },
-                partner: {
-                    user_id: 0,
-                    username: '',
-                    picture: ''
-                },
-                messages: [{
-                    message_id: 0,
-                    created_by: 0,
-                    created_on: '',
-                    message: ''
-                }]
+                
             },
             message: '',
             partner: 0

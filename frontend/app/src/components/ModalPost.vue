@@ -6,7 +6,7 @@
                     <q-icon id="close" name="highlight_off" size="30px" @click="close" />
                     <q-icon v-if="post.creator.id === user.id" id="delete" color='red' name='delete' size='30px' @click="deletePost" />
 
-                    <img id="image" :src="post.picture" alt="">
+                    <img id="image" :src="post.picture" alt="publicacion">
 
                     <div id="pie-de-foto" class="absolute-bottom text-subtitle2">
                         {{post.caption}}
@@ -19,7 +19,7 @@
                             <q-icon name='person' />
                         </q-avatar>
                         <q-avatar v-else size="30px" class="avatar">
-                            <img :src="post.creator.picture" alt="">
+                            <img :src="post.creator.picture" alt="foto_de_perfil">
                         </q-avatar>
                         <h6>{{post.creator.username}}</h6>
                     </div>
@@ -44,7 +44,7 @@
                                     <q-icon name='person' />
                                 </q-avatar>
                                 <q-avatar v-else>
-                                    <img :src="comment.user.picture" />
+                                    <img :src="comment.user.picture" alt="foto_de_perfil" />
                                 </q-avatar>
                                 </q-item-section>
                                 <q-item-section>{{comment.message}}</q-item-section>

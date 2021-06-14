@@ -3,11 +3,11 @@
         <div id="menu-access">
             <q-toolbar class="row d-flex justify-content-center">
                 <q-tabs class="col-md-12">
-                    <router-link to="/inside/social/followers" class="col-md-6">
+                    <router-link to="/inside/social/followers" class="col-md-6" role="tab">
                         <q-tab name="tab1" label="SEGUIDORES" />
                     </router-link>
             
-                    <router-link to="/inside/social/following" class="col-md-6">
+                    <router-link to="/inside/social/following" class="col-md-6" role="tab">
                         <q-tab name="tab2" label="SEGUIDOS" />
                     </router-link>
                 </q-tabs>

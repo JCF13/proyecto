@@ -21,7 +21,7 @@
                                     <q-btn v-if="!isUser" flat color="black" icon="chat_bubble_outline" @click="createChat" />
                                     
                                     <router-link to="/inside/settings">
-                                        <q-btn flat round color="black" icon="settings" />
+                                        <q-btn flat round color="black" icon="settings" aria-label="settings" />
                                     </router-link>
                                 </q-card-actions>
                             </q-card-section>
