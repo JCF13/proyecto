@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from flask import abort
 from flask.globals import current_app, request, session
@@ -10,7 +11,7 @@ from flask_jwt_extended.view_decorators import verify_jwt_in_request
 from flask_jwt_extended.exceptions import (
     NoAuthorizationError, InvalidHeaderError, WrongTokenError
 )
-
+from flask_app.app import db
 from flask_app.app import _LEVELLOG_, oauth2
 from flask_app.app.exceptions import EmailUsed, InvalidUsername, InvalidPassword
 from flask_app.app.namespaces.auth.jwt_auth import make_header, make_header_from_identity
@@ -278,7 +279,6 @@ def save_token(token, request, *args, **kwargs):
 class LoginOauth(Resource):
     
     @authorization.expect(parser)
-    @r
     def post(self):
         print(session.get('oauth'))
         

@@ -1475,3 +1475,15 @@
 
     INFO :: 2021-06-14 17:23:51,741 _ authorization _ post : request: Login | username: jero | 
                     
+
+    INFO :: 2021-06-14 22:16:54,283 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-14 22:19:20,922 _ authorization _ post : username: jero | email: jerocf13@gmail.com | 
+                    
+
+    INFO :: 2021-06-14 22:19:59,127 _ authorization _ post : request: Login | username: jero | 
+                    
+
+    INFO :: 2021-06-14 22:20:11,598 _ posts _ post : request: make post | post_id: 1 | 
+                    
